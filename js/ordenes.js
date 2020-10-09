@@ -392,10 +392,10 @@ $(document).on('click', '.show_solicitudes_det', function(){
       dataType:"json",
       success:function(data)
       {
-
+        $("#cod_emp").html(data.cod_emp);
         $("#pac_solicitud").html(data.nombre);
         $("#empresa_solicitud").html(data.empresa);
-        $("#orden_solicitud").html(data.numero_orden);
+        $("#depto_solicitud").html(data.departamento);
 
       }
     })

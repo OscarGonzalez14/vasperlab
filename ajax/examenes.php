@@ -38,7 +38,7 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["examen"];
 		$sub_array[] = $row["estado"];
-        $sub_array[] = '<button type="button"  class="btn btn-infos btn-md asigna_datos_orden" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$row["examen"].'" value="'.$row["examen"].'"><i class="fas fa-plus"></i></button>';                                 
+        $sub_array[] = '<button type="button"  class="btn btn-infos btn-md asigna_datos_orden focus" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$row["examen"].'" value="'.$row["examen"].'" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"></i></button>';                                 
 		$data[] = $sub_array;
 	}
 
@@ -50,6 +50,23 @@ case 'examenes_ingreso':
  		echo json_encode($results);
 
     break;
+
+    ///////////////uardar examen trigliceridos
+    case 'registrar_examen_trig':
+	$examenes->registar_examenes_trig($_POST["resultado"]);
+	break;
+	//////////////////REGISTRAR XAMEN COLESTEROL
+	case 'registrar_examen_trigcolesterol':
+	$examenes->registar_examenes_colesterol($_POST["resultado"]);
+	break;
+	//////////////////REGISTRAR XAMEN GLUCOSA
+	case 'registrar_examen_glucosa':
+	$examenes->registar_examenes_glucosa($_POST["resultado"]);
+	break; 
+
+	case 'registrar_examen_exo':
+	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);
+	break;
 
 }
 

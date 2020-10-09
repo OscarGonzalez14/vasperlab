@@ -67,4 +67,29 @@ public function count_solicitudes_pendientes_emp(){
     return $sql->rowCount();
 }
 
+//////////////////GET DETALLE ORDEN POR PACIENTE7
+public function get_detalle_orden_pacientes($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql= "SELECT p.nombre,p.empresa,p.departamento,p.cod_emp,d.numero_orden from pacientes_o as p inner join detalle_orden as d on p.id_paciente=d.id_paciente WHERE p.id_paciente=? and d.numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function datos_item_examenes($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

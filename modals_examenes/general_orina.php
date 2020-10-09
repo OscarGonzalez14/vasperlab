@@ -29,7 +29,7 @@
      </div>
 <div style="text-align: center;background: #343a40;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN QUIMICO - ORINA</strong></div>
 
-  <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px">
+  <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px" autocomplete="on">
   <div class="form-group col-md-2">
     <label for="inputEmail4" style="font-size: 12px">Color</label>
     <input type="text" class="form-control" id="color_orina" required="" style="text-align: right;">
@@ -146,8 +146,8 @@
 
   </div>
 <!--FIN EXAMEN ORINA SECTION 2-->
-<input type="text" class="form-control" id="id_pac_exa">
-<input type="text" class="form-control num_orden_exa" id="num_orden_exa_orina">
+<input type="hidden" class="form-control" id="id_pac_exa">
+<input type="hidden" class="form-control num_orden_exa" id="num_orden_exa_orina">
 </div>
   
     </div><!--Fin modal Content-->

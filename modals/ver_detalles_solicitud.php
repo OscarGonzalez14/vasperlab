@@ -1,8 +1,8 @@
  <style>
-    #tamModal{
-      width: 65% !important;
+    #tamModal_exa_d{
+      width: 85% !important;
     }
-     #head{
+     #head_exa_d{
         background-color: black;
         color: white;
         text-align: center;
@@ -19,11 +19,11 @@
 </style>
 
 
-<div class="modal fade bd-example-modal-lg" id="detalle_solicitudes" style="border-radius:0px !important;">
-  <div class="modal-dialog modal-lg" role="document" id="tamModal">
+<div class="modal fade" id="detalle_solicitudes">
+  <div class="modal-dialog modal-xl" role="document" id="tamModal_exa_d">
 
     <div class="modal-content">
-     <div class="modal-header" id="head" style="justify-content:space-between">
+     <div class="modal-header" id="head_exa_d" style="justify-content:space-between">
        <span><i class="fas fa-plus-square"></i> Detalles Solicitudes</span>
         <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
      </div>
@@ -32,15 +32,12 @@
       <table class="table" width="100%">
         <thead>
           <tr>
-            <th colspan="60"><span style="color: blue;text-transform: uppercase;">Paciente:&nbsp;</span><span id="pac_solicitud"></span></th>
-            <th colspan="40"><span style="color: blue;text-transform: uppercase;">Empresa:&nbsp;</span><span id="empresa_solicitud"></span></th>
+            <th colspan="15"><span style="color: black;text-transform: uppercase;">Cod.Emp:&nbsp;</span><span id="cod_emp" style="color: blue;"></span></th>
+            <th colspan="30"><span style="color: black;text-transform: uppercase;">Paciente:&nbsp;</span><span id="pac_solicitud" style="color: blue;"></span></th>
+            <th colspan="25"><span style="color: black;text-transform: uppercase;">Empresa:&nbsp;</span><span id="empresa_solicitud" style="color: blue;"></span></th>
+            <th colspan="30"><span style="color: black;text-transform: uppercase;">Depto:&nbsp;</span><span id="depto_solicitud" style="color: blue;"></span></th>
           </tr>
         </thead>
-          <tr>
-            <td colspan="80" style="text-align: left;"><strong>DETALLES DE SOLICITUD</strong></td>
-            <td colspan="20" style="text-align: left;"><srong style="color: blue;text-transform: uppercase;">#Orden:&nbsp;</srong><span id="orden_solicitud"></span></td>
-
-          </tr>
         <tbody style="text-align:center" id="detalles_solicitud">
       </tbody>
       </table>

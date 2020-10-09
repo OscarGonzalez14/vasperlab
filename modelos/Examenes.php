@@ -75,6 +75,47 @@ public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consis
 }
 ///////////FIN 
 
+/////////////REGISTRAR TRIGLICERIDOS
+public function registar_examenes_trig($resultado){
+
+    $conectar=parent::conexion();
+    $sql2="insert into trigliceridos values(null,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado);
+    $sql2->execute();
+}
+
+/////////////REGISTRAR COLESTEROL
+public function registar_examenes_colesterol($resultado){
+    $conectar=parent::conexion();
+    $sql2="insert into colesterol values(null,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado);
+    $sql2->execute();
+}
+//////////////
+public function registar_examenes_glucosa($resultado){
+    $conectar=parent::conexion();
+    $sql2="insert into glucosa values(null,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado);
+    $sql2->execute();
+}
+
+//////////////REGISTRAR EXAMEN EXOFARINGEO
+public function registar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$numero_orden,$refiere){
+    $conectar=parent::conexion();
+    $sql2="insert into exofaringeo values(null,?,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$aisla);
+    $sql2->bindValue(2,$sensible);
+    $sql2->bindValue(3,$resiste);
+    $sql2->bindValue(4,$numero_orden);
+    $sql2->bindValue(5,$id_paciente);
+    $sql2->bindValue(6,$refiere);
+    $sql2->execute();
+}
+
 public function registar_examenes_check(){
 
 $conectar=parent::conexion();

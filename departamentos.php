@@ -8,32 +8,30 @@ case 'select_departamento':
   if ($_POST['empresa']=='Corrugado') {
     $html="
       <option value='AUDITORIA INTERNA'>AUDITORIA INTERNA</option>
-      <option value='DEPARTAMENTO DE COMPENSACION Y BENEFICIOS'>DEPARTAMENTO DE COMPENSACION Y BENEFICIOS</option>
-      <option value='DEPARTAMENTO DE CREDITOS Y COBROS'>DEPARTAMENTO DE CREDITOS Y COBROS</option>
-      <option value='DEPARTAMENTO DE CONTABILIDAD GENERAL'>DEPARTAMENTO DE CONTABILIDAD GENERAL</option>
+      <option value='COMPENSACION Y BENEFICIOS'>COMPENSACION Y BENEFICIOS</option>
+      <option value='CREDITOS Y COBROS'>CREDITOS Y COBROS</option>      
+      <option value='CONTABILIDAD GENERAL'>CONTABILIDAD GENERAL</option>
       <option value='CONTROL DE CALIDAD'>CONTROL DE CALIDAD</option>
       <option value='DEPARTAMENTO DE INFORMATICA - ES'>DEPARTAMENTO DE INFORMATICA - ES</option>
       <option value='SISTEMAS INTEGRADOS DE GESTION'>SISTEMAS INTEGRADOS DE GESTION</option>
       <option value='MANTENIMIENTO GENERAL E INFRAESTRUCTURA'>MANTENIMIENTO GENERAL E INFRAESTRUCTURA</option>
       <option value='PLANIFICACION CAJAS Y BOLSAS'>PLANIFICACION CAJAS Y BOLSAS</option>
       <option value='DIRECCION FINANCIERA'>DIRECCION FINANCIERA</option>
-      <option value='TESORERIA'>TESORERIA</option>
+      <option value='DEPARTAMENTO DE TESORERIA'>DEPARTAMENTO DE TESORERIA</option>
       <option value='GERENCIA DE MANUFACTURA CAJAS Y BOLSAS'>GERENCIA DE MANUFACTURA CAJAS Y BOLSAS</option>
+      <option value='DIRECCION FINANCIERA'>DIRECCION FINANCIERA</option>
+      <option value='TESORERIA'>TESORERIA</option>
+      <option value='GERENCIA DE MANUFACTURA'>GERENCIA DE MANUFACTURA</option>
       <option value='GERENCIA REGIONAL DE RECURSOS HUMANOS'>GERENCIA REGIONAL DE RECURSOS HUMANOS</option>
-      <option value='GERENCIA REGIONAL DE COMPRA'>GERENCIA REGIONAL DE COMPRA</option>
-      <option value='GERENCIA GENERAL'>GERENCIA GENERAL</option>
-      <option value='GERENCIA DE VENTAS CAJAS Y BOLSAS'>GERENCIA DE VENTAS CAJAS Y BOLSAS</option>
-      <option value='SECCION DE ACABADO CAJAS Y BOLSAS'>SECCION DE ACABADO CAJAS Y BOLSAS</option>
-      <option value='SECCION DE IMPRESION CAJAS Y BOLSAS'>SECCION DE IMPRESION CAJAS Y BOLSAS</option>
-      <option value='CORRUGADORA CAJAS Y BOLSAS'>CORRUGADORA CAJAS Y BOLSAS</option>
-      <option value='TUBERA CAJAS Y BOLSAS'>TUBERA CAJAS Y BOLSAS</option>
-      <option value='SECCION DE DESPACHO CAJAS Y BOLSAS'>SECCION DE DESPACHO CAJAS Y BOLSAS</option>
-      <option value='SECCION DE INVENTARIOS'>SECCION DE INVENTARIOS</option>
-      <option value='GERENCIA ADUANAL'>GERENCIA ADUANAL</option>
-      <option value='SECCION DE COMPRAS LOCALES'>SECCION DE COMPRAS LOCALES</option>
-      <option value='CUENTAS POR PAGAR'>CUENTAS POR PAGAR</option>
-      <option value='SECCION DE RETACEOS'>SECCION DE RETACEOS</option>
-      <option value='SEGURIDAD Y SALUD OCUPACIONAL'>SEGURIDAD Y SALUD OCUPACIONAL</option>
+      <option value='GERENCIA REGIONAL DE COMPRAS'>GERENCIA REGIONAL DE COMPRAS</option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
+      <option value=''></option>
       ";
     echo $html;
 
@@ -99,8 +97,11 @@ case 'select_departamento':
       <option value='PREPRENSA CELPAC'>PREPRENSA CELPAC</option>
       <option value='RECLUTAMIENTO Y SELECCION'>RECLUTAMIENTO Y SELECCION</option>
       <option value='SEGURIDAD Y SALUD OCUPACIONAL'>SEGURIDAD Y SALUD OCUPACIONAL</option>
-       ";
+
+    ";
     echo $html;
-}
+  }
+
     break;
+
 }

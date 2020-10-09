@@ -249,10 +249,128 @@ $(document).on('click', '.asigna_datos_orden', function(){
   var id_paciente = $(this).attr("id");
   var numero_orden = $(this).attr("name");
   //var examen = $(this).attr("value");
-
-  $("#id_pac_exa").val(id_paciente);
+  $(".id_paciente_exa").val(id_paciente);
   $(".num_orden_exa").val(numero_orden);
 
+});
+
+$(document).on('click', '.focus', function(){
+  $("input:number").focus(); 
 
 });
+
+$(document).on('click', '.reg_examenes', function(){
+document.getElementsByClassName("reg_examenes").style.display = "none";
+});
+
+/////////////////GUARDA EXAMEN TRIGLICERIDOS
+function GuardarTrigliceridos(){
+    
+  var resultado = $("#resultado_triglicerido").val();
+  if (resultado !=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_trig",
+    method:"POST",
+    data:{resultado:resultado},
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("explode();", 2000);
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+/////////////GUSRADAR COLESTEROL
+function GuardarColesterol(){
+    
+  var resultado = $("#resultado_colesterol").val();
+  if (resultado!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_trigcolesterol",
+    method:"POST",
+    data:{resultado:resultado},
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("explode();", 2000);
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+///////////////////   GUARDAR GLUCOSA
+function GuardarGlucosa(){
+    
+  var resultado = $("#resultado_glucosa").val();
+  if (resultado!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_glucosa",
+    method:"POST",
+    data:{resultado:resultado},
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("explode();", 2000);
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+
+
+/////////////////////////GUARDAR EXOFARIGEO
+function GuardarExo(){
+    
+  var aisla = $("#aisla_exo").val();
+  var sensible = $("#sensible_exo").val();
+  var resiste = $("#resiste_exo").val();
+  var id_paciente = $("#id_paciente_exofarigeo").val();
+  var numero_orden = $("#n_orden_exofarigeo").val();
+  var refiere = $("#refiere_exo").val();
+  
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_exo",
+    method:"POST",
+    data:{aisla:aisla,sensible:sensible,resiste:resiste,id_paciente:id_paciente,numero_orden:numero_orden,refiere:refiere},
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    setTimeout ("Swal.fire('Examen Exofaringeo guardado exitosamente','','success')", 100);
+    setTimeout ("explode();", 2000);
+  }
+
+  }); 
+  
+
+}
+
 init();

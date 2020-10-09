@@ -64,7 +64,8 @@ case "examenes_clinica_pendientes":
 	    $sub_array[] = $row["numero_orden"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["cod_emp"];
-		$sub_array[] = $row["empresa"];				
+		$sub_array[] = $row["empresa"];
+		$sub_array[] = $row["departamento"];				
         $sub_array[] = '<button type="button" class="btn btn-primary show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye"></i></button>';
         $sub_array[] = '<span style="color:'.$color.'"><strong>'.$status.'</strong></span>';
         $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-warning btn-md"><i class="fas fa-file-download"></i></button></a>';                                 
@@ -126,10 +127,11 @@ case "examenes_clinica_pendientes":
 	    if(is_array($datos)==true and count($datos)>0){
 			foreach($datos as $row)
 			{
-				$output["numero_orden"] = $row["numero_orden"];
+				//$output["numero_orden"] = $row["numero_orden"];
 				$output["nombre"] = $row["nombre"];
 				$output["empresa"] = $row["empresa"];
-				//$output["numero_orden"] = $row["numero_orden"];		
+				$output["cod_emp"] = $row["cod_emp"];
+				$output["departamento"] = $row["departamento"];		
 			}			 
 
 	    }

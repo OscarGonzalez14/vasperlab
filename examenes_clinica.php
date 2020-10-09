@@ -8,14 +8,15 @@
 
 <div style="margin: 5px">
     <h5 align="center"><strong>SOLICITUDES DE EXAMEN DE CLÍNICA A PENDIENTES</strong></h5>
-	<table class="table" id="data_examenes_clinica" width="100%">
+	<table class="table-hover" id="data_examenes_clinica" width="100%">
         <thead style="background:#034f84;color:white;max-height:10px">
           <tr>
             <th style="text-align:center">Fecha</th>
             <th style="text-align:center"># Orden</th>
             <th style="text-align:center">Paciente</th>
-            <th style="text-align:center">Cod. Empleado</th>
+            <th style="text-align:center">Cod. Emp</th>
             <th style="text-align:center">Empresa</th>
+            <th style="text-align:center">Departamento</th>
             <th style="text-align:center">Ver</th>
             <th style="text-align:center">Estado</th>
             <th style="text-align:center">Ingresar</th>

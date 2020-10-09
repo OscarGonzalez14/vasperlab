@@ -16,9 +16,11 @@ case "listar_pacientes_registrados":
 	{
 		$sub_array = array();				
 				
-	    $sub_array[] = $row["id_paciente"];
+	    $sub_array[] = $row["cod_emp"];
 		$sub_array[] = $row["nombre"];
-		$sub_array[] = $row["edad"];
+		$sub_array[] = $row["empresa"];
+		$sub_array[] = $row["departamento"];
+
 		$sub_array[] = '<button type="button" class="btn btn-primary agregar_oden_paciente" id="'.$row["id_paciente"].'" data-toggle="modal" data-target="#nueva_orden" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"> Orden</button>';
         $sub_array[] = '<button type="button" class="btn btn-success agregndoe" id="'.$row["id_paciente"].'">Editar</button>';
         $sub_array[] = '<button type="button" class="btn btn-danger" onClick="eliminar_paciente_o('.$row["id_paciente"].');">Eliminar</button>';                                 

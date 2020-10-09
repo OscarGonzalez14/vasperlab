@@ -83,6 +83,7 @@ public function login_u(){
 public function login_usuarios(){
   $conectar=parent::conexion();
   parent::set_names();
+  
     if(isset($_POST["enviar"])){
   //*****************VALIDACIONES  DE ACCESO*****************
         //$password = $_POST["pwd"];

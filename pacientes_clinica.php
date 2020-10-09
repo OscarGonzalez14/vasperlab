@@ -17,12 +17,13 @@
 </div> 
 
 <div style="margin: 5px">
-  <table class="table" id="data_pacientes_reg" width="100%">
+  <table class="table" id="data_pacientes_reg" width="100%" data-order='[[ 0, "desc" ]]'>
         <thead style="background:#034f84;color:white;max-height:10px">
           <tr>
             <th style="text-align:center">Código</th>
             <th style="text-align:center">Nombre Paciente</th>
-            <th style="text-align:center">Edad</th>
+            <th style="text-align:center">Empresa</th>
+            <th style="text-align:center">Departamento</th>
             <th style="text-align:center">Agregar</th>
             <th style="text-align:center">Editar</th>
             <th style="text-align:center">Eliminar</th>

@@ -66,9 +66,9 @@ case "examenes_clinica_pendientes":
 		$sub_array[] = $row["cod_emp"];
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["departamento"];				
-        $sub_array[] = '<button type="button" class="btn btn-primary show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye"></i></button>';
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye" style="color:blue"></i></button>';
         $sub_array[] = '<span style="color:'.$color.'"><strong>'.$status.'</strong></span>';
-        $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-warning btn-md"><i class="fas fa-file-download"></i></button></a>';                                 
+        $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-file-download" style="color:#1E0F59"></i></button></a>';                                 
 		$data[] = $sub_array;
 	}
 

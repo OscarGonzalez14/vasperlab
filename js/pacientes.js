@@ -17,11 +17,12 @@ function listar_pacientes_registrados()
     "aProcessing": true,//Activamos el procesamiento del datatables
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
-      buttons: [              
-                'copyHtml5',
+      buttons: [        
+ 
                 'excelHtml5',
-                'csvHtml5',
-                'pdf'
+                
+                'csvHtml5'
+
             ],
     "ajax":
         {
@@ -99,10 +100,10 @@ function listar_pacientes_registrados_clinicas()
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [              
-                'copyHtml5',
+
                 'excelHtml5',
                 'csvHtml5',
-                'pdf'
+
             ],
     "ajax":
         {

@@ -62,6 +62,7 @@ case 'select_departamento':
       <option value='SEGURIDAD Y SALUD OCUPACIONAL'>SEGURIDAD Y SALUD OCUPACIONAL</option>
       <option value='PREPRENSA CAJAS PLEGADIZAS'>PREPRENSA CAJAS PLEGADIZAS</option>
       <option value='AUDITORIA INTERNA'>AUDITORIA INTERNA</option>
+      <option value='PRESUPUESTO Y ANALISIS'>PRESUPUESTO Y ANALISIS</option>
     ";
     echo $html;
   }elseif ($_POST['empresa']=='Flexible') {

@@ -3,16 +3,21 @@
  require_once('header.php');
  require_once('modals/ver_detalles_solicitud.php');
 ?>
+<style type="text/css">
+    .dataTables_filter {
+   float: right !important;
+}
+</style>
 
 <div class="content-wrapper" >
 
 <div style="margin: 5px">
     <h5 align="center"><strong>SOLICITUDES DE EXAMEN DE CLÍNICA A PENDIENTES</strong></h5>
-	<table class="table-hover" id="data_examenes_clinica" width="100%">
-        <thead style="background:#034f84;color:white;max-height:10px">
+	<table class="table-hover table-bordered" id="data_examenes_clinica" width="100%" data-order='[[ 0, "desc" ]]'>
+        <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 12px">
           <tr>
             <th style="text-align:center">Fecha</th>
-            <th style="text-align:center"># Orden</th>
+            <th style="text-align:center">#Orden</th>
             <th style="text-align:center">Paciente</th>
             <th style="text-align:center">Cod. Emp</th>
             <th style="text-align:center">Empresa</th>
@@ -22,7 +27,7 @@
             <th style="text-align:center">Ingresar</th>
           </tr>
         </thead>
-        <tbody style="text-align:center">                                        
+        <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                        
         </tbody>
       </table>   <!-- /.content -->
 </div>

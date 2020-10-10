@@ -75,10 +75,14 @@ $datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_G
   <td colspan="100" style="text-align: center" class="stilot1">EXAMENES</td>
 </tr>
 <tr style="height:50px;">
-  <td colspan="100" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 14px;text-align: center;margin:20px;height: 140px">
+  <td colspan="100" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center;margin:20px;height: 85px;white-space: wrap;" align="center">
  <?php 
     for ($i=0; $i < sizeof($datos_item_examenes); $i++) {
-     echo $datos_item_examenes[$i]["examen"]." |"?>
+      $id=$i+1;      
+     echo "<b>".$id."."."</b>".ucfirst($datos_item_examenes[$i]["examen"])."&nbsp;&nbsp;&nbsp;";
+     if($i == 5){
+      echo '<br />';
+    }?>
      <?php } ?>     
   </td>
 </table>

@@ -8,28 +8,41 @@
 <style type="text/css">
   .sorting, .sorting_asc, .sorting_desc {
     background : none;
+
+}
+/*div.dt-buttons {
+    float: right;
+
+}*/
+.dataTables_filter {
+   float: right !important;
+}
+.buttons-excel{
+  background: green;
+  color:white;
 }
 </style>
 <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
 <div style="margin:10px;">
  <a class="btn btn-dark" style="color:white;border-radius:0px; background:black" data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus-square"></i> Crear Paciente</a>
-</div> 
+</div> <strong><h5 style="text-align: center">PACIENTES CLÍNICA</h5></strong>
 
 <div style="margin: 5px">
-  <table class="table" id="data_pacientes_reg" width="100%" data-order='[[ 0, "desc" ]]'>
-        <thead style="background:#034f84;color:white;max-height:10px">
+  <table class="table-hover table-bordered striped" id="data_pacientes_reg" width="100%" data-order='[[ 0, "desc" ]]'>
+        <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 12px">
           <tr>
-            <th style="text-align:center">Código</th>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:center">Cód. Emp</th>
             <th style="text-align:center">Nombre Paciente</th>
             <th style="text-align:center">Empresa</th>
             <th style="text-align:center">Departamento</th>
-            <th style="text-align:center">Agregar</th>
+            <th style="text-align:center">Orden</th>
             <th style="text-align:center">Editar</th>
             <th style="text-align:center">Eliminar</th>
           </tr>
         </thead>
-        <tbody style="text-align:center">                                        
+        <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                        
         </tbody>
       </table>   <!-- /.content -->
 </div>

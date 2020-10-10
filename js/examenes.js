@@ -15,10 +15,8 @@ function init(){
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [              
-                'copyHtml5',
                 'excelHtml5',
-                'csvHtml5',
-                'pdf'
+                'csvHtml5'
             ],
     "ajax":
         {
@@ -248,9 +246,11 @@ function explode(){
 $(document).on('click', '.asigna_datos_orden', function(){
   var id_paciente = $(this).attr("id");
   var numero_orden = $(this).attr("name");
-  //var examen = $(this).attr("value");
+  var paciente = $(this).attr("value");
+  console.log(paciente);
   $(".id_paciente_exa").val(id_paciente);
   $(".num_orden_exa").val(numero_orden);
+  $("#paciente_exa").html(paciente);
 
 });
 

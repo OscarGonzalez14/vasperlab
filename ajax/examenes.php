@@ -38,7 +38,7 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["examen"];
 		$sub_array[] = $row["estado"];
-        $sub_array[] = '<button type="button"  class="btn btn-infos btn-md asigna_datos_orden focus" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$row["examen"].'" value="'.$row["examen"].'" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"></i></button>';                                 
+        $sub_array[] = '<button type="button"  class="btn btn-infos btn-md asigna_datos_orden focus" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$row["examen"].'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"></i></button>';                                 
 		$data[] = $sub_array;
 	}
 

@@ -81,7 +81,7 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HECES</td>
         </tr>
         <tr>
-          <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="heces">Examen General</td>
+          <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="heces">Examen General Heces</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Sangre Oculta"> Sangre Oculta</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Coprocultivo"> Coprocultivo</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Sustancias Reductoras"> Sustancias Reductoras</td>
@@ -104,7 +104,7 @@
         </tr>
         <tr>
           <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="orina">Examen general de orina</td>
-          <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="Orocultivo"> Orocultivo</td>
+          <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="Urocultivo"> U2rocultivo</td>
           <td colspan="20"><input class="orina" type="checkbox" name="check_box" value="Prueba de embarazo"> Prueba de embarazo</td>
         </tr>
       <tr>

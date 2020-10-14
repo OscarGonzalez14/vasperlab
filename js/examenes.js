@@ -147,7 +147,7 @@ function GurdarExamenOrina(){
 
 }
 
-function clear_disable_inputs_orina(){
+/*function clear_disable_inputs_orina(){
   $("#color_orina").val("");
   $('#color_orina').attr('readonly', true);
 
@@ -188,37 +188,32 @@ $("#epiteliales_orina").val("");
 $("#filamentos_orina").val("");
 $("#bacterias_orina").val("");
 $("#cristales_orina").val("");
-$("#observaciones_orina").val("");
+$("#observaciones_orina").val("");*/
 //$("#id_paciente").val("");
 
-}
+//}
 
-function GuardarExamenHeces(){
-    
+function GuardarExamenHeces(){    
   var color_heces = $("#color_heces").val();
   var consistencia_heces = $("#consistencia_heces").val();
   var mucus_heces = $("#mucus_heces").val();
-  var restos_heces = $("#restos_heces").val();
   var macroscopicos_heces = $("#macroscopicos_heces").val();
-
   var microscopicos_heces = $("#microscopicos_heces").val();
   var hematies_heces = $("#hematies_heces").val();
   var leucocitos_heces = $("#leucocitos_heces").val();
   var protozoarios_heces = $("#protozoarios_heces").val();
   var activos_heces = $("#activos_heces").val();
-
   var quistes_heces = $("#quistes_heces").val();
   var metazoarios_heces = $("#metazoarios_heces").val();
   var observaciones_heces = $("#observaciones_heces").val();
-  var id_paciente = $("#id_pac_exa").val();
-  var numero_orden_paciente = $("#num_orden_exa_heces").val();
-  
+  var id_paciente = $("#id_pac_exa_heces").val();
+  var numero_orden_paciente = $("#num_orden_exa_heces").val(); 
 
-  if (id_paciente!=""){
+  
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_heces",
     method:"POST",
-    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,restos_heces:restos_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
     cache: false,
     dataType:"html",
     error:function(x,y,z){
@@ -237,9 +232,7 @@ function GuardarExamenHeces(){
   }
 
   }); 
-  }else{
-    setTimeout ("Swal.fire('Debe seleccionar un Paciente','','error')", 100);
-  }
+
 
 }///////FIN GUARDAR EXAMEN HECES
 
@@ -278,7 +271,7 @@ function GuardarTrigliceridos(){
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("Swal.fire('Examen de trigliceridos guardado exitosamente','','success')", 100);
     setTimeout ("explode();", 2000);
   }
 
@@ -304,7 +297,7 @@ function GuardarColesterol(){
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("Swal.fire('Examen de colesterol guardado exitosamente','','success')", 100);
     setTimeout ("explode();", 2000);
   }
 
@@ -330,7 +323,7 @@ function GuardarGlucosa(){
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de heces guardado exitosamente','','success')", 100);
+    setTimeout ("Swal.fire('Examen de glucosa guardado exitosamente','','success')", 100);
     setTimeout ("explode();", 2000);
   }
 

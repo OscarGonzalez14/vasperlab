@@ -45,33 +45,33 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
     $sql2->execute();
 }
 
-public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$restos_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
+public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
 
-    $conectar=parent::conexion();   
+    $conectar=parent::conexion();  
 
-    $sql2="insert into heces values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-
-    $sql2=$conectar->prepare($sql2); 
-
+    $sql2="insert into heces values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$numero_orden_paciente);
     $sql2->bindValue(2,$color_heces); 
     $sql2->bindValue(3,$consistencia_heces);
     $sql2->bindValue(4,$mucus_heces); 
-    $sql2->bindValue(5,$restos_heces);
+    $sql2->bindValue(5,$macroscopicos_heces);
+    $sql2->bindValue(6,$microscopicos_heces); 
+    $sql2->bindValue(7,$hematies_heces);
+    $sql2->bindValue(8,$leucocitos_heces); 
+    $sql2->bindValue(9,$activos_heces);
+    $sql2->bindValue(10,$quistes_heces);
+    $sql2->bindValue(11,$metazoarios_heces);
+    $sql2->bindValue(12,$protozoarios_heces);
+    $sql2->bindValue(13,$observaciones_heces);
+    $sql2->bindValue(14,$id_paciente);
+    $sql2->execute();
 
-    $sql2->bindValue(6,$macroscopicos_heces);
-    $sql2->bindValue(7,$microscopicos_heces); 
-    $sql2->bindValue(8,$hematies_heces);
-    $sql2->bindValue(9,$leucocitos_heces); 
-    $sql2->bindValue(10,$activos_heces);
-
-    $sql2->bindValue(11,$quistes_heces);
-    $sql2->bindValue(12,$metazoarios_heces);
-    $sql2->bindValue(13,$protozoarios_heces);
-    $sql2->bindValue(14,$observaciones_heces);
-    $sql2->bindValue(15,$id_paciente);
-
-    $sql2->execute(); 
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='heces';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden_paciente);
+    $sql3->execute();
 }
 ///////////FIN 
 

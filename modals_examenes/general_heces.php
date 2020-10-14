@@ -28,35 +28,30 @@
 </div>
   <div style="text-align: center;background:#347C98;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN QUIMICO - HECES</strong></div>
 
-  <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px">
+  <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px" autocomplete="on">
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Color</label>
-    <input type="text" class="form-control" id="color_heces" required="" style="text-align: right;">
+    <input type="text" class="form-control" id="color_heces" required="" style="text-align: right;" autocomplete="on">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Consistencia</label>
-    <input type="text" class="form-control" id="consistencia_heces" required="" style="text-align: right;">
+    <input type="text" class="form-control" id="consistencia_heces" required="" style="text-align: right;" autocomplete="on">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Mucus</label>
-    <input type="text" class="form-control" id="mucus_heces" required="" style="text-align: right;">
+    <input type="text" class="form-control" id="mucus_heces" required="" style="text-align: right;" autocomplete="on">
   </div>
 
-  <div class="form-group col-md-2">
-    <label for="inputEmail4">Restos</label>
-    <input type="text" class="form-control" id="restos_heces" required="" style="text-align: right;" placeholder="Almenticios">
+  <div class="form-group col-md-3">
+    <label for="inputEmail4">Macroscopicos(R. Alim.)</label>
+    <input type="text" class="form-control" id="macroscopicos_heces" required="" style="text-align: right;" autocomplete="on">
   </div>
 
-  <div class="form-group col-md-2">
-    <label for="inputEmail4">Macroscopicos</label>
-    <input type="text" class="form-control" id="macroscopicos_heces" required="" style="text-align: right;">
-  </div>
-
-  <div class="form-group col-md-2">
-    <label for="inputEmail4">Microscopicos</label>
+  <div class="form-group col-md-3">
+    <label for="inputEmail4">Microscopicos(R. Alim.)</label>
     <input type="text" class="form-control" id="microscopicos_heces" required="" style="text-align: right;">
   </div>
 
@@ -98,7 +93,7 @@
 
   <div class="form-group col-md-10">
     <label for="inputEmail4">Observaciones</label>
-    <input type="text" class="form-control" id="observaciones_heces" required="" style="text-align: right;">
+    <input type="text" class="form-control" id="observaciones_heces" required="" style="text-align: left;">
   </div>
 
   <div class="form-group col-md-12">
@@ -106,8 +101,9 @@
   </div>
 
   </div>
-<input type="hidden" class="form-control" id="id_pac_exa">
-<input type="hidden" class="form-control num_orden_exa" id="num_orden_exa_heces">
+<input type="hidden" class="id_paciente_exa" id="id_pac_exa_heces">
+<input type="hidden" class="num_orden_exa" id="num_orden_exa_heces">
+<input type="hidden" id="fecha" value="<?php echo $hoy;?>">
 </div>
 
 

@@ -34,11 +34,14 @@ case 'select_departamento':
       <option value='CUENTAS POR PAGAR'>CUENTAS POR PAGAR</option>
       <option value='SECCION DE RETACEOS'>SECCION DE RETACEOS</option>
       <option value='SEGURIDAD Y SALUD OCUPACIONAL'>SEGURIDAD Y SALUD OCUPACIONAL</option>
+      <option value='SECCION DE FACTURACION'>SECCION DE FACTURACION</option>
       ";
     echo $html;
 
   }elseif ($_POST['empresa']=='Plegadizo') {
     $html="
+      <option value='FACTURACION'>FACTURACIÓN</option>
+      <option value='ANALISTA DE NOMINAS'>ANALISTA DE NOMINAS</option>
       <option value='CONTROL DE CALIDAD'>CONTROL DE CALIDAD</option>
       <option value='COMPENSACION Y BENEFICIOS'>COMPENSACION Y BENEFICIOS</option>
       <option value='CONTABILIDAD DE COSTOS'>CONTABILIDAD DE COSTOS</option>

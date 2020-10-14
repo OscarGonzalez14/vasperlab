@@ -39,7 +39,7 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
   <body>
 <table style="width: 100%;">
    <tr>
-      <td width="10%"><h1 style="text-align: left; margin-right:20px;"><img src="images/vasperlogo.png" width="100" height="50"  /></h1></td>
+      <td width="10%"><h1 style="text-align: left; margin-right:20px;"><img src="images/vasperlogo.png" width="100" height="50"/></h1></td>
 
     <td width="60%">
        <table style="width:95%;">

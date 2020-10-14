@@ -8,7 +8,7 @@
     }
 </style>
 
-<div class="modal fade bd-example-modal-lg" id="hemograma">
+<div class="modal fade bd-example-modal-lg" id="hemograma_edit">
   <div class="modal-dialog" id="tamModal_hemo">
     <div class="modal-content">
       <!-- Modal Header -->
@@ -19,7 +19,7 @@
       <div class="modal-body">
         <table width="100%" class="table-bordered">
           <tr>
-            <td colspan="100" style="text-align: center;" class="bg-info">HEMATOLOGIA</td>
+            <td colspan="100" style="text-align: center;" class="bg-secondary">HEMATOLOGIA AGREGAR RESULTADOS</td>
           </tr>
            <tr>
             <td colspan="100" style="text-align: center;" class="bg-light"><b><span style="color: blue">PACIENTE:</span>&nbsp;<span id="paciente_exa"></span></b></td>
@@ -145,14 +145,11 @@
       <input type="hidden" id="n_orden_hematologia" class="num_orden_exa">
       <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
       <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-block" onClick="GuardarHemograma();" id="guardar_hemo">Guardar</button>
-      </div>
-      <div class="row" id="edit_exa_hemo" style="margin-bottom: 8px">
+      <div class="row" id="" style="margin-bottom: 8px">
         <div class="col-md-1"></div>
-        <div class="col-md-4" style="margin-left: 10px"><button type="button" class="btn btn-block btn-danger btn-flat pull-left" onClick="finalizar_hemograma();">Finalizar</button></div>
+        <div class="col-md-4" style="margin-left: 10px"><button type="button" class="btn btn-block btn-danger btn-flat pull-left">Finalizar</button></div>
         <div class="col-md-3" style="width: 100%"></div>
-        <div class="col-md-3"><button type="button" class="btn btn-block btn-success btn-flat pull-left" onClick="GuardarHemograma();">Agregar</button></div>
+        <div class="col-md-3"><button type="button" class="btn btn-block btn-success btn-flat pull-left">Agregar</button></div>
         <div class="col-md-1"></div>
       </div>
 

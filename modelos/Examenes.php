@@ -115,6 +115,112 @@ public function registar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$nu
     $sql2->bindValue(6,$refiere);
     $sql2->execute();
 }
+/*===================INICIA EXAMEN ==========================
+======================DE HEMOGRAMA=====================*/
+////***************COMPROBAR SI EXISTE EXAMEN DE HEMATOLOGIA***********////
+
+public function buscar_existe_hemo($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql= "select*from hemograma where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+//////////////REGISTRAR EXAMEN HEMATOLOGIA
+public function registar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_hemato,$cmhc_hemato,$hcm_hemato,$gb_hemato,$linfocitos_hemato,$monocitos_hemato,$eosinofilos_hemato,$basinofilos_hemato,$banda_hemato,$segmentados_hemato,$metamielo_hemato,$mielocitos_hemato,$blastos_hemato,$plaquetas_hemato,$reti_hemato,$eritro_hemato,$otros_hema,$id_paciente,$numero_orden,$fecha,$gota_hema){
+    $estado='0';
+    $conectar=parent::conexion();
+    $sql2="insert into hemograma values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$gr_hemato);
+    $sql2->bindValue(2,$ht_hemato);
+    $sql2->bindValue(3,$hb_hemato);
+    $sql2->bindValue(4,$vcm_hemato);
+    $sql2->bindValue(5,$cmhc_hemato);
+    $sql2->bindValue(6,$gota_hema);
+    $sql2->bindValue(7,$gb_hemato);
+    $sql2->bindValue(8,$linfocitos_hemato);
+    $sql2->bindValue(9,$monocitos_hemato);
+    $sql2->bindValue(10,$eosinofilos_hemato);
+    $sql2->bindValue(11,$basinofilos_hemato);
+    $sql2->bindValue(12,$banda_hemato);
+    $sql2->bindValue(13,$segmentados_hemato);
+    $sql2->bindValue(14,$metamielo_hemato);
+    $sql2->bindValue(15,$mielocitos_hemato);
+    $sql2->bindValue(16,$blastos_hemato);
+    $sql2->bindValue(17,$plaquetas_hemato);
+    $sql2->bindValue(18,$reti_hemato);
+    $sql2->bindValue(19,$eritro_hemato);
+    $sql2->bindValue(20,$otros_hema);
+    $sql2->bindValue(21,$id_paciente);
+    $sql2->bindValue(22,$numero_orden);
+    $sql2->bindValue(23,$fecha);
+    $sql2->bindValue(24,$estado);
+    $sql2->bindValue(25,$hcm_hemato);   
+    $sql2->execute();
+
+    ///////////////////UPDATE ESTADO DE EXAMEN
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='hemograma';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden);
+    $sql3->execute();
+}
+/////////////GET DATOS HEMOGRAMA PARA FUNCION SHOW DATA
+public function show_datos_hemograma($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from hemograma where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+////////////////////EDITAR HEMATOLOGIA
+public function editar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_hemato,$cmhc_hemato,$hcm_hemato,$gb_hemato,$linfocitos_hemato,$monocitos_hemato,$eosinofilos_hemato,$basinofilos_hemato,$banda_hemato,$segmentados_hemato,$metamielo_hemato,$mielocitos_hemato,$blastos_hemato,$plaquetas_hemato,$reti_hemato,$eritro_hemato,$otros_hema,$id_paciente,$numero_orden,$fecha,$gota_hema){
+    
+    $conectar=parent::conexion();
+    $sql2="update hemograma set gr_hemato=?,ht_hemato=?,hb_hemato=?,vcm_hemato=?,cmhc_hemato=?,gota_hema=?,gb_hemato=?,linfocitos_hemato=?,monocitos_hemato=?,eosinofilos_hemato=?,basinofilos_hemato=?,banda_hemato=?,segmentados_hemato=?,metamielo_hemato=?,mielocitos_hemato=?,blastos_hemato=?,plaquetas_hemato=?,reti_hemato=?,eritro_hemato=?,otros_hema=?,hcm_hemato=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$gr_hemato);
+    $sql2->bindValue(2,$ht_hemato);
+    $sql2->bindValue(3,$hb_hemato);
+    $sql2->bindValue(4,$vcm_hemato);
+    $sql2->bindValue(5,$cmhc_hemato);
+    $sql2->bindValue(6,$gota_hema);
+    $sql2->bindValue(7,$gb_hemato);
+    $sql2->bindValue(8,$linfocitos_hemato);
+    $sql2->bindValue(9,$monocitos_hemato);
+    $sql2->bindValue(10,$eosinofilos_hemato);
+    $sql2->bindValue(11,$basinofilos_hemato);
+    $sql2->bindValue(12,$banda_hemato);
+    $sql2->bindValue(13,$segmentados_hemato);
+    $sql2->bindValue(14,$metamielo_hemato);
+    $sql2->bindValue(15,$mielocitos_hemato);
+    $sql2->bindValue(16,$blastos_hemato);
+    $sql2->bindValue(17,$plaquetas_hemato);
+    $sql2->bindValue(18,$reti_hemato);
+    $sql2->bindValue(19,$eritro_hemato);
+    $sql2->bindValue(20,$otros_hema);
+    $sql2->bindValue(21,$hcm_hemato);
+    $sql2->bindValue(22,$id_paciente);
+    $sql2->bindValue(23,$numero_orden);
+  
+    $sql2->execute();
+}
+///////////////FINALIZAR HEMOGRAMA
+    public function finalizar_hemograma($id_paciente,$numero_orden){
+        $conectar=parent::conexion();
+        $sql2="update detalle_item_orden set estado='2' where id_paciente=? and numero_orden=? and examen='hemograma';";
+        $sql2=$conectar->prepare($sql2);
+        $sql2->bindValue(1,$id_paciente);
+        $sql2->bindValue(2,$numero_orden);
+        $sql2->execute();
+    }
+/*===================FINALIZA EXAMEN 0===========================
+======================DE HEMOGRAMA=====================*/
 
 public function registar_examenes_check(){
 

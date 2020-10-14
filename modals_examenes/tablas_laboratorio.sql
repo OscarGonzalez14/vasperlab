@@ -25,5 +25,4 @@ id_paciente INT,
 numero_orden varchar(25),
 fecha varchar(25),
 primary key(id_hemograma),
-FOREIGN KEY (id_paciente) REFERENCES pacientes_o(id_paciente)
-);
+FOREIGN KEY (id_paciente) REFERENCES pacientes_o(id_paciente));

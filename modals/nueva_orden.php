@@ -112,7 +112,7 @@
         </tr>
         <tr>
           <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="baciloscopia">Baciloscopia</td>
-          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="exofarigeo">C. Ex.Faringeo</td>
+          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="exofaringeo">C. Ex.Faringeo</td>
          </tr>
            <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">INMUNOLOGIA</td>
         </tr>

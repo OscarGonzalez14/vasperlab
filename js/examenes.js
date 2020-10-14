@@ -1,11 +1,15 @@
 var tabla_examenes_ingreso;
 function init(){
   listar_examenes_ingreso();
+  mostrar_btns_edit_exa();
+}
+
+function mostrar_btns_edit_exa(){
+  document.getElementById("edit_exa_hemo").style.display = "none";
 }
 
 /////////////////LISTAR EXAMENES INGRESO////////******
   function listar_examenes_ingreso(){
-
     var id_paciente_examen = $("#id_paciente_examen").val();
     var n_orden_examen = $("#n_orden_examen").val();
 
@@ -254,11 +258,6 @@ $(document).on('click', '.asigna_datos_orden', function(){
 
 });
 
-$(document).on('click', '.focus', function(){
-  $("input:number").focus(); 
-
-});
-
 $(document).on('click', '.reg_examenes', function(){
 document.getElementsByClassName("reg_examenes").style.display = "none";
 });
@@ -368,9 +367,134 @@ function GuardarExo(){
     setTimeout ("explode();", 2000);
   }
 
-  }); 
+  });
+  }
+
+  //////////////////GUARDAR EXAMEN HEMOGRAMA
+  function GuardarHemograma(){
+    
+  var gr_hemato = $("#gr_hemato").val();
+  var ht_hemato = $("#ht_hemato").val();
+  var hb_hemato = $("#hb_hemato").val();
+  var vcm_hemato = $("#vcm_hemato").val();
+  var cmhc_hemato = $("#cmhc_hemato").val();
+  var hcm_hemato  = $("#hcm_hemato").val();
+  var gb_hemato  = $("#gb_hemato").val();
+  var linfocitos_hemato  = $("#linfocitos_hemato").val();
+  var monocitos_hemato  = $("#monocitos_hemato").val();
+  var eosinofilos_hemato  = $("#eosinofilos_hemato").val();
+  var basinofilos_hemato  = $("#basinofilos_hemato").val();
+
+  var banda_hemato = $("#banda_hemato").val();
+  var segmentados_hemato = $("#segmentados_hemato").val();
+  var metamielo_hemato = $("#metamielo_hemato").val();
+  var mielocitos_hemato = $("#mielocitos_hemato").val();
+  var blastos_hemato = $("#blastos_hemato").val();
+
+  var plaquetas_hemato = $("#plaquetas_hemato").val();
+  var reti_hemato = $("#reti_hemato").val();
+  var eritro_hemato = $("#eritro_hemato").val();
+  var otros_hema = $("#otros_hema").val();
+
+  var id_paciente = $("#id_paciente_hematologia").val();
+  var numero_orden = $("#n_orden_hematologia").val();
+  var fecha = $("#fecha").val();
+  var gota_hema  = $("#gota_hema").val();
+
   
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_hemograma",
+    method:"POST",
+    data:{gr_hemato:gr_hemato,ht_hemato:ht_hemato,hb_hemato:hb_hemato,vcm_hemato:vcm_hemato,cmhc_hemato:cmhc_hemato,hcm_hemato:hcm_hemato,gb_hemato:gb_hemato,linfocitos_hemato:linfocitos_hemato,monocitos_hemato:monocitos_hemato,eosinofilos_hemato:eosinofilos_hemato,basinofilos_hemato:basinofilos_hemato,banda_hemato:banda_hemato,segmentados_hemato:segmentados_hemato,metamielo_hemato:metamielo_hemato,mielocitos_hemato:mielocitos_hemato,blastos_hemato:blastos_hemato,plaquetas_hemato:plaquetas_hemato,reti_hemato:reti_hemato,eritro_hemato:eritro_hemato,otros_hema:otros_hema,id_paciente:id_paciente,numero_orden:numero_orden,fecha:fecha,gota_hema:gota_hema},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+          console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen Hemograma Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  });
+  }
+  ///////////////EDITAR HEMOGRAMA
+  $(document).on('click', '.hemograma_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    //console.log(id_paciente+" ** "+numero_orden);
+    document.getElementById("guardar_hemo").style.display = "none";
+    document.getElementById("edit_exa_hemo").style.display = "flex";
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_hemograma_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#gr_hemato").val(data.gr_hemato);
+        $("#ht_hemato").val(data.ht_hemato);
+        $("#hb_hemato").val(data.hb_hemato);
+        $("#vcm_hemato").val(data.vcm_hemato);
+        $("#cmhc_hemato").val(data.cmhc_hemato);
+        $("#hcm_hemato").val(data.hcm_hemato);
+        $("#gota_hema").val(data.gota_hema);
+        $("#gb_hemato").val(data.gb_hemato);
+        $("#linfocitos_hemato").val(data.linfocitos_hemato);
+        $("#monocitos_hemato").val(data.monocitos_hemato);
+        $("#eosinofilos_hemato").val(data.eosinofilos_hemato);
+        $("#basinofilos_hemato").val(data.basinofilos_hemato);
+        $("#banda_hemato").val(data.banda_hemato);
+        $("#segmentados_hemato").val(data.segmentados_hemato);
+        $("#metamielo_hemato").val(data.metamielo_hemato);
+        $("#mielocitos_hemato").val(data.mielocitos_hemato);
+        $("#blastos_hemato").val(data.blastos_hemato);
+        $("#plaquetas_hemato").val(data.plaquetas_hemato);
+        $("#reti_hemato").val(data.reti_hemato);
+        $("#eritro_hemato").val(data.eritro_hemato);
+        $("#otros_hema").val(data.otros_hema);
+        $("#id_paciente_hematologia").val(data.id_paciente);
+        $("#n_orden_hematologia").val(data.numero_orden);
+
+      }
+    });
+
+  });
+/////////////////FINALIZA HEMOGRAMA
+function finalizar_hemograma(){
+  var id_paciente = $("#id_paciente_hematologia").val();
+  var numero_orden = $("#n_orden_hematologia").val();
+  bootbox.confirm("¿Está Seguro que ha finalizado el llenado de este examen correctamente?", function(result){
+  if(result){
+  $.ajax({
+    url:"ajax/examenes.php?op=finalizar_hemograma",
+    method:"POST",
+    data:{id_paciente:id_paciente,numero_orden:numero_orden},
+    dataType:"json",
+    success:function(data)
+    {
+      console.log(data);
+      GuardarHemograma();
+      Swal.fire('Examen finalizado!','','error')   
+      setTimeout ("explode();", 2000);
+    }
+  });
+
+}else{
+  GuardarHemograma();
 
 }
+});//bootbox
 
+}
 init();

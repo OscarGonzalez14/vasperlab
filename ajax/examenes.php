@@ -30,15 +30,35 @@ case 'examenes_ingreso':
 	$datos=$examenes->get_examenes_ingresar($_POST["id_paciente_examen"],$_POST["n_orden_examen"]);
     //Vamos a declarar un array
  	$data= Array();
-    foreach($datos as $row)
-	{
+    foreach($datos as $row){
+    	$estado = $row["estado"];
+    	if ($estado=='0') {
+    		$est = "En Proceso";
+    		$clase ="none";
+    		$modal = $row["examen"];
+    		$color ="primary";
+    		$text ="Iniciar";
+    	}elseif ($estado=='1') {
+    		$est = "Iniciado";
+    		$clase =$row["examen"]."_show";
+    		$modal = $row["examen"];
+    		$color ="warning";
+    		$text ="Iniciado";
+    	}elseif ($estado=='2') {
+    		$est = "Finalizado";
+    		$clase ="";
+    		$modal ="";
+    		$color ="success";
+    		$text ="Finalizado";
+    	}
+
 		$sub_array = array();				
 		$sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["examen"];
-		$sub_array[] = $row["estado"];
-        $sub_array[] = '<button type="button"  class="btn btn-infos btn-md asigna_datos_orden focus" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$row["examen"].'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"></i></button>';                                 
+		$sub_array[] = $est;
+        $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
 		$data[] = $sub_array;
 	}
 
@@ -63,11 +83,89 @@ case 'examenes_ingreso':
 	case 'registrar_examen_glucosa':
 	$examenes->registar_examenes_glucosa($_POST["resultado"]);
 	break; 
-
+	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':
 	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);
 	break;
+	////////////REGISTRAR EXAMEN HEMATOLOGIA
+	case 'registrar_examen_hemograma':
+	$datos = $examenes->buscar_existe_hemo($_POST["id_paciente"],$_POST["numero_orden"]);
 
+	if(is_array($datos)==true and count($datos)==0){
+		$examenes->registar_examenes_hemograma($_POST["gr_hemato"],$_POST["ht_hemato"],$_POST["hb_hemato"],$_POST["vcm_hemato"],$_POST["cmhc_hemato"],$_POST["hcm_hemato"],$_POST["gb_hemato"],$_POST["linfocitos_hemato"],$_POST["monocitos_hemato"],$_POST["eosinofilos_hemato"],$_POST["basinofilos_hemato"],$_POST["banda_hemato"],$_POST["segmentados_hemato"],$_POST["metamielo_hemato"],$_POST["mielocitos_hemato"],$_POST["blastos_hemato"],$_POST["plaquetas_hemato"],$_POST["reti_hemato"],$_POST["eritro_hemato"],$_POST["otros_hema"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["fecha"],$_POST["gota_hema"]);
+		$messages[]="ok";
+	}else{
+		$examenes->editar_examenes_hemograma($_POST["gr_hemato"],$_POST["ht_hemato"],$_POST["hb_hemato"],$_POST["vcm_hemato"],$_POST["cmhc_hemato"],$_POST["hcm_hemato"],$_POST["gb_hemato"],$_POST["linfocitos_hemato"],$_POST["monocitos_hemato"],$_POST["eosinofilos_hemato"],$_POST["basinofilos_hemato"],$_POST["banda_hemato"],$_POST["segmentados_hemato"],$_POST["metamielo_hemato"],$_POST["mielocitos_hemato"],$_POST["blastos_hemato"],$_POST["plaquetas_hemato"],$_POST["reti_hemato"],$_POST["eritro_hemato"],$_POST["otros_hema"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["fecha"],$_POST["gota_hema"]);
+		$errors[]="edit";
+	}
+	if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+	break;
+	///////////////SHOW DATA HEMOGRAMA
+  case 'show_hemograma_data':    
+    $datos=$examenes->show_datos_hemograma($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+      //$output["id_paciente"] = $row["id_paciente"];
+      	$output["gr_hemato"] = $row["gr_hemato"];
+      	$output["ht_hemato"] = $row["ht_hemato"];
+      	$output["hb_hemato"] = $row["hb_hemato"];
+      	$output["vcm_hemato"] = $row["vcm_hemato"];
+      	$output["cmhc_hemato"] = $row["cmhc_hemato"];
+      	$output["gota_hema"] = $row["gota_hema"];
+      	$output["hcm_hemato"] = $row["hcm_hemato"];
+      	$output["gota_hema"] = $row["gota_hema"];
+      	$output["gb_hemato"] = $row["gb_hemato"];
+      	$output["linfocitos_hemato"] = $row["linfocitos_hemato"];
+      	$output["monocitos_hemato"] = $row["monocitos_hemato"];
+      	$output["eosinofilos_hemato"] = $row["eosinofilos_hemato"];
+      	$output["basinofilos_hemato"] = $row["basinofilos_hemato"];
+      	$output["banda_hemato"] = $row["banda_hemato"];
+      	$output["segmentados_hemato"] = $row["segmentados_hemato"];
+      	$output["metamielo_hemato"] = $row["metamielo_hemato"];
+      	$output["mielocitos_hemato"] = $row["mielocitos_hemato"];
+      	$output["blastos_hemato"] = $row["blastos_hemato"];
+      	$output["plaquetas_hemato"] = $row["plaquetas_hemato"];
+      	$output["reti_hemato"] = $row["reti_hemato"];
+      	$output["eritro_hemato"] = $row["eritro_hemato"];
+      	$output["otros_hema"] = $row["otros_hema"];
+      	$output["id_paciente"] = $row["id_paciente"];
+      	$output["numero_orden"] = $row["numero_orden"];
+      	
+      }
+    echo json_encode($output);
+  break;
+
+  case 'finalizar_hemograma':
+   $examenes->finalizar_hemograma($_POST["id_paciente"],$_POST["numero_orden"]);
+   $messages[]="ok";
 }
+if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
 
 ?>

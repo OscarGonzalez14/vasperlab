@@ -537,7 +537,7 @@ function GuardarExamenHeces(){
 
   });
 }///////FIN GUARDAR EXAMEN HECES
-
+/*#########HECES SHOW DATA############*/
 $(document).on('click', '.heces_show', function(){    
     var id_paciente = $(this).attr("id");
     var numero_orden = $(this).attr("name");
@@ -597,4 +597,134 @@ function finalizar_heces(){
 }
 });//bootbox
 }
+
+/*============================================
+              INICIO EXAMEN ORINA
+==============================================*/
+
+function GuardarExamenOrina(){
+    
+  var color_orina = $("#color_orina").val();
+  var olor_orina = $("#olor_orina").val();
+  var aspecto_orina = $("#aspecto_orina").val();
+  var densidad_orina = $("#densidad_orina").val();
+  var esterasas_orina = $("#esterasas_orina").val();
+  var nitritos_orina = $("#nitritos_orina").val();
+  var ph_orina = $("#ph_orina").val();
+  var proteinas_orina = $("#proteinas_orina").val();
+  var glucosa_orina = $("#glucosa_orina").val();
+  var cetonas_orina = $("#cetonas_orina").val();
+  var urobilinogeno_orina = $("#urobilinogeno_orina").val();
+  var bilirrubina_orina = $("#bilirrubina_orina").val();
+  var sangre_oculta_orina = $("#sangre_oculta_orina").val();
+  var cilindros_orina = $("#cilindros_orina").val();
+  var leucocitos_orina = $("#leucocitos_orina").val();
+  var hematies_orina = $("#hematies_orina").val();
+  var epiteliales_orina = $("#epiteliales_orina").val();
+  var filamentos_orina = $("#filamentos_orina").val();
+  var bacterias_orina = $("#bacterias_orina").val();
+  var cristales_orina = $("#cristales_orina").val();
+  var observaciones_orina = $("#observaciones_orina").val();
+  var id_paciente = $("#id_pac_exa_orina").val();
+  var numero_orden_paciente = $("#num_orden_exa_orina").val();
+  
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_orina",
+    method:"POST",
+    data:{color_orina:color_orina,olor_orina:olor_orina,aspecto_orina:aspecto_orina,densidad_orina:densidad_orina,esterasas_orina:esterasas_orina,
+    nitritos_orina:nitritos_orina,ph_orina:ph_orina,proteinas_orina:proteinas_orina,glucosa_orina:glucosa_orina,cetonas_orina:cetonas_orina,
+    urobilinogeno_orina:urobilinogeno_orina,bilirrubina_orina:bilirrubina_orina,sangre_oculta_orina:sangre_oculta_orina,cilindros_orina:cilindros_orina,leucocitos_orina:leucocitos_orina,
+    hematies_orina:hematies_orina,epiteliales_orina:epiteliales_orina,filamentos_orina:filamentos_orina,bacterias_orina:bacterias_orina,cristales_orina:cristales_orina,observaciones_orina:observaciones_orina,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    cache: false,
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },
+      
+  success:function(data){
+        console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Orina Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      } 
+  }
+  }); 
+}
+/////////////////////////////////////////////////
+$(document).on('click', '.orina_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    console.log(id_paciente+" ** "+numero_orden);
+    document.getElementById("guarda_orina").style.display = "none";
+    document.getElementById("edit_exa_orina").style.display = "flex";
+    $.ajax({
+      url:"ajax/examenes.php?op=show_orina_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#color_orina").val(data.color);
+        $("#olor_orina").val(data.olor);
+        $("#aspecto_orina").val(data.aspecto);
+        $("#densidad_orina").val(data.densidad);
+        $("#esterasas_orina").val(data.est_leuco);
+        $("#nitritos_orina").val(data.nitritos_orina);
+        $("#ph_orina").val(data.ph);
+        $("#proteinas_orina").val(data.proteinas);
+        $("#glucosa_orina").val(data.glucosa);
+        $("#cetonas_orina").val(data.cetonas);
+        $("#urobilinogeno_orina").val(data.urobigilogeno);
+        $("#bilirrubina_orina").val(data.bilirrubina);
+        $("#sangre_oculta_orina").val(data.sangre_oculta);
+        $("#cilindros_orina").val(data.cilindros);
+        $("#leucocitos_orina").val(data.leucocitos);
+        $("#hematies_orina").val(data.hematies);
+        $("#epiteliales_orina").val(data.cel_epiteliales);
+        $("#filamentos_orina").val(data.filamentos_muco);
+        $("#bacterias_orina").val(data.bacterias);
+        $("#cristales_orina").val(data.cristales);
+        $("#observaciones_orina").val(data.observaciones);
+        $("#id_pac_exa_orina").val(data.id_paciente);
+        $("#num_orden_exa_orina").val(data.numero_orden);
+      }
+    });
+  });
+
+/*===============FINALIZAR EXAMEN ORINA============*/
+function finalizar_orina(){
+  var id_paciente = $("#id_pac_exa_orina").val();
+  var numero_orden = $("#num_orden_exa_orina").val();
+  console.log(id_paciente+numero_orden);
+  bootbox.confirm("¿Está Segur@ que ha finalizado el llenado de este examen correctamente?", function(result){
+  if(result){
+  $.ajax({
+    url:"ajax/examenes.php?op=finalizar_orina",
+    method:"POST",
+    data:{id_paciente:id_paciente,numero_orden:numero_orden},
+    dataType:"json",
+    success:function(data){
+      console.log(data);
+      Swal.fire('Examen finalizado!','','error')  
+      setTimeout("GuardarExamenOrina();",2000)  
+      setTimeout ("explode();", 2000);
+    }
+  });
+
+}else{
+  Swal.fire('Examen finalizado!','','error')  
+  setTimeout("GuardarExamenOrina();",2000)
+}
+});//bootbox
+}
+
+
+///////INIT
 init();

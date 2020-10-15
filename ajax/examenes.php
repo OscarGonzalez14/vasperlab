@@ -8,12 +8,6 @@ $examenes = new Examenes();
 
 switch($_GET["op"]){
 
-case "registrar_examen_orina":
-
-$examenes->agregar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"]);
-
-break;
-
 case 'registrar_examenes_check':
 	$examenes->registar_examenes_check();
 	break;  
@@ -235,6 +229,88 @@ if (isset($messages)){
    <?php
 }
  break;
+
+/*=================================================================================================
+**********************************INICIO EXAMEN ORINA*******************************                       
+===================================================================================================*/
+case "registrar_examen_orina":
+
+$datos = $examenes->buscar_existe_orina($_POST["id_paciente"],$_POST["numero_orden_paciente"]);
+
+if(is_array($datos)==true and count($datos)==0){
+$examenes->agregar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"]);
+$messages[]="ok";
+}else{
+  $examenes->editar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"]);
+  $errors[]="edit";
+}
+if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+break;
+#show data orina
+case 'show_orina_data':    
+    $datos=$examenes->show_datos_orina($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["numero_orden"] = $row["numero_orden"];
+        $output["color"] = $row["color"];
+        $output["olor"] = $row["olor"];
+        $output["aspecto"] = $row["aspecto"];
+        $output["densidad"] = $row["densidad"];
+        $output["est_leuco"] = $row["est_leuco"];
+        $output["ph"] = $row["ph"];
+        $output["proteinas"] = $row["proteinas"];
+        $output["glucosa"] = $row["glucosa"];
+        $output["cetonas"] = $row["cetonas"];
+        $output["urobigilogeno"] = $row["urobigilogeno"];
+        $output["bilirrubina"] = $row["bilirrubina"];
+        $output["sangre_oculta"] = $row["sangre_oculta"];
+        $output["cilindros"] = $row["cilindros"];
+        $output["leucocitos"] = $row["leucocitos"];
+        $output["hematies"] = $row["hematies"];
+        $output["cel_epiteliales"] = $row["cel_epiteliales"];
+        $output["filamentos_muco"] = $row["filamentos_muco"];
+        $output["bacterias"] = $row["bacterias"];
+        $output["cristales"] = $row["cristales"];
+        $output["observaciones"] = $row["observaciones"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["nitritos_orina"] = $row["nitritos_orina"];
+      }
+  echo json_encode($output);
+break;
+#FINALIZAR ORINA
+case 'finalizar_orina':
+   $examenes->finalizar_orina($_POST["id_paciente"],$_POST["numero_orden"]);
+   $messages[]="ok";
+
+if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+}
+ break;
+
 
 }
 ?>

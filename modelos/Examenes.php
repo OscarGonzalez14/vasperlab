@@ -6,45 +6,6 @@ require_once("../config/conexion.php");
 class Examenes extends Conectar{  
 ////////////////////CLASE REGISTRA CPACIENTES
 
-public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente
-){
-
-	$conectar=parent::conexion();   
-
-    $sql2="insert into examen_orina values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-
-    $sql2=$conectar->prepare($sql2); 
-    //$sql2->bindValue(1,$numero_orden_diario);
-    $sql2->bindValue(1,$numero_orden_paciente);
-    $sql2->bindValue(2,$color_orina); 
-    $sql2->bindValue(3,$olor_orina);
-    $sql2->bindValue(4,$aspecto_orina); 
-    $sql2->bindValue(5,$densidad_orina); 
-    $sql2->bindValue(6,$esterasas_orina);
-
-    $sql2->bindValue(7,$ph_orina); 
-    $sql2->bindValue(8,$proteinas_orina);
-    $sql2->bindValue(9,$glucosa_orina); 
-    $sql2->bindValue(10,$cetonas_orina); 
-    $sql2->bindValue(11,$urobilinogeno_orina);              
-
-    $sql2->bindValue(12,$bilirrubina_orina);
-    $sql2->bindValue(13,$sangre_oculta_orina);
-    $sql2->bindValue(14,$cilindros_orina);
-    $sql2->bindValue(15,$leucocitos_orina);
-    $sql2->bindValue(16,$hematies_orina);
-
-    $sql2->bindValue(17,$epiteliales_orina);
-    $sql2->bindValue(18,$filamentos_orina);
-    $sql2->bindValue(19,$bacterias_orina);
-    $sql2->bindValue(20,$cristales_orina);
-    $sql2->bindValue(21,$observaciones_orina);
-    $sql2->bindValue(22,$id_paciente);
-    $sql2->bindValue(23,$nitritos_orina);
-              
-    $sql2->execute();
-}
-
 ///////////REGISTRAR TRIGLICERIDOS
 public function registar_examenes_trig($resultado){
 
@@ -275,8 +236,108 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
         $sql2->execute();
     }
 /*=================================================================================================
-**********************************FIN EXAMEN HECES********************************                          
+**********************************INICIO DE EXAMEN ORINA*****************************                          
 ===================================================================================================*/
+public function buscar_existe_orina($id_paciente,$numero_orden_paciente){
+    $conectar= parent::conexion();
+    $sql= "select*from examen_orina where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden_paciente);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente){
+
+    $conectar=parent::conexion();   
+
+    $sql2="insert into examen_orina values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+
+    $sql2=$conectar->prepare($sql2); 
+    //$sql2->bindValue(1,$numero_orden_diario);
+    $sql2->bindValue(1,$numero_orden_paciente);
+    $sql2->bindValue(2,$color_orina); 
+    $sql2->bindValue(3,$olor_orina);
+    $sql2->bindValue(4,$aspecto_orina); 
+    $sql2->bindValue(5,$densidad_orina); 
+    $sql2->bindValue(6,$esterasas_orina);
+
+    $sql2->bindValue(7,$ph_orina); 
+    $sql2->bindValue(8,$proteinas_orina);
+    $sql2->bindValue(9,$glucosa_orina); 
+    $sql2->bindValue(10,$cetonas_orina); 
+    $sql2->bindValue(11,$urobilinogeno_orina);              
+
+    $sql2->bindValue(12,$bilirrubina_orina);
+    $sql2->bindValue(13,$sangre_oculta_orina);
+    $sql2->bindValue(14,$cilindros_orina);
+    $sql2->bindValue(15,$leucocitos_orina);
+    $sql2->bindValue(16,$hematies_orina);
+
+    $sql2->bindValue(17,$epiteliales_orina);
+    $sql2->bindValue(18,$filamentos_orina);
+    $sql2->bindValue(19,$bacterias_orina);
+    $sql2->bindValue(20,$cristales_orina);
+    $sql2->bindValue(21,$observaciones_orina);
+    $sql2->bindValue(22,$id_paciente);
+    $sql2->bindValue(23,$nitritos_orina);
+              
+    $sql2->execute();
+}
+########EDITAR EXAMEN ORINA
+public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente){
+
+    $conectar=parent::conexion();   
+
+    $sql2="update examen_orina set color=?,olor=?,aspecto=?,densidad=?,est_leuco=?,ph=?,proteinas=?,glucosa=?,cetonas=?,urobigilogeno=?,bilirrubina=?,sangre_oculta=?,cilindros=?,leucocitos=?,hematies=?,cel_epiteliales=?,filamentos_muco=?,bacterias=?,cristales=?,observaciones=?,nitritos_orina=? where id_paciente=? and numero_orden=?;";
+
+    $sql2=$conectar->prepare($sql2);    
+    $sql2->bindValue(1,$color_orina);
+    $sql2->bindValue(2,$olor_orina);
+    $sql2->bindValue(3,$aspecto_orina);
+    $sql2->bindValue(4,$densidad_orina);
+    $sql2->bindValue(5,$esterasas_orina);
+    $sql2->bindValue(6,$ph_orina);
+    $sql2->bindValue(7,$proteinas_orina);
+    $sql2->bindValue(8,$glucosa_orina);
+    $sql2->bindValue(9,$cetonas_orina);
+    $sql2->bindValue(10,$urobilinogeno_orina);
+    $sql2->bindValue(11,$bilirrubina_orina);
+    $sql2->bindValue(12,$sangre_oculta_orina);
+    $sql2->bindValue(13,$cilindros_orina);
+    $sql2->bindValue(14,$leucocitos_orina);
+    $sql2->bindValue(15,$hematies_orina);
+    $sql2->bindValue(16,$epiteliales_orina);
+    $sql2->bindValue(17,$filamentos_orina);
+    $sql2->bindValue(18,$bacterias_orina);
+    $sql2->bindValue(19,$cristales_orina);
+    $sql2->bindValue(20,$observaciones_orina);
+    $sql2->bindValue(21,$nitritos_orina);
+    $sql2->bindValue(22,$id_paciente);
+    $sql2->bindValue(23,$numero_orden_paciente);
+    $sql2->execute();
+}
+
+########SHOW DATA ORINA
+public function show_datos_orina($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from examen_orina where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+###########FINALIZAR ORINA
+ public function finalizar_orina($id_paciente,$numero_orden){
+        $conectar=parent::conexion();
+        $sql2="update detalle_item_orden set estado='2' where id_paciente=? and numero_orden=? and examen='orina';";
+        $sql2=$conectar->prepare($sql2);
+        $sql2->bindValue(1,$id_paciente);
+        $sql2->bindValue(2,$numero_orden);
+        $sql2->execute();
+    }
 
 public function registar_examenes_check(){
 

@@ -22,7 +22,7 @@
             <td colspan="100" style="text-align: center;" class="bg-info">HEMATOLOGIA</td>
           </tr>
            <tr>
-            <td colspan="100" style="text-align: center;" class="bg-light"><b><span style="color: blue">PACIENTE:</span>&nbsp;<span id="paciente_exa"></span></b></td>
+            <td colspan="100" style="text-align: center;" class="bg-light"><b><span style="color: blue">PACIENTE:</span>&nbsp;<span id="paciente_exa" class="paciente_exa"></span></b></td>
           </tr>
           <tr>
             <td style="width: 30%;border: 1px solid black;" colspan="30"><!--LINEA ROJA TD-->
@@ -138,7 +138,7 @@
               </table>
             </td><!--VARIOS OTROS-->
           </tr>
-        </table>
+        </table>        
       </div>
 
       <input type="hidden" id="id_paciente_hematologia" class="id_paciente_exa">

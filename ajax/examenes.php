@@ -14,16 +14,9 @@ $examenes->agregar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POS
 
 break;
 
-case "registrar_examen_heces":
-
-$examenes->agregar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"]);
-//,$_POST["protozoarios_heces"]$_POST["observaciones_heces"],
-break;
-
 case 'registrar_examenes_check':
 	$examenes->registar_examenes_check();
-	break;   
-
+	break;  
 
 ///////////////LISTAR EXAMENES A INGRESAR
 case 'examenes_ingreso':
@@ -87,7 +80,9 @@ case 'examenes_ingreso':
 	case 'registrar_examen_exo':
 	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);
 	break;
-	////////////REGISTRAR EXAMEN HEMATOLOGIA
+/*=================================================================================================
+**********************************INICIO EXAMEN HEMOGRAMA*******************************                       
+===================================================================================================*/
 	case 'registrar_examen_hemograma':
 	$datos = $examenes->buscar_existe_hemo($_POST["id_paciente"],$_POST["numero_orden"]);
 
@@ -157,7 +152,7 @@ case 'examenes_ingreso':
   case 'finalizar_hemograma':
    $examenes->finalizar_hemograma($_POST["id_paciente"],$_POST["numero_orden"]);
    $messages[]="ok";
-}
+
 if (isset($messages)){
      ?>
        <?php
@@ -166,6 +161,80 @@ if (isset($messages)){
            }
          ?>
    <?php
- }
+}
+ break;
+/*=================================================================================================
+**********************************INICIO EXAMEN HECES*******************************                       
+===================================================================================================*/
+case "registrar_examen_heces":
+$datos = $examenes->buscar_existe_heces($_POST["id_paciente"],$_POST["numero_orden_paciente"]);
 
+if(is_array($datos)==true and count($datos)==0){
+$examenes->agregar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"]);
+$messages[]="ok";
+}else{
+  $examenes->editar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+break;
+#show data heces
+case 'show_heces_data':    
+    $datos=$examenes->show_datos_heces($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+      //$output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];
+        $output["color"] = $row["color"];
+        $output["consistencia"] = $row["consistencia"];
+        $output["mucus"] = $row["mucus"];
+        $output["macroscopicos"] = $row["macroscopicos"];
+        $output["microscopicos"] = $row["microscopicos"];
+        $output["hematies"] = $row["hematies"];
+        $output["leucocitos"] = $row["leucocitos"];
+        $output["activos"] = $row["activos"];
+        $output["quistes"] = $row["quistes"];
+        $output["metazoarios"] = $row["metazoarios"];
+        $output["protozoarios"] = $row["protozoarios"];
+        $output["observaciones"] = $row["observaciones"];
+        $output["id_paciente"] = $row["id_paciente"];
+      }
+
+    echo json_encode($output);
+break;
+case 'finalizar_heces':
+   $examenes->finalizar_heces($_POST["id_paciente"],$_POST["numero_orden"]);
+   $messages[]="ok";
+
+if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+}
+ break;
+
+}
 ?>

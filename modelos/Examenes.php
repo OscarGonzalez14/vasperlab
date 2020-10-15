@@ -45,37 +45,7 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
     $sql2->execute();
 }
 
-public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
-
-    $conectar=parent::conexion();  
-
-    $sql2="insert into heces values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    $sql2=$conectar->prepare($sql2);
-    $sql2->bindValue(1,$numero_orden_paciente);
-    $sql2->bindValue(2,$color_heces); 
-    $sql2->bindValue(3,$consistencia_heces);
-    $sql2->bindValue(4,$mucus_heces); 
-    $sql2->bindValue(5,$macroscopicos_heces);
-    $sql2->bindValue(6,$microscopicos_heces); 
-    $sql2->bindValue(7,$hematies_heces);
-    $sql2->bindValue(8,$leucocitos_heces); 
-    $sql2->bindValue(9,$activos_heces);
-    $sql2->bindValue(10,$quistes_heces);
-    $sql2->bindValue(11,$metazoarios_heces);
-    $sql2->bindValue(12,$protozoarios_heces);
-    $sql2->bindValue(13,$observaciones_heces);
-    $sql2->bindValue(14,$id_paciente);
-    $sql2->execute();
-
-    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='heces';";
-    $sql3=$conectar->prepare($sql3);
-    $sql3->bindValue(1,$id_paciente);
-    $sql3->bindValue(2,$numero_orden_paciente);
-    $sql3->execute();
-}
-///////////FIN 
-
-/////////////REGISTRAR TRIGLICERIDOS
+///////////REGISTRAR TRIGLICERIDOS
 public function registar_examenes_trig($resultado){
 
     $conectar=parent::conexion();
@@ -222,6 +192,92 @@ public function editar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_
 /*===================FINALIZA EXAMEN 0===========================
 ======================DE HEMOGRAMA=====================*/
 
+/*=================================================================================================
+**********************************INICIO EXAMEN HECES********************************                          
+===================================================================================================*/
+public function buscar_existe_heces($id_paciente,$numero_orden_paciente){
+    $conectar= parent::conexion();
+    $sql= "select*from heces where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden_paciente);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
+
+    $conectar=parent::conexion();  
+
+    $sql2="insert into heces values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$numero_orden_paciente);
+    $sql2->bindValue(2,$color_heces); 
+    $sql2->bindValue(3,$consistencia_heces);
+    $sql2->bindValue(4,$mucus_heces); 
+    $sql2->bindValue(5,$macroscopicos_heces);
+    $sql2->bindValue(6,$microscopicos_heces); 
+    $sql2->bindValue(7,$hematies_heces);
+    $sql2->bindValue(8,$leucocitos_heces); 
+    $sql2->bindValue(9,$activos_heces);
+    $sql2->bindValue(10,$quistes_heces);
+    $sql2->bindValue(11,$metazoarios_heces);
+    $sql2->bindValue(12,$protozoarios_heces);
+    $sql2->bindValue(13,$observaciones_heces);
+    $sql2->bindValue(14,$id_paciente);
+    $sql2->execute();
+    #ACTUALIZA EL ESTADO DE DETALLE ORDEN ITEM
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='heces';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden_paciente);
+    $sql3->execute();
+}
+/////////////GET DATOS HECES PARA FUNCION SHOW DATA
+public function show_datos_heces($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from heces where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+# Edita EXamen heces
+public function editar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
+
+    $conectar=parent::conexion();  
+
+    $sql2="update heces set color=?,consistencia=?,mucus=?,macroscopicos=?,microscopicos=?,hematies=?,leucocitos=?,protozoarios=?,activos=?,quistes=?,metazoarios=?,observaciones=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$color_heces);
+    $sql2->bindValue(2,$consistencia_heces);
+    $sql2->bindValue(3,$mucus_heces);
+    $sql2->bindValue(4,$macroscopicos_heces);
+    $sql2->bindValue(5,$microscopicos_heces);
+    $sql2->bindValue(6,$hematies_heces);
+    $sql2->bindValue(7,$leucocitos_heces);
+    $sql2->bindValue(8,$protozoarios_heces);
+    $sql2->bindValue(9,$activos_heces);
+    $sql2->bindValue(10,$quistes_heces);
+    $sql2->bindValue(11,$metazoarios_heces);
+    $sql2->bindValue(12,$observaciones_heces);
+    $sql2->bindValue(13,$id_paciente);
+    $sql2->bindValue(14,$numero_orden_paciente);    
+    $sql2->execute();
+}
+   public function finalizar_heces($id_paciente,$numero_orden){
+        $conectar=parent::conexion();
+        $sql2="update detalle_item_orden set estado='2' where id_paciente=? and numero_orden=? and examen='heces';";
+        $sql2=$conectar->prepare($sql2);
+        $sql2->bindValue(1,$id_paciente);
+        $sql2->bindValue(2,$numero_orden);
+        $sql2->execute();
+    }
+/*=================================================================================================
+**********************************FIN EXAMEN HECES********************************                          
+===================================================================================================*/
+
 public function registar_examenes_check(){
 
 $conectar=parent::conexion();
@@ -250,6 +306,7 @@ $sql->bindValue(2,$numero_orden);
 $sql->execute();
 return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 
 

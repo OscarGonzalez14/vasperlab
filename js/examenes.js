@@ -247,7 +247,8 @@ $(document).on('click', '.asigna_datos_orden', function(){
   console.log(paciente);
   $(".id_paciente_exa").val(id_paciente);
   $(".num_orden_exa").val(numero_orden);
-  $("#paciente_exa").html(paciente);
+  $(".paciente_exa").html(paciente);
+  $(".num_orden_exa").html(numero_orden);
 
 });
 
@@ -488,6 +489,112 @@ function finalizar_hemograma(){
 
 }
 });//bootbox
+}
 
+/*============================================
+              INICIO EXAMEN HECES
+==============================================*/
+function GuardarExamenHeces(){    
+  var color_heces = $("#color_heces").val();
+  var consistencia_heces = $("#consistencia_heces").val();
+  var mucus_heces = $("#mucus_heces").val();
+  var macroscopicos_heces = $("#macroscopicos_heces").val();
+  var microscopicos_heces = $("#microscopicos_heces").val();
+  var hematies_heces = $("#hematies_heces").val();
+  var leucocitos_heces = $("#leucocitos_heces").val();
+  var protozoarios_heces = $("#protozoarios_heces").val();
+  var activos_heces = $("#activos_heces").val();
+  var quistes_heces = $("#quistes_heces").val();
+  var metazoarios_heces = $("#metazoarios_heces").val();
+  var observaciones_heces = $("#observaciones_heces").val();
+  var id_paciente = $("#id_pac_exa_heces").val();
+  var numero_orden_paciente = $("#num_orden_exa_heces").val(); 
+
+  
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_heces",
+    method:"POST",
+    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    cache: false,
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },
+      
+    success:function(data){ 
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen Heces Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  });
+}///////FIN GUARDAR EXAMEN HECES
+
+$(document).on('click', '.heces_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    console.log(id_paciente+" ** "+numero_orden);
+    document.getElementById("guerda_exa_heces").style.display = "none";
+    document.getElementById("edit_exa_heces").style.display = "flex";
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_heces_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#color_heces").val(data.color);
+        $("#consistencia_heces").val(data.consistencia);
+        $("#mucus_heces").val(data.mucus);
+        $("#macroscopicos_heces").val(data.macroscopicos);
+        $("#microscopicos_heces").val(data.microscopicos);
+        $("#hematies_heces").val(data.hematies);
+        $("#leucocitos_heces").val(data.leucocitos);
+        $("#protozoarios_heces").val(data.protozoarios);
+        $("#activos_heces").val(data.activos);
+        $("#quistes_heces").val(data.quistes);
+        $("#metazoarios_heces").val(data.metazoarios);
+        $("#observaciones_heces").val(data.observaciones);
+        $("#id_pac_exa_heces").val(data.id_paciente);
+        $("#num_orden_exa_heces").val(data.numero_orden);
+      }
+    });
+
+  });
+/*===============FINALIZAR EXAMEN HECES============*/
+function finalizar_heces(){
+  var id_paciente = $("#id_pac_exa_heces").val();
+  var numero_orden = $("#num_orden_exa_heces").val();
+  bootbox.confirm("¿Está Segur@ que ha finalizado el llenado de este examen correctamente?", function(result){
+  if(result){
+  $.ajax({
+    url:"ajax/examenes.php?op=finalizar_heces",
+    method:"POST",
+    data:{id_paciente:id_paciente,numero_orden:numero_orden},
+    dataType:"json",
+    success:function(data)
+    {
+      console.log(data);
+      Swal.fire('Examen finalizado!','','error')  
+  setTimeout("GuardarExamenHeces();",2000)  
+      setTimeout ("explode();", 2000);
+    }
+  });
+
+}else{
+  Swal.fire('Examen finalizado!','','error')  
+  setTimeout("GuardarExamenHeces();",2000)
+}
+});//bootbox
 }
 init();

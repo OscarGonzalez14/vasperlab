@@ -26,6 +26,8 @@
        <span><i class="fas fa-flask"></i> EXAMEN GENERAL DE HECES</span>
         <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
 </div>
+ <td colspan="100" style="text-align: center;" class="bg-light"><b><span style="color: blue">PACIENTE:</span>&nbsp;<span id="paciente_exa" class="paciente_exa"></span></b></td>
+          </tr>
   <div style="text-align: center;background:#347C98;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN QUIMICO - HECES</strong></div>
 
   <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px" autocomplete="on">
@@ -97,9 +99,16 @@
   </div>
 
   <div class="form-group col-md-12">
-    <button class="btn btn-dark btn-block" style="border-radius:0px;background:#3e4444; " data-toggle="modal" data-target="#modalProveedores" onClick="GuardarExamenHeces();">Guardar Examen Heces</button>
+    <button class="btn btn-dark btn-block" style="border-radius:0px;background:#3e4444; " data-toggle="modal" data-target="#modalProveedores" onClick="GuardarExamenHeces();" id="guerda_exa_heces">Guardar Examen Heces</button>
   </div>
 
+  </div>
+  <div class="row" id="edit_exa_heces" style="margin-bottom: 8px" style="display:none">
+    <div class="col-md-1"></div>
+    <div class="col-md-4" style="margin-left: 10px"><button type="button" class="btn btn-block btn-danger btn-flat pull-left" onClick="finalizar_heces();">Finalizar</button></div>
+    <div class="col-md-3" style="width: 100%"></div>
+    <div class="col-md-3"><button type="button" class="btn btn-block btn-success btn-flat pull-left" onClick="GuardarExamenHeces();">Agregar</button></div>
+    <div class="col-md-1"></div>
   </div>
 <input type="hidden" class="id_paciente_exa" id="id_pac_exa_heces">
 <input type="hidden" class="num_orden_exa" id="num_orden_exa_heces">

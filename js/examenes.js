@@ -6,6 +6,8 @@ function init(){
 
 function mostrar_btns_edit_exa(){
   document.getElementById("edit_exa_hemo").style.display = "none";
+  document.getElementById("edit_exa_orina").style.display = "none";
+  document.getElementById("edit_exa_heces").style.display = "none";
 }
 
 /////////////////LISTAR EXAMENES INGRESO////////******
@@ -260,20 +262,32 @@ document.getElementsByClassName("reg_examenes").style.display = "none";
 function GuardarTrigliceridos(){
     
   var resultado = $("#resultado_triglicerido").val();
+  var observaciones_trigliceridos = $("#observaciones_trigliceridos").val();
+  var id_pac_exa_trigliceridos = $("#id_pac_exa_trigliceridos").val();
+  var num_orden_exa_trigliceridos = $("#num_orden_exa_trigliceridos").val();
+
+  
   if (resultado !=""){
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_trig",
     method:"POST",
-    data:{resultado:resultado},
-    dataType:"html",
+    data:{resultado:resultado,observaciones_trigliceridos:observaciones_trigliceridos,id_pac_exa_trigliceridos:id_pac_exa_trigliceridos,num_orden_exa_trigliceridos:num_orden_exa_trigliceridos},
+    dataType:"json",
     error:function(x,y,z){
       console.log(x);
       console.log(y);
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de trigliceridos guardado exitosamente','','success')", 100);
-    setTimeout ("explode();", 2000);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Trigliceridos Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
   }
 
   }); 
@@ -286,20 +300,32 @@ function GuardarTrigliceridos(){
 function GuardarColesterol(){
     
   var resultado = $("#resultado_colesterol").val();
+  var observaciones_colesterol = $("#observaciones_colesterol").val();
+  var id_pac_exa_colesterol = $("#id_pac_exa_colesterol").val();
+  var num_orden_exa_colesterol = $("#num_orden_exa_colesterol").val();
+  var fecha = $("#fecha").val();
+
   if (resultado!=""){
     $.ajax({
-    url:"ajax/examenes.php?op=registrar_examen_trigcolesterol",
+    url:"ajax/examenes.php?op=registrar_examen_colesterol",
     method:"POST",
-    data:{resultado:resultado},
-    dataType:"html",
+    data:{resultado:resultado,resultado:resultado,observaciones_colesterol:observaciones_colesterol,id_pac_exa_colesterol:id_pac_exa_colesterol,num_orden_exa_colesterol:num_orden_exa_colesterol,fecha:fecha},
+    dataType:"json",
     error:function(x,y,z){
       console.log(x);
       console.log(y);
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de colesterol guardado exitosamente','','success')", 100);
-    setTimeout ("explode();", 2000);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Colesterol Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
   }
 
   }); 
@@ -312,20 +338,33 @@ function GuardarColesterol(){
 function GuardarGlucosa(){
     
   var resultado = $("#resultado_glucosa").val();
+  var observacione_glucosa = $("#observacione_glucosa").val();
+  var id_pac_exa_glucosa = $("#id_pac_exa_glucosa").val();
+  var num_orden_exa_glucosa = $("#num_orden_exa_glucosa").val();
+  var fecha = $("#fecha").val();
+  
   if (resultado!=""){
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_glucosa",
     method:"POST",
-    data:{resultado:resultado},
-    dataType:"html",
+    data:{resultado:resultado,observacione_glucosa:observacione_glucosa,id_pac_exa_glucosa:id_pac_exa_glucosa,num_orden_exa_glucosa:num_orden_exa_glucosa,fecha:fecha},
+    dataType:"json",
     error:function(x,y,z){
       console.log(x);
       console.log(y);
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen de glucosa guardado exitosamente','','success')", 100);
-    setTimeout ("explode();", 2000);
+     console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Glucosa Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+    
   }
 
   }); 

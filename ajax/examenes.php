@@ -60,15 +60,97 @@ case 'examenes_ingreso':
 
     ///////////////uardar examen trigliceridos
     case 'registrar_examen_trig':
-	$examenes->registar_examenes_trig($_POST["resultado"]);
+    $datos = $examenes->buscar_existe_trigliceridos($_POST["id_pac_exa_trigliceridos"],$_POST["num_orden_exa_trigliceridos"]);
+      if(is_array($datos)==true and count($datos)==0){
+	   $examenes->registar_examenes_trig($_POST["resultado"],$_POST["observaciones_trigliceridos"],$_POST["id_pac_exa_trigliceridos"],$_POST["num_orden_exa_trigliceridos"]);
+     $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_trigliceridos($_POST["resultado"],$_POST["observaciones_trigliceridos"],$_POST["id_pac_exa_trigliceridos"],$_POST["num_orden_exa_trigliceridos"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
 	break;
 	//////////////////REGISTRAR XAMEN COLESTEROL
-	case 'registrar_examen_trigcolesterol':
-	$examenes->registar_examenes_colesterol($_POST["resultado"]);
+	case 'registrar_examen_colesterol':
+  $datos = $examenes->buscar_existe_colesterol($_POST["id_pac_exa_colesterol"],$_POST["num_orden_exa_colesterol"]);
+  if(is_array($datos)==true and count($datos)==0){
+	$examenes->registar_examenes_colesterol($_POST["resultado"],$_POST["observaciones_colesterol"],$_POST["id_pac_exa_colesterol"],$_POST["num_orden_exa_colesterol"],$_POST["fecha"]);
+  $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_colesterol($_POST["resultado"],$_POST["observaciones_colesterol"],$_POST["id_pac_exa_colesterol"],$_POST["num_orden_exa_colesterol"],$_POST["fecha"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
 	break;
 	//////////////////REGISTRAR XAMEN GLUCOSA
 	case 'registrar_examen_glucosa':
-	$examenes->registar_examenes_glucosa($_POST["resultado"]);
+  $datos = $examenes->buscar_existe_glucosa($_POST["id_pac_exa_glucosa"],$_POST["num_orden_exa_glucosa"]);
+  if(is_array($datos)==true and count($datos)==0){
+	$examenes->registar_examenes_glucosa($_POST["resultado"],$_POST["observacione_glucosa"],$_POST["id_pac_exa_glucosa"],$_POST["num_orden_exa_glucosa"],$_POST["fecha"]);
+  $messages[]="ok";
+}else{
+    $examenes->editar_examenes_glucosa($_POST["resultado"],$_POST["observacione_glucosa"],$_POST["id_pac_exa_glucosa"],$_POST["num_orden_exa_glucosa"],$_POST["fecha"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
 	break; 
 	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':

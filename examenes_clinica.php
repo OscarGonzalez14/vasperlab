@@ -2,6 +2,7 @@
 
  require_once('header.php');
  require_once('modals/ver_detalles_solicitud.php');
+ require_once('modals/show_categorias_impresion.php');
 ?>
 <style type="text/css">
     .dataTables_filter {
@@ -22,9 +23,9 @@
             <th style="text-align:center">Cod. Emp</th>
             <th style="text-align:center">Empresa</th>
             <th style="text-align:center">Departamento</th>
-            <th style="text-align:center">Ver</th>
-            <th style="text-align:center">Estado</th>
+            <th style="text-align:center">Ver</th>            
             <th style="text-align:center">Ingresar</th>
+            <th style="text-align:center">Imprimir</th>
           </tr>
         </thead>
         <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                        

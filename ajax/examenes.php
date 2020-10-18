@@ -43,8 +43,8 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["empresa"];
-		$sub_array[] = $row["examen"];
-		$sub_array[] = $est;
+		$sub_array[] = strtoupper($row["examen"]);
+		$sub_array[] = strtoupper($est);
         $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
 		$data[] = $sub_array;
 	}
@@ -89,6 +89,39 @@ case 'examenes_ingreso':
    <?php
    }
 	break;
+  //////////===============REGISTRAR EXAMEN DE CRETININA=============
+ case 'registrar_examen_creatinina':
+    $datos = $examenes->buscar_existe_creatinina($_POST["id_pac_exa_creatina"],$_POST["num_orden_exa_creatina"]);
+      if(is_array($datos)==true and count($datos)==0){
+     $examenes->registar_examenes_creatinina($_POST["resultado_creatinina"],$_POST["observaciones_creatinina"],$_POST["id_pac_exa_creatina"],$_POST["num_orden_exa_creatina"]);
+     $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_creatinina($_POST["resultado_creatinina"],$_POST["observaciones_creatinina"],$_POST["id_pac_exa_creatina"],$_POST["num_orden_exa_creatina"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+
+
 	//////////////////REGISTRAR XAMEN COLESTEROL
 	case 'registrar_examen_colesterol':
   $datos = $examenes->buscar_existe_colesterol($_POST["id_pac_exa_colesterol"],$_POST["num_orden_exa_colesterol"]);
@@ -151,7 +184,39 @@ case 'examenes_ingreso':
            ?>
    <?php
    }
-	break; 
+	break;
+  ///////////////////REGISTRAR ACIDO URICO///////////////
+  case 'registrar_examen_acido_u':
+  $datos = $examenes->buscar_existe_u($_POST["id_pac_exa_urico"],$_POST["num_orden_exa_urico"]);
+  if(is_array($datos)==true and count($datos)==0){
+  $examenes->registar_examenes_urico($_POST["resultado"],$_POST["observacione_urico"],$_POST["id_pac_exa_urico"],$_POST["num_orden_exa_urico"]);
+  $messages[]="ok";
+}else{
+    $examenes->editar_examenes_urico($_POST["resultado"],$_POST["observacione_urico"],$_POST["id_pac_exa_urico"],$_POST["num_orden_exa_urico"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break; 
 	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':
 	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);

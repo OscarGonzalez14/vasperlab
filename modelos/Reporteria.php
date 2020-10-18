@@ -105,4 +105,66 @@ public function get_categorias($id_paciente,$numero_orden){
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/*==================PLANTILLAS DE IMPRESION=================*/
+public function examenes_quimica_print($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=?;";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+####GET DATA EXAMEN GLUCOSA
+public function get_data_quimica($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from glucosa where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+####GET DATA EXAMEN COLESTROL
+public function get_data_colesterol($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from colesterol where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+####GET DATA EXAMEN TRIGLICERIDOS
+public function get_data_trigliceridos($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from trigliceridos where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+####GET DATA EXAMEN ACIDO URICO
+public function get_data_acido($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from acido_urico where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

@@ -37,11 +37,12 @@ $reporteria=new Reporteria();
 <?php 
 $id_paciente=109;
 $item_orden = $reporteria->get_detalle_orden($id_paciente);
-$pagina ='';
+/*$pagina ='';
   for($i=0;$i<sizeof($item_orden);$i++){
       $pagina=$item_orden[$i]["examen"];
       require_once('examenes/'.$pagina.'.php');   
-  }
+  }*/
+  var_dump($item_orden);
   ?>
 </div><!--Fin div Examen Orina--->
 </body>

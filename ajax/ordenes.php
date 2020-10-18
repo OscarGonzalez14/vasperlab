@@ -67,9 +67,10 @@ case "examenes_clinica_pendientes":
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["departamento"];				
         $sub_array[] = '<button type="button" class="btn btn-md bg-light show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye" style="color:blue"></i></button>';
-        $sub_array[] = '<span style="color:'.$color.'"><strong>'.$status.'</strong></span>';
-        $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-file-download" style="color:#1E0F59"></i></button></a>';                                 
+        $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-file-download" style="color:#1E0F59"></i></button></a>';
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';                               
 		$data[] = $sub_array;
+
 	}
 
         $results = array(
@@ -107,6 +108,31 @@ case "examenes_clinica_pendientes":
         $sub_array[] = '<button type="button" class="btn btn-primary show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye"></i></button>';
         $sub_array[] = '<span style="color:'.$color.'"><strong>'.$status.'</strong></span>';
         $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-warning btn-md"><i class="fas fa-file-download"></i></button></a>';                                 
+		$data[] = $sub_array;
+	}
+
+        $results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+    break;
+
+//////////////LISTAR CATEGORIAS PARA IMPRESION
+
+    case "show_cat_print":
+    $datos=$ordenes->get_show_cat_print($_POST["id_paciente"],$_POST["numero_orden"]);
+    //Vamos a declarar un array
+ 	$data= Array();
+    foreach($datos as $row)
+	{
+		$sub_array = array();				
+	    $sub_array[] = $row["numero_orden"];
+		$sub_array[] = $row["nombre"];
+		$sub_array[] = $row["categoria"];	
+        $sub_array[] = '<a href="imprimir_resultados_pdf.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'&categoria='.$row["categoria"].'&nombre='.$row["nombre"].'" target="_blank"><button type="button"  class="btn btn-ligth btn-md"><i class="fas fa-print" style="color:green"></i></button></a>';                                 
 		$data[] = $sub_array;
 	}
 

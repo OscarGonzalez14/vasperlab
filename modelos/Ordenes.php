@@ -20,6 +20,18 @@ class Ordenes extends Conectar{
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/////////////////////LISTAR SOLICITUDES EN PROCESO
+  public function get_show_cat_print($id_paciente,$numero_orden){
+    $conectar= parent::conexion();         
+    $sql= "select p.nombre,d.numero_orden,d.categoria,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente
+      where d.id_paciente=? and d.numero_orden=? group by d.categoria;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 /////////////////////LISTAR SOLICITUDES EN PROCESO LABORATORIOS
   public function get_solicitudes_proceso_lab(){
     $conectar= parent::conexion();         

@@ -4,12 +4,14 @@ use Dompdf\Options;
 
 require_once 'dompdf/autoload.inc.php';
 
-//require_once("modelos/Reporteria.php");
-/*$reporteria=new Reporteria();
+require_once("modelos/Reporteria.php");
+$reporteria=new Reporteria();
 $id_paciente =$_GET["id_paciente"];
-$n_orden =$_GET["n_orden"];
+$n_orden =$_GET["numero_orden"];
+$categoria =$_GET["categoria"];
+$paciente =$_GET["nombre"];
 
-$datos_det_orden_paciente = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"],$_GET["n_orden"]);
+/*$datos_det_orden_paciente = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"],$_GET["n_orden"]);
 $datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_GET["n_orden"]);
 $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orden"]);*/
 
@@ -53,10 +55,34 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
    </style>
   </head>
   <body>
-HHHHH
+
 <div style="margin-top:0px;height:200px" >
+  <table style="width: 100%;">
+   <tr>
+      <td width="10%"><h1 style="text-align: left; margin-right:20px;"><img src="images/vasperlogo.png" width="100" height="50"/></h1></td>
+
+    <td width="60%">
+       <table style="width:95%;">
+           <tr>
+             <td style="text-align:center; font-size:16px"><strong>LABORATORIO CLINICO VASPER</strong> || <strong>Lic. Carlos Andrés Vásquez Peraza</strong></td>
+           </tr>
+           <tr>
+              <td style="text-align:center; font-size:12px">Calle Francisco Gavidia y Final Calle Gerardo Barrios #9-A, Ciudad Arce<span id="date"></span><span>Telefonos: 23330-9801&nbsp;&nbsp;</span><br>E-mail: labclinicovasper@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-align:center; font-size:11px"><?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s"); echo $hoy; ?></span></td>
+            </tr>
+        </table><!--fin segunda tabla-->
+    </td>
+    <td width="10%">      
+    <table>
+      <tr>
+        <td style="text-align:center; font-size:12px;color: red;"><strong style="text-align:center; font-size:14px"></strong></td>
+     </tr>
+</table><!--fin segunda tabla-->
+</td> <!--fin segunda columna-->
+</tr>
+</table>
+<div>
 <?php
-$categoria="quimica";
+
 if ($categoria=="quimica") {
   require_once("plantillas/quimica.php");
 }

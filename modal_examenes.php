@@ -7,4 +7,6 @@ require_once("modals_examenes/glucosa.php");
 require_once("modals_examenes/exofaringeo.php");
 require_once("modals_examenes/hemograma.php");
 require_once("modals_examenes/hemograma_edit.php");
+require_once("modals_examenes/acido_urico.php");
+require_once("modals_examenes/creatinina.php");
 ?>

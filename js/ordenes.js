@@ -1,6 +1,7 @@
 var tablas_solicitudes;
 var tabla_examenes_clinica;
 var tabla_examenes_laboratorio;
+var tabla_cats;
 
 function init(){
   listar_solicitudes();
@@ -432,5 +433,89 @@ function set_estado_orden(id_paciente,numero_orden){
   });//bootbox;
 }
 
+/////////////////SHOW CATEGORIAS PARA IMPRIMIR
+/////////////////mostrar detalles de solicitud
+$(document).on('click', '.show_print_categorias', function(){
+  var id_paciente = $(this).attr("id");
+  var numero_orden = $(this).attr("name");
+  console.log(id_paciente+"**"+numero_orden);
+  $("#show_cat_print").modal("show");
+  ///////////////DATATABLES
 
+  tabla_cats=$('#data_show_cat_print').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+            buttons: [
+                'excelHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/ordenes.php?op=show_cat_print',
+          type : "post",
+          dataType : "json",
+          data:{id_paciente:id_paciente,numero_orden:numero_orden},
+          error: function(e){
+            console.log(e.responseText);
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+
+          "sProcessing":     "Procesando...",
+
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+
+          "sZeroRecords":    "No se encontraron resultados",
+
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+          "sInfoPostFix":    "",
+
+          "sSearch":         "Buscar:",
+
+          "sUrl":            "",
+
+          "sInfoThousands":  ",",
+
+          "sLoadingRecords": "Cargando...",
+
+          "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+          },
+
+          "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+          }
+
+         }//cerrando language
+
+  }).DataTable();
+
+  
+});
 init();

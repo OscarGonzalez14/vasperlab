@@ -334,6 +334,46 @@ function GuardarColesterol(){
   }
 
 }
+//=================================GUARDAR CREATININA=================
+/////////////GUSRADAR COLESTEROL
+function GuardarCreatinina(){
+    
+  var resultado_creatinina = $("#resultado_creatinina").val();
+  var observaciones_creatinina = $("#observaciones_creatinina").val();
+  var id_pac_exa_creatina = $("#id_pac_exa_creatina").val();
+  var num_orden_exa_creatina = $("#num_orden_exa_creatina").val();
+  var fecha = $("#fecha").val();
+
+
+  if (resultado_creatinina!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_creatinina",
+    method:"POST",
+    data:{resultado_creatinina:resultado_creatinina,observaciones_creatinina:observaciones_creatinina,id_pac_exa_creatina:id_pac_exa_creatina,num_orden_exa_creatina:num_orden_exa_creatina},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Creatinina Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
 ///////////////////   GUARDAR GLUCOSA
 function GuardarGlucosa(){
     
@@ -763,6 +803,48 @@ function finalizar_orina(){
 }
 });//bootbox
 }
+
+/*======================INICIO EXAMEN ==========================
+=============================ORINA==============================*/
+//////////////////GUARDAR EXAMEN HEMOGRAMA
+  function GuardarAcidoUrico(){
+    
+  var resultado = $("#resultado_acido_urico").val();
+  var observacione_urico = $("#observaciones_acido_urico").val();
+  var id_pac_exa_urico= $("#id_pac_exa_acido_urico").val();
+  var num_orden_exa_urico = $("#num_orden_exa_acido_urico").val();
+
+ 
+  if (resultado!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_acido_u",
+    method:"POST",
+    data:{resultado:resultado,observacione_urico:observacione_urico,id_pac_exa_urico:id_pac_exa_urico,num_orden_exa_urico:num_orden_exa_urico},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+     console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Ácido Urico Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+    
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+  
+  }
 
 
 ///////INIT

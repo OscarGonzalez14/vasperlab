@@ -73,8 +73,8 @@
         <tr>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Nitrogeno Ureico">Nitrogeno Ureico</td>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Bilirubina"> Bilirubina</td>
-          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="S.G.O.T"> S.G.O.T</td>
-          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="S.G.P.T"> S.G.P.T</td>
+          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgot"> S.G.O.T</td>
+          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgpt"> S.G.P.T</td>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Proteinas Sericas"> Proteinas Sericas</td>
         </tr>
         <tr>

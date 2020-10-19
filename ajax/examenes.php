@@ -121,6 +121,69 @@ case 'examenes_ingreso':
    }
   break;
 
+//////////===============REGISTRAR EXAMEN DE SGOT=============
+ case 'registrar_examen_sgot':
+    $datos = $examenes->buscar_existe_sgot($_POST["id_pac_exa_sgot"],$_POST["num_orden_exa_sgot"]);
+      if(is_array($datos)==true and count($datos)==0){
+     $examenes->registar_examenes_sgot($_POST["resultado_sgot"],$_POST["observacione_sgot"],$_POST["id_pac_exa_sgot"],$_POST["num_orden_exa_sgot"]);
+     $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_sgot($_POST["resultado_sgot"],$_POST["observacione_sgot"],$_POST["id_pac_exa_sgot"],$_POST["num_orden_exa_sgot"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+
+  //////////===============REGISTRAR EXAMEN DE SGPT=============
+ case 'registrar_examen_sgpt':
+    $datos = $examenes->buscar_existe_sgpt($_POST["id_pac_exa_sgpt"],$_POST["num_orden_exa_sgpt"]);
+      if(is_array($datos)==true and count($datos)==0){
+     $examenes->registar_examenes_sgpt($_POST["resultado_sgpt"],$_POST["observacione_sgpt"],$_POST["id_pac_exa_sgpt"],$_POST["num_orden_exa_sgpt"]);
+     $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_sgpt($_POST["resultado_sgpt"],$_POST["observacione_sgpt"],$_POST["id_pac_exa_sgpt"],$_POST["num_orden_exa_sgpt"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
 
 	//////////////////REGISTRAR XAMEN COLESTEROL
 	case 'registrar_examen_colesterol':

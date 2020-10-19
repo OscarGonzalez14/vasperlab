@@ -335,7 +335,7 @@ function GuardarColesterol(){
 
 }
 //=================================GUARDAR CREATININA=================
-/////////////GUSRADAR COLESTEROL
+
 function GuardarCreatinina(){
     
   var resultado_creatinina = $("#resultado_creatinina").val();
@@ -374,6 +374,90 @@ function GuardarCreatinina(){
   }
 
 }
+
+
+
+/*=======================GUARDAR SGOT==================*/
+
+function Guardarsgot(){
+    
+  var resultado_sgot = $("#resultado_sgot").val();
+  var observacione_sgot = $("#observacione_sgot").val();
+  var id_pac_exa_sgot = $("#id_pac_exa_sgot").val();
+  var num_orden_exa_sgot = $("#num_orden_exa_sgot").val();
+  var fecha = $("#fecha").val();
+
+
+  if (resultado_sgot !=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_sgot",
+    method:"POST",
+    data:{resultado_sgot:resultado_sgot,observacione_sgot:observacione_sgot,id_pac_exa_sgot:id_pac_exa_sgot,num_orden_exa_sgot:num_orden_exa_sgot},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de SGOT Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+
+/*======================INICIO EXAMEN SGPT==================*/
+function Guardarsgpt(){
+    
+  var resultado_sgpt = $("#resultado_sgpt").val();
+  var observacione_sgpt = $("#observacione_sgpt").val();
+  var id_pac_exa_sgpt = $("#id_pac_exa_sgpt").val();
+  var num_orden_exa_sgpt = $("#num_orden_exa_sgpt").val();
+  var fecha = $("#fecha").val();
+
+
+  if (resultado_sgpt !=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_sgpt",
+    method:"POST",
+    data:{resultado_sgpt:resultado_sgpt,observacione_sgpt:observacione_sgpt,id_pac_exa_sgpt:id_pac_exa_sgpt,num_orden_exa_sgpt:num_orden_exa_sgpt},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de SGPT Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+
 ///////////////////   GUARDAR GLUCOSA
 function GuardarGlucosa(){
     

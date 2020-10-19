@@ -167,4 +167,41 @@ public function get_data_acido($id_paciente,$numero_orden){
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+####GET DATA EXAMEN CREATININA
+public function get_data_creatinina($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from creatinina where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function get_data_sgot($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from sgot where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function get_data_sgpt($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from sgpt where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

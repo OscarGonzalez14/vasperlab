@@ -73,9 +73,7 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
     </td>
     <td width="10%">      
     <table>
-      <tr>
-        <td style="text-align:center; font-size:12px;color: red;"><strong style="text-align:center; font-size:14px"></strong></td>
-     </tr>
+      
 </table><!--fin segunda tabla-->
 </td> <!--fin segunda columna-->
 </tr>
@@ -85,6 +83,11 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
 
 if ($categoria=="quimica") {
   require_once("plantillas/quimica.php");
+}elseif ($categoria=="heces") {
+  require_once("resultados/heces.php");
+}
+elseif ($categoria=="orina") {
+  require_once("resultados/orina.php");
 }
 ?>
 </div>

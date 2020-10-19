@@ -9,4 +9,6 @@ require_once("modals_examenes/hemograma.php");
 require_once("modals_examenes/hemograma_edit.php");
 require_once("modals_examenes/acido_urico.php");
 require_once("modals_examenes/creatinina.php");
+require_once("modals_examenes/sgot.php");
+require_once("modals_examenes/sgpt.php");
 ?>

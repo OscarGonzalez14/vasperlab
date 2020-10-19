@@ -8,7 +8,7 @@
     }
 </style>
 
-<div class="modal fade bd-example-modal-xl" id="exofarigeo">
+<div class="modal fade bd-example-modal-xl" id="exofaringeo">
   <div class="modal-dialog" id="tamModal_exo">
     <div class="modal-content">
       <!-- Modal Header -->

@@ -17,5 +17,13 @@ var detalles = [];
 detalles.push(examenes[key]);
 
 </script>
+
+<?php
+$cadena=" hola mundo  como estan";
+$text_clear= preg_replace("/[[:space:]]/"," ",trim($cadena));
+
+echo $cadena."<br>";
+echo $text_clear;
+?>
 </body>
 </html> 

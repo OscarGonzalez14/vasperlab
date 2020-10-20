@@ -6,12 +6,12 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
       <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong></td>
     </tr>
     <tr><td style="text-align: center;width: 100%" colspan="100">
-      <span style="color: red;font-size: 15px;text-align: center"><strong>EXAMEN GENERAL DE HECES</strong></span>
+      <span style="color: red;font-size: 15px;text-align: center"><strong>EXAMEN GENERAL DE ORINA</strong></span>
     </td></tr>
 	<?php for($i=0;$i<sizeof($items_orina);$i++){ ?>
   <tr>
-    <th class="#table2 stilot1"
-       border-collapse: collapse;" colspan="50" style="background:#034f84;color: white;font-size:13px">EXAMEN FÍSICO-QUÍMICO</th>
+    <th class="#table2 stilot1
+       border-collapse: collapse" colspan="50" style="background:#034f84;color: white;font-size:13px">EXAMEN FÍSICO-QUÍMICO</th>
     <th class="stilot1" colspan="50" style="background:#034f84;border-left: 2px solid black;color: white;font-size:13px">EXAMEN MICROSCOPICO</th>
   </tr>
   <tr>

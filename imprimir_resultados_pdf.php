@@ -80,7 +80,7 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
 </table>
 <div>
 <?php
-
+//echo $categoria;
 if ($categoria=="quimica") {
   require_once("plantillas/quimica.php");
 }elseif ($categoria=="heces") {
@@ -88,6 +88,10 @@ if ($categoria=="quimica") {
 }
 elseif ($categoria=="orina") {
   require_once("resultados/orina.php");
+}elseif($categoria=="bacteriologia"){
+  require_once("plantillas/bacteriologia.php");
+}elseif($categoria=="hemograma"){
+  require_once("resultados/hemograma.php");
 }
 ?>
 </div>

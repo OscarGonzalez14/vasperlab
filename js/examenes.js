@@ -497,8 +497,45 @@ function GuardarGlucosa(){
   }
 
 }
+/*=======================GUARDAR EXAMEN DE BACILOSCOPIA=============*/
+function GuardarBaciloscopia(){
+    
+  var resultado = $("#resultado_baciloscopia").val();
+  var observaciones_baciloscopia = $("#observaciones_baciloscopia").val();
+  var id_pac_exa_baciloscopia = $("#id_pac_exa_baciloscopia").val();
+  var num_orden_exa_baciloscopia = $("#num_orden_exa_baciloscopia").val();
 
+  if (resultado!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_baciloscopia",
+    method:"POST",
+    data:{resultado:resultado,observaciones_baciloscopia:observaciones_baciloscopia,id_pac_exa_baciloscopia:id_pac_exa_baciloscopia,num_orden_exa_baciloscopia:num_orden_exa_baciloscopia},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+     console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de Baciloscopia Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+    
+  }
 
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+/*=======================FIN  EXAMEN DE BACILOSCOPIA=============*/
 /////////////////////////GUARDAR EXOFARIGEO
 function GuardarExo(){
     

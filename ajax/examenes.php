@@ -279,7 +279,40 @@ case 'examenes_ingreso':
            ?>
    <?php
    }
-  break; 
+  break;
+//////////////////REGISTRAR EXAMEN BACILOSCOPIA
+  case 'registrar_examen_baciloscopia':
+  $datos = $examenes->buscar_existe_baciloscopia($_POST["id_pac_exa_baciloscopia"],$_POST["num_orden_exa_baciloscopia"]);
+  if(is_array($datos)==true and count($datos)==0){
+  $examenes->registar_examenes_baciloscopia($_POST["resultado"],$_POST["observaciones_baciloscopia"],$_POST["id_pac_exa_baciloscopia"],$_POST["num_orden_exa_baciloscopia"]);
+  $messages[]="ok";
+}else{
+    $examenes->editar_examenes_baciloscopia($_POST["resultado"],$_POST["observaciones_baciloscopia"],$_POST["id_pac_exa_baciloscopia"],$_POST["num_orden_exa_baciloscopia"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+
 	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':
 	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);

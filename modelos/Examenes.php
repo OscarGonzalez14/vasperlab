@@ -341,6 +341,12 @@ public function registar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$nu
     $sql2->bindValue(5,$id_paciente);
     $sql2->bindValue(6,$refiere);
     $sql2->execute();
+
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='exofaringeo';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_pac_exa_glucosa);
+    $sql3->bindValue(2,$num_orden_exa_glucosa);
+    $sql3->execute();
 }
 /*===================INICIA EXAMEN ==========================
 ======================DE HEMOGRAMA=====================*/
@@ -357,7 +363,15 @@ public function buscar_existe_hemo($id_paciente,$numero_orden){
     }
 //////////////REGISTRAR EXAMEN HEMATOLOGIA
 public function registar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_hemato,$cmhc_hemato,$hcm_hemato,$gb_hemato,$linfocitos_hemato,$monocitos_hemato,$eosinofilos_hemato,$basinofilos_hemato,$banda_hemato,$segmentados_hemato,$metamielo_hemato,$mielocitos_hemato,$blastos_hemato,$plaquetas_hemato,$reti_hemato,$eritro_hemato,$otros_hema,$id_paciente,$numero_orden,$fecha,$gota_hema){
-    $estado='0';
+    
+    if (($hb_hemato>=12.5 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
+        $estado="Bueno";
+    }elseif($hb<12.5 && ($gb_hemato>=4500 && $gb_hemato>=10500) &&($plaquetas_hemato>=150000 or $plaquetas_hemato>=40000)){
+        $estado="Malo";
+    }
+
+
+
     $conectar=parent::conexion();
     $sql2="insert into hemograma values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -407,6 +421,12 @@ public function show_datos_hemograma($id_paciente,$numero_orden){
   }
 ////////////////////EDITAR HEMATOLOGIA
 public function editar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_hemato,$cmhc_hemato,$hcm_hemato,$gb_hemato,$linfocitos_hemato,$monocitos_hemato,$eosinofilos_hemato,$basinofilos_hemato,$banda_hemato,$segmentados_hemato,$metamielo_hemato,$mielocitos_hemato,$blastos_hemato,$plaquetas_hemato,$reti_hemato,$eritro_hemato,$otros_hema,$id_paciente,$numero_orden,$fecha,$gota_hema){
+
+        if (($hb_hemato>=12 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
+        $estado="Bueno";
+    }elseif(($hb_hemato<12) or ($gb_hemato<=4500 && $gb_hemato>=10500) or ($plaquetas_hemato<=150000 or $plaquetas_hemato>=40000)){
+        $estado="Malo";
+    }
     
     $conectar=parent::conexion();
     $sql2="update hemograma set gr_hemato=?,ht_hemato=?,hb_hemato=?,vcm_hemato=?,cmhc_hemato=?,gota_hema=?,gb_hemato=?,linfocitos_hemato=?,monocitos_hemato=?,eosinofilos_hemato=?,basinofilos_hemato=?,banda_hemato=?,segmentados_hemato=?,metamielo_hemato=?,mielocitos_hemato=?,blastos_hemato=?,plaquetas_hemato=?,reti_hemato=?,eritro_hemato=?,otros_hema=?,hcm_hemato=? where id_paciente=? and numero_orden=?;";
@@ -791,6 +811,51 @@ public function editar_examenes_sgpt($resultado_sgpt,$observacione_sgpt,$id_pac_
     $sql2->bindValue(5,$num_orden_exa_sgpt);
     $sql2->execute();
 }
+////////////////////////
+/*==================REGISTRO DE EXAMEN DE BACILOSCOPIA=========*/
+
+public function buscar_existe_baciloscopia($id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
+    $conectar= parent::conexion();
+    $sql= "select*from baciloscopia where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_baciloscopia);
+    $sql->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function registar_examenes_baciloscopia($resultado,$observaciones_baciloscopia,$id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
+    $estado="0";
+    $conectar=parent::conexion();
+    $sql2="insert into baciloscopia values(null,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado);
+    $sql2->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_baciloscopia);
+    $sql2->bindValue(5,$observaciones_baciloscopia);
+    $sql2->execute();
+
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='baciloscopia';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_pac_exa_baciloscopia);
+    $sql3->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql3->execute();
+}
+
+public function editar_examenes_baciloscopia($resultado,$observaciones_baciloscopia,$id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
+    $estado="0";
+    $conectar=parent::conexion();
+    $sql2="update baciloscopia set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado);
+    $sql2->bindValue(2,$observaciones_baciloscopia);
+    $sql2->bindValue(3,$id_pac_exa_baciloscopia);
+    $sql2->bindValue(4,$num_orden_exa_baciloscopia);
+    $sql2->execute();
+}
+
+
 public function registar_examenes_check(){
 
 $conectar=parent::conexion();

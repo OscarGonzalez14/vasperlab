@@ -29,6 +29,18 @@ public function get_items_orina($id_paciente,$numero_orden){
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function get_items_hemograma($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+
+  $sql="select*from hemograma where numero_orden=? and id_paciente=?;";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$numero_orden);
+  $sql->bindValue(2,$id_paciente);
+  $sql->execute();
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 public function get_items_heces($id_paciente,$numero_orden){
   $conectar=parent::conexion();
   parent::set_names();
@@ -110,7 +122,20 @@ public function examenes_quimica_print($id_paciente,$numero_orden){
   $conectar=parent::conexion();
   parent::set_names();
   
-  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=?;";
+  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=? and categoria='quimica';";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/*==================PLANTILLAS DE IMPRESION=================*/
+public function examenes_bacteriologia_print($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=? and categoria='bacteriologia' ORDER BY examen ASC;";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$id_paciente);
   $sql->bindValue(2,$numero_orden);
@@ -204,4 +229,26 @@ public function get_data_sgpt($id_paciente,$numero_orden){
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function get_data_baciloscopia($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observacione from baciloscopia where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+public function get_data_exofaringeo($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select aisla,sensible,resiste,refiere from exofaringeo where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
 }

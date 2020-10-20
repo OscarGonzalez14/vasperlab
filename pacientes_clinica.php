@@ -25,8 +25,9 @@
 <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
 <div style="margin:10px;">
- <a class="btn btn-dark" style="color:white;border-radius:0px; background:black" data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus-square"></i> Crear Paciente</a>
-</div> <strong><h5 style="text-align: center">PACIENTES CLÍNICA</h5></strong>
+
+  <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false">CREAR PACIENTE</button>
+</div> 
 
 <div style="margin: 5px">
   <table class="table-hover table-bordered striped" id="data_pacientes_reg" width="100%" data-order='[[ 0, "desc" ]]'>

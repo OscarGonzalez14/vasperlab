@@ -92,7 +92,7 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HEMATOLOGIA</td>
         </tr>
         <tr>
-          <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="hemograma">Hemograma</td>
+          <td colspan="20"><input class="hemograma" type="checkbox" name="check_box" value="hemograma">Hemograma</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="hematocrito_emoglobina"> Hematocrito-Hemoglobina</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="leucograma">Leucograma</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="plaquetas"> Plaquetas</td>

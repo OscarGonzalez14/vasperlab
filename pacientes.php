@@ -14,6 +14,10 @@
     <!-- Content Header (Page header) -->
 <div style="margin:10px;">
  <a class="btn btn-dark" style="color:white;border-radius:0px; background:black" data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus-square"></i> Crear Paciente</a>
+
+ <button data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false">
+   P
+ </button>
 </div> 
 
 <div style="margin: 5px">

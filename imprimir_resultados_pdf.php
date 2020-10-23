@@ -92,6 +92,8 @@ elseif ($categoria=="orina") {
   require_once("plantillas/bacteriologia.php");
 }elseif($categoria=="hemograma"){
   require_once("resultados/hemograma.php");
+}elseif ($categoria=="inmunologia") {
+  require_once("resultados/rpr.php");
 }
 ?>
 </div>

@@ -12,5 +12,5 @@ require_once("modals_examenes/creatinina.php");
 require_once("modals_examenes/sgot.php");
 require_once("modals_examenes/sgpt.php");
 require_once("modals_examenes/baciloscopia.php");
-
+require_once("modals_examenes/vdrl.php");
 ?>

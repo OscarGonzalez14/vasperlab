@@ -82,6 +82,36 @@ case "examenes_clinica_pendientes":
 
     break;
 
+////////////////LISTAR EXAMENES DE CLINICA(EMPRESARIAL)
+case "examenes_clinica_pendientes_empresarial":
+    $datos=$ordenes->get_solicitudes_proceso();
+    //Vamos a declarar un array
+ 	$data= Array();
+    foreach($datos as $row)
+	{
+
+		$sub_array = array();				
+	
+	    $sub_array[] = $row["numero_orden"];
+		$sub_array[] = $row["nombre"];
+		$sub_array[] = $row["cod_emp"];
+		$sub_array[] = $row["empresa"];
+		$sub_array[] = $row["departamento"];				
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-file-alt" style="color:#00001a"></i></button>';
+        $sub_array[] = '<a href="examenes_empresarial.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-eye" style="color:blue"></i></button></a>';
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';                               
+		$data[] = $sub_array;
+
+	}
+
+        $results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+    break;
  ///////////////LISTAR ORDENES DE LABORATORIO PENDIENTES
 
     case "examenes_laboratorio_pendientes":

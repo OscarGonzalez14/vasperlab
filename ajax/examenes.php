@@ -58,6 +58,53 @@ case 'examenes_ingreso':
 
     break;
 
+///////////////LISTAR EXAMENES EMPRESARIAL
+case 'examenes_empresarial':
+  $datos=$examenes->get_examenes_ingresar($_POST["id_paciente_examen"],$_POST["n_orden_examen"]);
+    //Vamos a declarar un array
+  $data= Array();
+
+    foreach($datos as $row){
+
+    if ($row["examen"]=="glucosa") {
+        $examen=$row["examen"];
+        $id_paciente=$_POST["id_paciente_examen"];
+        $numero_orden=$_POST["n_orden_examen"];
+        $estado= $examenes->estado_examenes($id_paciente,$numero_orden,$examen);
+
+        foreach ($estado as $valor){          
+          $esta=$valor["estado"];
+        }
+      } else{
+        $esta="0";
+      }
+   
+
+    
+    $est = "Iniciado";
+    $clase =$row["examen"]."_show";
+    $modal = $row["examen"];
+    $color ="warning";
+    $text ="Ver Examen";
+      
+    $sub_array = array();       
+    $sub_array[] = $row["fecha"];
+    $sub_array[] = $row["nombre"];
+    $sub_array[] = $row["empresa"];
+    $sub_array[] = strtoupper($row["examen"]);
+    $sub_array[] = $esta;
+        $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $data[] = $sub_array;
+  }
+
+        $results = array(
+      "sEcho"=>1, //Información para el datatables
+      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+      "aaData"=>$data);
+    echo json_encode($results);
+
+    break;
     ///////////////uardar examen trigliceridos
     case 'registrar_examen_trig':
     $datos = $examenes->buscar_existe_trigliceridos($_POST["id_pac_exa_trigliceridos"],$_POST["num_orden_exa_trigliceridos"]);
@@ -89,6 +136,20 @@ case 'examenes_ingreso':
    <?php
    }
 	break;
+
+/******************** SHOW DATA TRIGLICERIDOS **************/
+case 'show_trigliceridos_data':    
+    $datos=$examenes->show_datos_trigliceridos($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
+  break;
+
   //////////===============REGISTRAR EXAMEN DE CRETININA=============
  case 'registrar_examen_creatinina':
     $datos = $examenes->buscar_existe_creatinina($_POST["id_pac_exa_creatina"],$_POST["num_orden_exa_creatina"]);
@@ -119,6 +180,18 @@ case 'examenes_ingreso':
            ?>
    <?php
    }
+  break;
+  #################SHOW DATA CREATININA##################
+  case 'show_creatinina_data':    
+    $datos=$examenes->show_datos_creatinina($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
   break;
 
 //////////===============REGISTRAR EXAMEN DE SGOT=============
@@ -152,6 +225,18 @@ case 'examenes_ingreso':
    <?php
    }
   break;
+  ###########show data sgot#################
+  case 'show_sgot_data':    
+    $datos=$examenes->show_datos_sgot($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
+  break;
 
   //////////===============REGISTRAR EXAMEN DE SGPT=============
  case 'registrar_examen_sgpt':
@@ -183,6 +268,18 @@ case 'examenes_ingreso':
            ?>
    <?php
    }
+  break;
+  /************SGPT DATA************/
+case 'show_sgpt_data':    
+    $datos=$examenes->show_datos_sgpt($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
   break;
 
 	//////////////////REGISTRAR XAMEN COLESTEROL
@@ -216,6 +313,20 @@ case 'examenes_ingreso':
    <?php
    }
 	break;
+  #######SHOW DATA COLESTEROL
+  #show data heces
+case 'show_colesterol_data':    
+    $datos=$examenes->show_datos_colesterol($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
+  break;
+
 	//////////////////REGISTRAR XAMEN GLUCOSA
 	case 'registrar_examen_glucosa':
   $datos = $examenes->buscar_existe_glucosa($_POST["id_pac_exa_glucosa"],$_POST["num_orden_exa_glucosa"]);
@@ -248,6 +359,21 @@ case 'examenes_ingreso':
    <?php
    }
 	break;
+#show data glucosa
+case 'show_glucosa_data':    
+    $datos=$examenes->show_datos_glucosa($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+      //$output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+      }
+    echo json_encode($output);
+  break;
+
+
+
   ///////////////////REGISTRAR ACIDO URICO///////////////
   case 'registrar_examen_acido_u':
   $datos = $examenes->buscar_existe_u($_POST["id_pac_exa_urico"],$_POST["num_orden_exa_urico"]);
@@ -279,6 +405,18 @@ case 'examenes_ingreso':
            ?>
    <?php
    }
+  break;
+#################SHOW DATA ACIDO URICO ######################
+case 'show_acido_urico_data':    
+    $datos=$examenes->show_datos_acido_urico($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
   break;
 //////////////////REGISTRAR EXAMEN BACILOSCOPIA
   case 'registrar_examen_baciloscopia':
@@ -313,10 +451,65 @@ case 'examenes_ingreso':
    }
   break;
 
+  ############SHOW DATA BACILOSCOPIA###############
+  case 'show_baciloscopia_data':    
+    $datos=$examenes->show_datos_baciloscopia($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
+  break;
+
 	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':
+  $datos = $examenes->buscar_existe_exo($_POST["id_paciente"],$_POST["numero_orden"]);
+  if(is_array($datos)==true and count($datos)==0){
 	$examenes->registar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);
+  $messages[]="ok";
+}else{
+    $examenes->editar_examenes_exo($_POST["aisla"],$_POST["sensible"],$_POST["resiste"],$_POST["id_paciente"],$_POST["numero_orden"],$_POST["refiere"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
 	break;
+  #############SHOW DATA EXOFARINGEO#############
+  case 'show_exofaringeo_data':    
+    $datos=$examenes->show_datos_exofaringeo($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["aisla"] = $row["aisla"];
+        $output["sensible"] = $row["sensible"];
+        $output["resiste"] = $row["resiste"];
+        $output["refiere"] = $row["refiere"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];       
+      }
+
+    echo json_encode($output);
+  break;
 /*=================================================================================================
 **********************************INICIO EXAMEN HEMOGRAMA*******************************                       
 ===================================================================================================*/
@@ -553,7 +746,49 @@ if (isset($messages)){
    <?php
 }
  break;
+////////////////INICIAR EXAMEN RPR/////////////////////
+ case 'registrar_examen_rpr':
+    $datos = $examenes->buscar_existe_rpr($_POST["id_pac_exa_rpr"],$_POST["num_orden_exa_rpr"]);
+      if(is_array($datos)==true and count($datos)==0){
+     $examenes->registar_examenes_rpr($_POST["resultado_rpr"],$_POST["observaciones_rpr"],$_POST["id_pac_exa_rpr"],$_POST["num_orden_exa_rpr"]);
+     $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_rpr($_POST["resultado_rpr"],$_POST["observaciones_rpr"],$_POST["id_pac_exa_rpr"],$_POST["num_orden_exa_rpr"]);
+    $errors[]="edit";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message.$_POST["num_orden_exa_rpr"]);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
 
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+  ####################SHOW DATA RPR***************
+  case 'show_rpr_data':    
+    $datos=$examenes->show_datos_rpr($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observacione"] = $row["observacione"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+
+    echo json_encode($output);
+  break;
 
 }
 ?>

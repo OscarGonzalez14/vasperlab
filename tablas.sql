@@ -87,3 +87,14 @@ observacione varchar(125),
 primary key(id_examen_baciloscopia),
 foreign key(id_paciente) references pacientes_o(id_paciente)
 );
+
+create table rpr(
+id_examen_rpr INT not null auto_increment,
+resultado varchar(25),
+numero_orden varchar(25),
+estado varchar(25),
+id_paciente INT,
+observacione varchar(125),
+primary key(id_examen_rpr),
+foreign key(id_paciente) references pacientes_o(id_paciente)
+);

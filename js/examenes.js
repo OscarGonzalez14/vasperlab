@@ -2,6 +2,7 @@ var tabla_examenes_ingreso;
 function init(){
   listar_examenes_ingreso();
   mostrar_btns_edit_exa();
+  listar_examenes_empresarial();
 }
 
 function mostrar_btns_edit_exa(){
@@ -89,6 +90,166 @@ function mostrar_btns_edit_exa(){
          
   }).DataTable();
 }
+
+/////////////////LISTAR EXAMENES EMPRESARIAL////////******
+  function listar_examenes_empresarial(){
+    var id_paciente_examen = $("#id_paciente_examen").val();
+    var n_orden_examen = $("#n_orden_examen").val();
+
+    tabla_examenes_empresarial=$('#data_examenes_empresarial').dataTable(
+    {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+      buttons: [              
+                'excelHtml5',
+                'csvHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/examenes.php?op=examenes_empresarial',
+          type : "post",
+          data:{id_paciente_examen:id_paciente_examen,n_orden_examen:n_orden_examen},            
+          error: function(e){
+            console.log(e.responseText);  
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+      
+      "language": {
+ 
+          "sProcessing":     "Procesando...",
+       
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+       
+          "sZeroRecords":    "No se encontraron resultados",
+       
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+       
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+       
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+       
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+       
+          "sInfoPostFix":    "",
+       
+          "sSearch":         "Buscar:",
+       
+          "sUrl":            "",
+       
+          "sInfoThousands":  ",",
+       
+          "sLoadingRecords": "Cargando...",
+       
+          "oPaginate": {
+       
+              "sFirst":    "Primero",
+       
+              "sLast":     "Último",
+       
+              "sNext":     "Siguiente",
+       
+              "sPrevious": "Anterior"
+       
+          },
+       
+          "oAria": {
+       
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+       
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+       
+          }
+
+         }//cerrando language
+         
+  }).DataTable();
+}
+/////////////////LISTAR EXAMENES EMPRESARIAL////////******
+  function listar_examenes_empresarial(){
+    var id_paciente_examen = $("#id_paciente_examen").val();
+    var n_orden_examen = $("#n_orden_examen").val();
+
+    tabla_examenes_ingreso=$('#data_examenes_empresarial').dataTable(
+    {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+      buttons: [              
+                'excelHtml5',
+                'csvHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/examenes.php?op=examenes_empresarial',
+          type : "post",
+          data:{id_paciente_examen:id_paciente_examen,n_orden_examen:n_orden_examen},            
+          error: function(e){
+            console.log(e.responseText);  
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+      
+      "language": {
+ 
+          "sProcessing":     "Procesando...",
+       
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+       
+          "sZeroRecords":    "No se encontraron resultados",
+       
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+       
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+       
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+       
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+       
+          "sInfoPostFix":    "",
+       
+          "sSearch":         "Buscar:",
+       
+          "sUrl":            "",
+       
+          "sInfoThousands":  ",",
+       
+          "sLoadingRecords": "Cargando...",
+       
+          "oPaginate": {
+       
+              "sFirst":    "Primero",
+       
+              "sLast":     "Último",
+       
+              "sNext":     "Siguiente",
+       
+              "sPrevious": "Anterior"
+       
+          },
+       
+          "oAria": {
+       
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+       
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+       
+          }
+
+         }//cerrando language
+         
+  }).DataTable();
+}
+
 
 /////////////////FIN LISTAR EXAMENES INGRESO////////******
 
@@ -296,6 +457,28 @@ function GuardarTrigliceridos(){
   }
 
 }
+/**************SHOW DATA TRIGLICERIDOS*************/
+$(document).on('click', '.Trigliceridos_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_trigliceridos_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_triglicerido").val(data.resultado);
+        $("#observaciones_trigliceridos").val(data.observacione);
+        $("#id_pac_exa_trigliceridos").val(data.id_paciente);
+        $("#num_orden_exa_trigliceridos").val(data.numero_orden);
+
+      }
+    });
+
+  });
 /////////////GUSRADAR COLESTEROL
 function GuardarColesterol(){
     
@@ -334,6 +517,33 @@ function GuardarColesterol(){
   }
 
 }
+/**************SHOW DATA GLUCOSA*************/
+$(document).on('click', '.Colesterol_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    //console.log(id_paciente+" ** "+numero_orden);
+    document.getElementById("guardar_hemo").style.display = "none";
+    document.getElementById("edit_exa_hemo").style.display = "flex";
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_colesterol_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_colesterol").val(data.resultado);
+        $("#observaciones_colesterol").val(data.observacione);
+        $("#id_pac_exa_colesterol").val(data.id_paciente);
+        $("#num_orden_exa_colesterol").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
+
 //=================================GUARDAR CREATININA=================
 
 function GuardarCreatinina(){
@@ -374,8 +584,29 @@ function GuardarCreatinina(){
   }
 
 }
+/*************CREATININA DATA SHOW**************/
+$(document).on('click', '.Creatinina_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
 
 
+    $.ajax({
+      url:"ajax/examenes.php?op=show_creatinina_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_creatinina").val(data.resultado);
+        $("#observaciones_creatinina").val(data.observacione);
+        $("#id_pac_exa_creatina").val(data.id_paciente);
+        $("#num_orden_exa_creatina").val(data.numero_orden);
+
+      }
+    });
+
+  });
 
 /*=======================GUARDAR SGOT==================*/
 
@@ -418,6 +649,30 @@ function Guardarsgot(){
 
 }
 
+/*******SHOW DATA SGOT********/
+$(document).on('click', '.sgot_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_sgot_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_sgot").val(data.resultado);
+        $("#observacione_sgot").val(data.observacione);
+        $("#id_pac_exa_sgot").val(data.id_paciente);
+        $("#num_orden_exa_sgot").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
 /*======================INICIO EXAMEN SGPT==================*/
 function Guardarsgpt(){
     
@@ -457,6 +712,53 @@ function Guardarsgpt(){
   }
 
 }
+/*SHOW DATA SGTP*/
+$(document).on('click', '.Colesterol_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_colesterol_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_colesterol").val(data.resultado);
+        $("#observaciones_colesterol").val(data.observacione);
+        $("#id_pac_exa_colesterol").val(data.id_paciente);
+        $("#num_orden_exa_colesterol").val(data.numero_orden);
+
+      }
+    });
+
+  });
+/**************SHOW DATA SGTP***************/
+$(document).on('click', '.sgpt_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_sgpt_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_sgpt").val(data.resultado);
+        $("#observacione_sgpt").val(data.observacione);
+        $("#id_pac_exa_sgpt").val(data.id_paciente);
+        $("#num_orden_exa_sgpt").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
 
 ///////////////////   GUARDAR GLUCOSA
 function GuardarGlucosa(){
@@ -497,6 +799,30 @@ function GuardarGlucosa(){
   }
 
 }
+/*=============FUNCION SHOW GLUCOSA==================*/
+$(document).on('click', '.glucosa_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    console.log();
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_glucosa_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#num_orden_exa_glucosa").val(data.numero_orden);
+        $("#resultado_glucosa").val(data.resultado);
+        $("#observacione_glucosa").val(data.observacione);
+        $("#id_pac_exa_glucosa").val(data.id_paciente);      }
+    });
+
+  });
+
+
+
 /*=======================GUARDAR EXAMEN DE BACILOSCOPIA=============*/
 function GuardarBaciloscopia(){
     
@@ -535,6 +861,32 @@ function GuardarBaciloscopia(){
   }
 
 }
+/*****************SHOW DATA BACILOSCOPIA*************/
+$(document).on('click', '.baciloscopia_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_baciloscopia_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_baciloscopia").val(data.resultado);
+        $("#observaciones_baciloscopia").val(data.observacione);
+        $("#id_pac_exa_baciloscopia").val(data.id_paciente);
+        $("#num_orden_exa_baciloscopia").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
+
+
 /*=======================FIN  EXAMEN DE BACILOSCOPIA=============*/
 /////////////////////////GUARDAR EXOFARIGEO
 function GuardarExo(){
@@ -550,19 +902,53 @@ function GuardarExo(){
     url:"ajax/examenes.php?op=registrar_examen_exo",
     method:"POST",
     data:{aisla:aisla,sensible:sensible,resiste:resiste,id_paciente:id_paciente,numero_orden:numero_orden,refiere:refiere},
-    dataType:"html",
+    dataType:"json",
     error:function(x,y,z){
       console.log(x);
       console.log(y);
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-    setTimeout ("Swal.fire('Examen Exofaringeo guardado exitosamente','','success')", 100);
-    setTimeout ("explode();", 2000);
+         console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen Exofaringeo Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
   }
 
   });
   }
+  /*SHOW DATA EXOFARINGEO*/
+$(document).on('click', '.exofaringeo_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_exofaringeo_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#aisla_exo").val(data.aisla);
+        $("#sensible_exo").val(data.sensible);
+        $("#resiste_exo").val(data.resiste);
+        $("#refiere_exo").val(data.refiere);
+        $("#id_paciente_exa").val(data.id_paciente);
+        $("#num_orden_exa").val(data.numero_orden);
+
+
+      }
+    });
+
+  });
+
 
   //////////////////GUARDAR EXAMEN HEMOGRAMA
   function GuardarHemograma(){
@@ -966,7 +1352,95 @@ function finalizar_orina(){
   }
   
   }
+/*   DATA SHOW ACIDO URICO   */
+$(document).on('click', '.acido_urico_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
 
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_acido_urico_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_acido_urico").val(data.resultado);
+        $("#observaciones_acido_urico").val(data.observacione);
+        $("#id_pac_exa_acido_urico").val(data.id_paciente);
+        $("#num_orden_exa_acido_urico").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
+
+
+/*=======================GUARDAR SGOT==================*/
+
+function Guardarrpr(){
+    
+  var resultado_rpr = $("#resultado_rpr").val();
+  var observaciones_rpr = $("#observaciones_rpr").val();
+  var id_pac_exa_rpr = $("#id_pac_exa_rpr").val();
+  var num_orden_exa_rpr = $("#num_orden_exa_rpr").val();
+  var fecha = $("#fecha").val();
+
+  if (resultado_rpr !=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_rpr",
+    method:"POST",
+    data:{resultado_rpr:resultado_rpr,observaciones_rpr:observaciones_rpr,id_pac_exa_rpr:id_pac_exa_rpr,num_orden_exa_rpr:num_orden_exa_rpr},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de RPR Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+
+/**************SHOW DATA VDRL*************/
+$(document).on('click', '.vdrl_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_rpr_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_rpr").val(data.resultado);
+        $("#observaciones_rpr").val(data.observacione);
+        $("#id_pac_exa_rpr").val(data.id_paciente);
+        $("#num_orden_exa_rpr").val(data.numero_orden);
+
+      }
+    });
+
+  });
 
 ///////INIT
 init();

@@ -5,10 +5,20 @@ require_once("../config/conexion.php");
 
 class Examenes extends Conectar{  
 ////////////////////CLASE REGISTRA CPACIENTES
+public function estado_examenes($id_paciente,$numero_orden,$examen){
+    $conectar= parent::conexion();
+    $sql3='select estado from '.$examen.' where id_paciente=? and numero_orden=?;';           
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden);
+    $sql3->execute();
+    return $resultado = $sql3->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ///////////REGISTRAR TRIGLICERIDOS
 public function buscar_existe_trigliceridos($id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
     $conectar= parent::conexion();
+
     $sql= "select*from trigliceridos where id_paciente=? and numero_orden=?;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$id_pac_exa_trigliceridos);
@@ -17,7 +27,15 @@ public function buscar_existe_trigliceridos($id_pac_exa_trigliceridos,$num_orden
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 public function registar_examenes_trig($resultado,$observaciones_trigliceridos,$id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
-    $estado="0";
+        if ($resultado>=0 and $resultado <=200) {
+       $estado="Bueno";
+    }elseif($resultado>=201 and $resultado <=300){
+        $estado="Intermedio";
+    }elseif($resultado>301){
+        $estado="Malo";
+    }
+
+
     $conectar=parent::conexion();
     $sql2="insert into trigliceridos values(null,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -36,16 +54,33 @@ public function registar_examenes_trig($resultado,$observaciones_trigliceridos,$
 }
 
 public function editar_examenes_trigliceridos($resultado,$observaciones_trigliceridos,$id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
-    $estado="0";
+    if ($resultado>=0 and $resultado <=200) {
+       $estado="Bueno";
+    }elseif($resultado>=201 and $resultado <=300){
+        $estado="Intermedio";
+    }elseif($resultado>301){
+        $estado="Malo";
+    }
     $conectar=parent::conexion();
-    $sql2="update trigliceridos set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
+    $sql2="update trigliceridos set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
     $sql2->bindValue(2,$observaciones_trigliceridos);
-    $sql2->bindValue(3,$id_pac_exa_trigliceridos);
-    $sql2->bindValue(4,$num_orden_exa_trigliceridos);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_trigliceridos);
+    $sql2->bindValue(5,$num_orden_exa_trigliceridos);
     $sql2->execute();
 }
+///////////////////SHOW DATA TRIGLICRERIDOS
+public function show_datos_trigliceridos($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from trigliceridos where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 /*=================INICIA EXAMEN=============================
 ====================ACIDO URICO==============================*/
@@ -140,7 +175,16 @@ public function editar_examenes_urico($resultado,$observacione_urico,$id_pac_exa
     $sql2->bindValue(5,$num_orden_exa_urico);
     $sql2->execute();
 }
-
+##################show data acido urico############
+public function show_datos_acido_urico($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from acido_urico where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 /*=================INICIA EXAMEN=============================
 ====================CREATININA =============================*/
@@ -232,6 +276,18 @@ public function editar_examenes_creatinina($resultado_creatinina,$observaciones_
     $sql2->bindValue(5,$num_orden_exa_creatina);
     $sql2->execute();
 }
+
+################show data creatinina################
+public function show_datos_creatinina($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from creatinina where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 /*===================INICIA EXAMEN ==========================
 ======================DE COLESTEROL==========================*/
 
@@ -246,7 +302,15 @@ public function buscar_existe_colesterol($id_pac_exa_colesterol,$num_orden_exa_c
 }
 
 public function registar_examenes_colesterol($resultado,$observaciones_colesterol,$id_pac_exa_colesterol,$num_orden_exa_colesterol,$fecha){
-    $estado="0";
+    if ($resultado>=0 and $resultado<=190) {
+        $estado="Bueno";
+    }elseif($resultado>=191 and $resultado<=250){
+        $estado="Intermedio";
+    }elseif($resultado>251){
+        $estado="Malo";
+    }
+
+
     $conectar=parent::conexion();
     $sql2="insert into colesterol values(null,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -266,14 +330,34 @@ public function registar_examenes_colesterol($resultado,$observaciones_colestero
 public function editar_examenes_colesterol($resultado,$observaciones_colesterol,$id_pac_exa_colesterol,$num_orden_exa_colesterol,$fecha){
     
     $conectar=parent::conexion();
-    $sql2="update colesterol set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
+    if ($resultado>=0 and $resultado<=190) {
+        $estado="Bueno";
+    }elseif($resultado>=191 and $resultado<=250){
+        $estado="Intermedio";
+    }elseif($resultado>251){
+        $estado="Malo";
+    }
+    $sql2="update colesterol set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
     $sql2->bindValue(2,$observaciones_colesterol);
-    $sql2->bindValue(3,$id_pac_exa_colesterol);
-    $sql2->bindValue(4,$num_orden_exa_colesterol);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_colesterol);
+    $sql2->bindValue(5,$num_orden_exa_colesterol);
     $sql2->execute();
 }
+#######################SHOW DATA COLESTEROL####################
+
+public function show_datos_colesterol($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from colesterol where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 /*===================INICIA EXAMEN ==========================
 ======================DE GLUCOSA=====================*/
 ////***************COMPROBAR SI EXISTE EXAMEN DE HEMATOLOGIA***********////
@@ -318,7 +402,13 @@ public function registar_examenes_glucosa($resultado,$observacione_glucosa,$id_p
 }
 
 public function editar_examenes_glucosa($resultado,$observacione_glucosa,$id_pac_exa_glucosa,$num_orden_exa_glucosa,$fecha){
-    $estado="0";
+        if ($resultado>=75 and $resultado <=115) {
+        $estado="Bueno";
+    }elseif(($resultado>56 && $resultado<=115) or ($resultado>115 && $resultado<=150)){
+        $estado="Intermedio";
+    }elseif(($resultado>150) or ($resultado<55)){
+        $estado="Malo";
+    }
     $conectar=parent::conexion();
     $sql2="update glucosa set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
@@ -329,7 +419,41 @@ public function editar_examenes_glucosa($resultado,$observacione_glucosa,$id_pac
     $sql2->execute();
 }
 
+/////////////GET DATOS GLUCOSA PARA FUNCION SHOW DATA
+public function show_datos_glucosa($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from glucosa where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 //////////////REGISTRAR EXAMEN EXOFARINGEO
+public function buscar_existe_exo($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql= "select*from exofaringeo where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+public function editar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$numero_orden,$refiere){
+    $conectar=parent::conexion();
+    $sql2="update exofaringeo set aisla=?,sensible=?,resiste=?,refiere=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$aisla);
+    $sql2->bindValue(2,$sensible);
+    $sql2->bindValue(3,$resiste);
+    $sql2->bindValue(4,$refiere);
+    $sql2->bindValue(5,$id_paciente);
+    $sql2->bindValue(6,$numero_orden);
+    $sql2->execute();
+}
+
+
 public function registar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$numero_orden,$refiere){
     $conectar=parent::conexion();
     $sql2="insert into exofaringeo values(null,?,?,?,?,?,?);";
@@ -344,10 +468,20 @@ public function registar_examenes_exo($aisla,$sensible,$resiste,$id_paciente,$nu
 
     $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='exofaringeo';";
     $sql3=$conectar->prepare($sql3);
-    $sql3->bindValue(1,$id_pac_exa_glucosa);
-    $sql3->bindValue(2,$num_orden_exa_glucosa);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden);
     $sql3->execute();
 }
+public function show_datos_exofaringeo($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from exofaringeo where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 /*===================INICIA EXAMEN ==========================
 ======================DE HEMOGRAMA=====================*/
 ////***************COMPROBAR SI EXISTE EXAMEN DE HEMATOLOGIA***********////
@@ -366,7 +500,7 @@ public function registar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vc
     
     if (($hb_hemato>=12.5 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
         $estado="Bueno";
-    }elseif($hb<12.5 && ($gb_hemato>=4500 && $gb_hemato>=10500) &&($plaquetas_hemato>=150000 or $plaquetas_hemato>=40000)){
+    }elseif($hb_hemato<12.5 && ($gb_hemato>=4500 && $gb_hemato>=10500) &&($plaquetas_hemato>=150000 or $plaquetas_hemato>=40000)){
         $estado="Malo";
     }
 
@@ -484,8 +618,14 @@ public function buscar_existe_heces($id_paciente,$numero_orden_paciente){
 
 public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
 
+    $hematies_hecess=preg_replace("/[[:space:]]/"," ",trim($hematies_heces));
+    $leucocitos_hecess=preg_replace("/[[:space:]]/"," ",trim($leucocitos_heces));
+    $activos_hecess=preg_replace("/[[:space:]]/"," ",trim($activos_heces));
+    $quistes_hecess = preg_replace("/[[:space:]]/"," ",trim($quistes_heces));
+    $metazoarios_hecess=preg_replace("/[[:space:]]/"," ",trim($metazoarios_heces));
+
     $conectar=parent::conexion();
-        if (($hematies_heces=="No se observan" or $hematies_heces=="no se observan") && ($leucocitos_heces=="No se observan" or $leucocitos_heces=="no se observan") &&($activos_heces=="No se observan" or $activos_heces=="no se observan") && ($quistes_heces=="No se observan" or $quistes_heces=="no se observan") && ($metazoarios_heces=="No se observan" or $quistes_heces=="no se observan")) {
+        if (($hematies_hecess=="No se observan" or $hematies_hecess=="no se observan") && ($leucocitos_hecess=="No se observan" or $leucocitos_hecess=="no se observan") &&($activos_hecess=="No se observan" or $activos_hecess=="no se observan") && ($quistes_hecess=="No se observan" or $quistes_hecess=="no se observan") && ($metazoarios_hecess=="No se observan" or $metazoarios_hecess=="no se observan")) {
         $estado="Bueno";
      }else{
         $estado="Malo";
@@ -499,11 +639,11 @@ public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consis
     $sql2->bindValue(4,$mucus_heces); 
     $sql2->bindValue(5,$macroscopicos_heces);
     $sql2->bindValue(6,$microscopicos_heces); 
-    $sql2->bindValue(7,$hematies_heces);
-    $sql2->bindValue(8,$leucocitos_heces); 
-    $sql2->bindValue(9,$activos_heces);
-    $sql2->bindValue(10,$quistes_heces);
-    $sql2->bindValue(11,$metazoarios_heces);
+    $sql2->bindValue(7,$hematies_hecess);
+    $sql2->bindValue(8,$leucocitos_hecess); 
+    $sql2->bindValue(9,$activos_hecess);
+    $sql2->bindValue(10,$quistes_hecess);
+    $sql2->bindValue(11,$metazoarios_hecess);
     $sql2->bindValue(12,$protozoarios_heces);
     $sql2->bindValue(13,$observaciones_heces);
     $sql2->bindValue(14,$id_paciente);
@@ -531,11 +671,18 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
 
     $conectar=parent::conexion();
 
-    if (($hematies_heces=="No se observan" or $hematies_heces=="no se observan") && ($leucocitos_heces=="No se observan" or $leucocitos_heces=="no se observan") &&($activos_heces=="No se observan" or $activos_heces=="no se observan") && ($quistes_heces=="No se observan" or $quistes_heces=="no se observan") && ($metazoarios_heces=="No se observan" or $quistes_heces=="no se observan")) {
+    $hematies_hecess=preg_replace("/[[:space:]]/"," ",trim($hematies_heces));
+    $leucocitos_hecess=preg_replace("/[[:space:]]/"," ",trim($leucocitos_heces));
+    $activos_hecess=preg_replace("/[[:space:]]/"," ",trim($activos_heces));
+    $quistes_hecess = preg_replace("/[[:space:]]/"," ",trim($quistes_heces));
+    $metazoarios_hecess=preg_replace("/[[:space:]]/"," ",trim($metazoarios_heces));
+
+    $conectar=parent::conexion();
+        if (($hematies_hecess=="No se observan" or $hematies_hecess=="no se observan") && ($leucocitos_hecess=="No se observan" or $leucocitos_hecess=="no se observan") &&($activos_hecess=="No se observan" or $activos_hecess=="no se observan") && ($quistes_hecess=="No se observan" or $quistes_hecess=="no se observan") && ($metazoarios_hecess=="No se observan" or $metazoarios_hecess=="no se observan")) {
         $estado="Bueno";
      }else{
         $estado="Malo";
-     }
+     }  
 
     $sql2="update heces set color=?,consistencia=?,mucus=?,macroscopicos=?,microscopicos=?,hematies=?,leucocitos=?,protozoarios=?,activos=?,quistes=?,metazoarios=?,observaciones=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
@@ -544,12 +691,12 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
     $sql2->bindValue(3,$mucus_heces);
     $sql2->bindValue(4,$macroscopicos_heces);
     $sql2->bindValue(5,$microscopicos_heces);
-    $sql2->bindValue(6,$hematies_heces);
-    $sql2->bindValue(7,$leucocitos_heces);
+    $sql2->bindValue(6,$hematies_hecess);
+    $sql2->bindValue(7,$leucocitos_hecess);
     $sql2->bindValue(8,$protozoarios_heces);
-    $sql2->bindValue(9,$activos_heces);
-    $sql2->bindValue(10,$quistes_heces);
-    $sql2->bindValue(11,$metazoarios_heces);
+    $sql2->bindValue(9,$activos_hecess);
+    $sql2->bindValue(10,$quistes_hecess);
+    $sql2->bindValue(11,$metazoarios_hecess);
     $sql2->bindValue(12,$observaciones_heces);
     $sql2->bindValue(13,$estado);
     $sql2->bindValue(14,$id_paciente);
@@ -578,10 +725,13 @@ public function buscar_existe_orina($id_paciente,$numero_orden_paciente){
 }
 
 public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente){
+    $conectar= parent::conexion();
+    $esterasas_orinass=preg_replace("/[[:space:]]/"," ",trim($esterasas_orina));
+    $nitritos_orinass=preg_replace("/[[:space:]]/"," ",trim($nitritos_orina));
+    $sangre_oculta_orinas=preg_replace("/[[:space:]]/"," ",trim($sangre_oculta_orina));
+    $bacterias_orinass=preg_replace("/[[:space:]]/"," ",trim($bacterias_orina));
 
-    $conectar=parent::conexion();
-
-    if (($esterasas_orina=="Negativo" or $esterasas_orina=="negativo") && ($nitritos_orina=="Negativo" or $nitritos_orina=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orina=="negativo") && ($sangre_oculta_orina=="Negativo" or $sangre_oculta_orina=="negativo") && ($bacterias_orina=="No se observan" or $bacterias_orina=="no se observan")) {
+    if (($esterasas_orinass=="Negativo" or $esterasas_orinass=="negativo") && ($nitritos_orinas=="Negativo" or $nitritos_orinas=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orinas=="negativo") && ($sangre_oculta_orinas=="Negativo" or $sangre_oculta_orinas=="negativo") && ($bacterias_orinas=="No se observan" or $bacterias_orinas=="no se observan")) {
            $estado ="Bueno";
        }else{
         $estado="Malo";
@@ -596,7 +746,7 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
     $sql2->bindValue(3,$olor_orina);
     $sql2->bindValue(4,$aspecto_orina); 
     $sql2->bindValue(5,$densidad_orina); 
-    $sql2->bindValue(6,$esterasas_orina);
+    $sql2->bindValue(6,$esterasas_orinass);
 
     $sql2->bindValue(7,$ph_orina); 
     $sql2->bindValue(8,$proteinas_orina);
@@ -605,18 +755,18 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
     $sql2->bindValue(11,$urobilinogeno_orina);              
 
     $sql2->bindValue(12,$bilirrubina_orina);
-    $sql2->bindValue(13,$sangre_oculta_orina);
+    $sql2->bindValue(13,$sangre_oculta_orinas);
     $sql2->bindValue(14,$cilindros_orina);
     $sql2->bindValue(15,$leucocitos_orina);
     $sql2->bindValue(16,$hematies_orina);
 
     $sql2->bindValue(17,$epiteliales_orina);
     $sql2->bindValue(18,$filamentos_orina);
-    $sql2->bindValue(19,$bacterias_orina);
+    $sql2->bindValue(19,$bacterias_orinass);
     $sql2->bindValue(20,$cristales_orina);
     $sql2->bindValue(21,$observaciones_orina);
     $sql2->bindValue(22,$id_paciente);
-    $sql2->bindValue(23,$nitritos_orina);
+    $sql2->bindValue(23,$nitritos_orinass);
     $sql2->bindValue(24,$estado);
               
     $sql2->execute();
@@ -631,13 +781,16 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
 public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente){
 
     $conectar=parent::conexion();
+    $esterasas_orinass=preg_replace("/[[:space:]]/"," ",trim($esterasas_orina));
+    $nitritos_orinass=preg_replace("/[[:space:]]/"," ",trim($nitritos_orina));
+    $sangre_oculta_orinas=preg_replace("/[[:space:]]/"," ",trim($sangre_oculta_orina));
+    $bacterias_orinass=preg_replace("/[[:space:]]/"," ",trim($bacterias_orina));
 
-    if (($esterasas_orina=="Negativo" or $esterasas_orina=="negativo") && ($nitritos_orina=="Negativo" or $nitritos_orina=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orina=="negativo") && ($sangre_oculta_orina=="Negativo" or $sangre_oculta_orina=="negativo") && ($bacterias_orina=="No se observan" or $bacterias_orina=="no se observan")) {
+    if (($esterasas_orinass=="Negativo" or $esterasas_orinass=="negativo") && ($nitritos_orinas=="Negativo" or $nitritos_orinas=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orinas=="negativo") && ($sangre_oculta_orinas=="Negativo" or $sangre_oculta_orinas=="negativo") && ($bacterias_orinas=="No se observan" or $bacterias_orinas=="no se observan")) {
            $estado ="Bueno";
-       }elseif(($esterasas_orina!="Negativo" or $esterasas_orina!="negativo") && ($nitritos_orina!="Negativo" or $nitritos_orina!="negativo") && ($glucosa_orina!="Negativo" or $glucosa_orina!="negativo") && ($sangre_oculta_orina!="Negativo" or $sangre_oculta_orina!="negativo") && ($bacterias_orina!="No se observan" or $bacterias_orina!="no se observan")){
-
+       }else{
         $estado="Malo";
-       }  
+       } 
 
     $sql2="update examen_orina set color=?,olor=?,aspecto=?,densidad=?,est_leuco=?,ph=?,proteinas=?,glucosa=?,cetonas=?,urobigilogeno=?,bilirrubina=?,sangre_oculta=?,cilindros=?,leucocitos=?,hematies=?,cel_epiteliales=?,filamentos_muco=?,bacterias=?,cristales=?,observaciones=?,nitritos_orina=?,estado=? where id_paciente=? and numero_orden=?;";
 
@@ -646,23 +799,23 @@ public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$den
     $sql2->bindValue(2,$olor_orina);
     $sql2->bindValue(3,$aspecto_orina);
     $sql2->bindValue(4,$densidad_orina);
-    $sql2->bindValue(5,$esterasas_orina);
+    $sql2->bindValue(5,$esterasas_orinass);
     $sql2->bindValue(6,$ph_orina);
     $sql2->bindValue(7,$proteinas_orina);
     $sql2->bindValue(8,$glucosa_orina);
     $sql2->bindValue(9,$cetonas_orina);
     $sql2->bindValue(10,$urobilinogeno_orina);
     $sql2->bindValue(11,$bilirrubina_orina);
-    $sql2->bindValue(12,$sangre_oculta_orina);
+    $sql2->bindValue(12,$sangre_oculta_orinas);
     $sql2->bindValue(13,$cilindros_orina);
     $sql2->bindValue(14,$leucocitos_orina);
     $sql2->bindValue(15,$hematies_orina);
     $sql2->bindValue(16,$epiteliales_orina);
     $sql2->bindValue(17,$filamentos_orina);
-    $sql2->bindValue(18,$bacterias_orina);
+    $sql2->bindValue(18,$bacterias_orinass);
     $sql2->bindValue(19,$cristales_orina);
     $sql2->bindValue(20,$observaciones_orina);
-    $sql2->bindValue(21,$nitritos_orina);
+    $sql2->bindValue(21,$nitritos_orinass);
     $sql2->bindValue(22,$estado);
     $sql2->bindValue(23,$id_paciente);
     $sql2->bindValue(24,$numero_orden_paciente);
@@ -750,6 +903,17 @@ public function editar_examenes_sgot($resultado_sgot,$observacione_sgot,$id_pac_
     $sql2->bindValue(5,$num_orden_exa_sgot);
     $sql2->execute();
 }
+##################sgor data show##########
+public function show_datos_sgot($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from sgot where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 ///=========================INICIO SGPT========================
 public function buscar_existe_sgpt($id_pac_exa_sgpt,$num_orden_exa_sgpt){
     $conectar= parent::conexion();
@@ -811,7 +975,17 @@ public function editar_examenes_sgpt($resultado_sgpt,$observacione_sgpt,$id_pac_
     $sql2->bindValue(5,$num_orden_exa_sgpt);
     $sql2->execute();
 }
-////////////////////////
+
+##################SGPT SHOW DATA######
+public function show_datos_sgpt($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from sgpt where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 /*==================REGISTRO DE EXAMEN DE BACILOSCOPIA=========*/
 
 public function buscar_existe_baciloscopia($id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
@@ -825,7 +999,11 @@ public function buscar_existe_baciloscopia($id_pac_exa_baciloscopia,$num_orden_e
 }
 
 public function registar_examenes_baciloscopia($resultado,$observaciones_baciloscopia,$id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
-    $estado="0";
+    if ($resultado=="Positivo" or $resultado=="positivo") {
+        $estado="Malo";
+    }else{
+        $estado="Bueno";
+    }
     $conectar=parent::conexion();
     $sql2="insert into baciloscopia values(null,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -844,17 +1022,32 @@ public function registar_examenes_baciloscopia($resultado,$observaciones_bacilos
 }
 
 public function editar_examenes_baciloscopia($resultado,$observaciones_baciloscopia,$id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
-    $estado="0";
+    
+    if ($resultado=="Positivo" or $resultado=="positivo") {
+        $estado="Malo";
+    }else{
+        $estado="Bueno";
+    }
     $conectar=parent::conexion();
-    $sql2="update baciloscopia set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
+    $sql2="update baciloscopia set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
     $sql2->bindValue(2,$observaciones_baciloscopia);
-    $sql2->bindValue(3,$id_pac_exa_baciloscopia);
-    $sql2->bindValue(4,$num_orden_exa_baciloscopia);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_baciloscopia);
+    $sql2->bindValue(5,$num_orden_exa_baciloscopia);
     $sql2->execute();
 }
-
+#################SHOW DATA BACILOSCOPIa##########
+public function show_datos_baciloscopia($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from baciloscopia where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 public function registar_examenes_check(){
 
@@ -885,8 +1078,73 @@ $sql->execute();
 return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/////////////////////////INICIAR EXAMEN RPR
+public function buscar_existe_rpr($id_pac_exa_rpr,$num_orden_exa_rpr){
+    $conectar= parent::conexion();
+    $sql= "select*from rpr where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_rpr);
+    $sql->bindValue(2,$num_orden_exa_rpr);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+public function registar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_exa_rpr,$num_orden_exa_rpr){
+
+    if($resultado_rpr == "Reactivo"){
+      $estado="Malo";  
+    }else{
+    $estado="Bueno";
+    }
 
 
+    $conectar=parent::conexion();
+
+    $sql2="insert into rpr values(null,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado_rpr);
+    $sql2->bindValue(2,$num_orden_exa_rpr);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_rpr);
+    $sql2->bindValue(5,$observaciones_rpr);
+    
+    $sql2->execute();
+
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='vdrl';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_pac_exa_rpr);
+    $sql3->bindValue(2,$num_orden_exa_rpr);
+    $sql3->execute();
+}
+
+public function editar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_exa_rpr,$num_orden_exa_rpr){
+
+    if($resultado_rpr == "Reactivo"){
+      $estado="Malo";  
+    }else{
+    $estado="Bueno";
+    }
+
+    $conectar=parent::conexion();
+    $sql2="update rpr set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado_rpr);
+    $sql2->bindValue(2,$observaciones_rpr);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_rpr);
+    $sql2->bindValue(5,$num_orden_exa_rpr);
+    $sql2->execute();
+}
+#################SHOW DATA RPR
+public function show_datos_rpr($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from rpr where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 }//FIN DE LA CLASE
 

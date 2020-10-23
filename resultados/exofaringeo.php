@@ -12,12 +12,16 @@ $datos_exofaringeo = $reporteria->get_data_exofaringeo($_GET["id_paciente"],$_GE
 <?php
 
   for($i=0;$i<sizeof($datos_exofaringeo);$i++){
+  $sens=$datos_exofaringeo[$i]["sensible"];
+  $array=explode(",", $sens);
 
 ?>
 <tr style="font-size:11px" class="even_row">
     <td style="text-align: center;width:20%;color: red" colspan="20" class="stilot1"><strong>EXOFARINGEO</strong></td>
     <td style="text-align: center;width:25%" colspan="25" class="stilot1"><span class=""><?php echo $datos_exofaringeo[$i]["aisla"];?></span></td>
-    <td style="text-align: center;width:35%" colspan="35" class="stilot1"><span class=""><?php echo $datos_exofaringeo[$i]["sensible"];?></span></td>
+    <td style="text-align: center;width:35%" colspan="35" class="stilot1"><span class=""><?php foreach ($array as &$valor) {
+    echo $valor."<br>";
+}?></span></td>
     <td style="text-align: center;width:20%" colspan="20" class="stilot1"><?php echo $datos_exofaringeo[$i]["resiste"];?></td>
 </tr>
 

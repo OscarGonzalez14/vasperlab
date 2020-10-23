@@ -94,14 +94,13 @@ public function get_detalle_solicitudes($id_paciente,$numero_orden){
 
 ///////////////////set estado solicitud
 public function set_estado_solicitud($id_paciente,$numero_orden){
-    $conectar= parent::conexion();         
+    $conectar = parent::conexion();         
     $sql= "update detalle_orden set estado='1' where id_paciente=? and numero_orden=?;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$id_paciente);
     $sql->bindValue(2,$numero_orden);
     $sql->execute();
-    //return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
-    //$conectar= parent::conexion();         
+         
     $sql= "update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=?;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$id_paciente);
@@ -109,13 +108,14 @@ public function set_estado_solicitud($id_paciente,$numero_orden){
     $sql->execute();
 }
 //////////////////correlativo para ordenes diarias de laboratorio
-public function get_correlativo_orden_laboratorio($now){
+  public function get_correlativo_orden_laboratorio($now){
+
     $conectar= parent::conexion();         
     $sql= "select numero_orden as correlativo_de_orden from detalle_orden where fecha=? order by id_detalle_orden DESC limit 1;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$now);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
-}
+  }
 
 }

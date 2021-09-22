@@ -64,22 +64,36 @@ case 'examenes_empresarial':
     //Vamos a declarar un array
   $data= Array();
 
-    foreach($datos as $row){
-
-    if ($row["examen"]=="glucosa") {
+    foreach($datos as $row){    
         $examen=$row["examen"];
+        //$exameness=strtolower($examen);
+        $esta="0";
+        if ($examen !="orina") {
+          $exameness=strtolower($examen);
+        }elseif($examen=="orina"){
+          $exameness="examen_orina";
+          //if ($examen=="Creatinina" or $examen=="sgot" or $examen=="sgpt" or $examen=="heces" or  $examen=="hemograma" or  $examen=="baciloscopia") {
+        }elseif($examen=="vdrl"){
+            $exameness="rpr";
+        }
         $id_paciente=$_POST["id_paciente_examen"];
         $numero_orden=$_POST["n_orden_examen"];
-        $estado= $examenes->estado_examenes($id_paciente,$numero_orden,$examen);
-
+        $estado= $examenes->estado_examenes($id_paciente,$numero_orden,$exameness);
         foreach ($estado as $valor){          
           $esta=$valor["estado"];
-        }
-      } else{
-        $esta="0";
-      }
+        } 
+        
    
-
+      if ($esta=="Bueno") {
+        $badge='success';
+      }elseif ($esta=="Intermedio") {
+        $badge='warning';
+      }
+      elseif ($esta=="Malo") {
+        $badge='danger';
+      }else{
+        $badge="light";
+      }
     
     $est = "Iniciado";
     $clase =$row["examen"]."_show";
@@ -92,8 +106,8 @@ case 'examenes_empresarial':
     $sub_array[] = $row["nombre"];
     $sub_array[] = $row["empresa"];
     $sub_array[] = strtoupper($row["examen"]);
-    $sub_array[] = $esta;
-        $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $sub_array[] = '<span class="right badge badge-'.$badge.'" style="font-size:12px"> '.$esta.'</span>';
+        $sub_array[] = '<button type="button"  class="disabled_input btn btn-primary btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
     $data[] = $sub_array;
   }
 
@@ -451,6 +465,9 @@ case 'show_acido_urico_data':
    }
   break;
 
+
+
+
   ############SHOW DATA BACILOSCOPIA###############
   case 'show_baciloscopia_data':    
     $datos=$examenes->show_datos_baciloscopia($_POST["id_paciente"],$_POST["numero_orden"]);
@@ -463,6 +480,43 @@ case 'show_acido_urico_data':
 
     echo json_encode($output);
   break;
+#########################REGITSRAR EXAMEN ANTIGENOS
+  case 'registrar_examen_antigenos':
+  $datos = $examenes->buscar_existe_antigenos($_POST["id_pac_exa_antigenos"],$_POST["num_orden_exa_antigenos"]);
+  if(is_array($datos)==true and count($datos)==0){
+  $examenes->registar_examenes_antigenos($_POST["muestra_antigenos"],$_POST["resultado"],$_POST["observaciones_antigenos"],$_POST["id_pac_exa_antigenos"],$_POST["num_orden_exa_antigenos"]);
+  $messages[]="ok";
+  }else{
+    $examenes->editar_examenes_antigenos($_POST["muestra_antigenos"],$_POST["resultado"],$_POST["observaciones_antigenos"],$_POST["id_pac_exa_antigenos"],$_POST["num_orden_exa_antigenos"]);
+    $errors[]="edit";
+  }
+
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+
+
+
+
 
 	////////////REGISTRAR EXAMEN EXOFARINGEO
 	case 'registrar_examen_exo':
@@ -603,7 +657,7 @@ if(is_array($datos)==true and count($datos)==0){
 $examenes->agregar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"]);
 $messages[]="ok";
 }else{
-  $examenes->editar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"]);
+  $examenes->editar_examen_heces($_POST["numero_orden_paciente"],$_POST["color_heces"],$_POST["consistencia_heces"],$_POST["mucus_heces"],$_POST["macroscopicos_heces"],$_POST["microscopicos_heces"],$_POST["hematies_heces"],$_POST["leucocitos_heces"],$_POST["activos_heces"],$_POST["quistes_heces"],$_POST["metazoarios_heces"],$_POST["protozoarios_heces"],$_POST["observaciones_heces"],$_POST["id_paciente"],$_POST["tratamiento_heces"],$_POST["diagnostico_heces"]);
     $errors[]="edit";
   }
   if (isset($messages)){
@@ -674,10 +728,10 @@ case "registrar_examen_orina":
 $datos = $examenes->buscar_existe_orina($_POST["id_paciente"],$_POST["numero_orden_paciente"]);
 
 if(is_array($datos)==true and count($datos)==0){
-$examenes->agregar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"]);
+$examenes->agregar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"],$_POST["tratamiento_orina"],$_POST["diagnostico_orina"]);
 $messages[]="ok";
 }else{
-  $examenes->editar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"]);
+  $examenes->editar_examen_orina($_POST["color_orina"],$_POST["olor_orina"],$_POST["aspecto_orina"],$_POST["densidad_orina"],$_POST["esterasas_orina"],$_POST["nitritos_orina"],$_POST["ph_orina"],$_POST["proteinas_orina"],$_POST["glucosa_orina"],$_POST["cetonas_orina"],$_POST["urobilinogeno_orina"],$_POST["bilirrubina_orina"],$_POST["sangre_oculta_orina"],$_POST["cilindros_orina"],$_POST["leucocitos_orina"],$_POST["hematies_orina"],$_POST["epiteliales_orina"],$_POST["filamentos_orina"],$_POST["bacterias_orina"],$_POST["cristales_orina"],$_POST["observaciones_orina"],$_POST["id_paciente"],$_POST["numero_orden_paciente"],$_POST["tratamiento_orina"],$_POST["diagnostico_orina"]);
   $errors[]="edit";
 }
 if (isset($messages)){
@@ -788,6 +842,81 @@ if (isset($messages)){
       }
 
     echo json_encode($output);
+  break;
+
+case 'ingresar_diagnosticos_examen':
+  $datos=$examenes->get_examenes_ingresar($_POST["id_paciente_examen"],$_POST["n_orden_examen"]);
+    //Vamos a declarar un array
+  $data= Array();
+    foreach($datos as $row){
+      $estado = $row["estado"];
+      if ($estado=='0') {
+        $est = "En Proceso";
+        $clase ="none";
+        $modal = $row["examen"];
+        $color ="primary";
+        $text ="Iniciar";
+      }elseif ($estado=='1') {
+        $est = "Iniciado";
+        $clase =$row["examen"]."_show";
+        $modal = $row["examen"];
+        $color ="warning";
+        $text ="Iniciado";
+      }elseif ($estado=='2') {
+        $est = "Finalizado";
+        $clase ="";
+        $modal ="";
+        $color ="success";
+        $text ="Finalizado";
+      }
+
+    $sub_array = array();       
+    $sub_array[] = $row["fecha"];
+    $sub_array[] = $row["nombre"];
+    $sub_array[] = $row["empresa"];
+    $sub_array[] = strtoupper($row["examen"]);
+    //$sub_array[] = strtoupper($est);
+        $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $data[] = $sub_array;
+  }
+
+      $results = array(
+      "sEcho"=>1, //Información para el datatables
+      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+      "aaData"=>$data);
+    echo json_encode($results);
+
+    break;
+
+/////////////////////REGISTRAR HDL ///////////////
+ case 'registrar_examen_hdl':
+   // $datos = $examenes->buscar_existe_hdl($_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
+     // if(is_array($datos)==true and count($datos)==0){
+     $examenes->registrar_hdl($_POST["resultado_hdl"],$_POST["observaciones_hdl"],$_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
+     $messages[]="ok";
+  /*}else{
+    $examenes->editar_examenes_hdl($_POST["resultado_hdl"],$_POST["observaciones_hdl"],$_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
+    $errors[]="edit";
+  }*/
+  if (isset($messages)){?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
   break;
 
 }

@@ -3,7 +3,7 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
 ?>
 <table class="table2" width="100%">
   <tr>
-      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong></td>
+      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong>&nbsp;&nbsp;&nbsp;&nbsp;COD. EMPLEADO: <?php echo $cod_emp;?><strong></td>
     </tr>
     <tr><td style="text-align: center;width: 100%" colspan="100">
       <span style="color: red;font-size: 15px;text-align: center"><strong>EXAMEN GENERAL DE ORINA</strong></span>

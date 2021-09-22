@@ -39,3 +39,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+   var baci = ["No se observan Bacilos Ácido-Alcohol Resistente","Positivo"];
+   autocomplete(document.getElementById("resultado_baciloscopia"), baci);
+</script>

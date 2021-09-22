@@ -5,9 +5,9 @@ require_once("../config/conexion.php");
 
 class Examenes extends Conectar{  
 ////////////////////CLASE REGISTRA CPACIENTES
-public function estado_examenes($id_paciente,$numero_orden,$examen){
+public function estado_examenes($id_paciente,$numero_orden,$exameness){
     $conectar= parent::conexion();
-    $sql3='select estado from '.$examen.' where id_paciente=? and numero_orden=?;';           
+    $sql3='select estado from '.$exameness.' where id_paciente=? and numero_orden=?;';           
     $sql3=$conectar->prepare($sql3);
     $sql3->bindValue(1,$id_paciente);
     $sql3->bindValue(2,$numero_orden);
@@ -26,12 +26,12 @@ public function buscar_existe_trigliceridos($id_pac_exa_trigliceridos,$num_orden
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
-public function registar_examenes_trig($resultado,$observaciones_trigliceridos,$id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
-        if ($resultado>=0 and $resultado <=200) {
+   public function registar_examenes_trig($resultado,$observaciones_trigliceridos,$id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
+    if ($resultado>=0 and $resultado <=200) {
        $estado="Bueno";
     }elseif($resultado>=201 and $resultado <=300){
         $estado="Intermedio";
-    }elseif($resultado>301){
+    }elseif($resultado>=301){
         $estado="Malo";
     }
 
@@ -51,17 +51,78 @@ public function registar_examenes_trig($resultado,$observaciones_trigliceridos,$
     $sql3->bindValue(1,$id_pac_exa_trigliceridos);
     $sql3->bindValue(2,$num_orden_exa_trigliceridos);
     $sql3->execute();
+
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_trigliceridos);
+    $sql4->bindValue(2,$num_orden_exa_trigliceridos);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_trigliceridos);
+        $sql6->bindValue(3,$num_orden_exa_trigliceridos);
+        $sql6->execute();
+
+    }
 }
 
 public function editar_examenes_trigliceridos($resultado,$observaciones_trigliceridos,$id_pac_exa_trigliceridos,$num_orden_exa_trigliceridos){
+
+    $conectar=parent::conexion();
+
     if ($resultado>=0 and $resultado <=200) {
        $estado="Bueno";
     }elseif($resultado>=201 and $resultado <=300){
         $estado="Intermedio";
-    }elseif($resultado>301){
+    }elseif($resultado>=301){
         $estado="Malo";
     }
-    $conectar=parent::conexion();
+    ////////////EDITAR L ESTADO DE DETALLE_ORDEN
+
+    ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_trigliceridos);
+    $sql->bindValue(2,$num_orden_exa_trigliceridos);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from trigliceridos where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_trigliceridos);
+    $sql4->bindValue(2,$num_orden_exa_trigliceridos);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+
     $sql2="update trigliceridos set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
@@ -70,6 +131,15 @@ public function editar_examenes_trigliceridos($resultado,$observaciones_triglice
     $sql2->bindValue(4,$id_pac_exa_trigliceridos);
     $sql2->bindValue(5,$num_orden_exa_trigliceridos);
     $sql2->execute();
+
+    ###########ACTUALIZA ESTADO DE LA ORDEN
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_trigliceridos);
+    $sql6->bindValue(3,$num_orden_exa_trigliceridos);
+    $sql6->execute();
+
 }
 ///////////////////SHOW DATA TRIGLICRERIDOS
 public function show_datos_trigliceridos($id_paciente,$numero_orden){
@@ -135,6 +205,28 @@ public function registar_examenes_urico($resultado,$observacione_urico,$id_pac_e
     $sql3->bindValue(1,$id_pac_exa_urico);
     $sql3->bindValue(2,$num_orden_exa_urico);
     $sql3->execute();
+/////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_urico);
+    $sql4->bindValue(2,$num_orden_exa_urico);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_urico);
+        $sql6->bindValue(3,$num_orden_exa_urico);
+        $sql6->execute();
+
+    }
 }
 
 public function editar_examenes_urico($resultado,$observacione_urico,$id_pac_exa_urico,$num_orden_exa_urico){
@@ -164,7 +256,41 @@ public function editar_examenes_urico($resultado,$observacione_urico,$id_pac_exa
         $estado="Malo";
     }
 
+    ////////////EDITAR L ESTADO DE DETALLE_ORDEN
 
+    ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_urico);
+    $sql->bindValue(2,$num_orden_exa_urico);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from acido_urico where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_urico);
+    $sql4->bindValue(2,$num_orden_exa_urico);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
    
     $sql2="update acido_urico set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
@@ -174,6 +300,14 @@ public function editar_examenes_urico($resultado,$observacione_urico,$id_pac_exa
     $sql2->bindValue(4,$id_pac_exa_urico);
     $sql2->bindValue(5,$num_orden_exa_urico);
     $sql2->execute();
+
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_urico);
+    $sql6->bindValue(3,$num_orden_exa_urico);
+    $sql6->execute();
 }
 ##################show data acido urico############
 public function show_datos_acido_urico($id_paciente,$numero_orden){
@@ -238,6 +372,29 @@ public function registar_examenes_creatinina($resultado_creatinina,$observacione
     $sql3->bindValue(1,$id_pac_exa_creatina);
     $sql3->bindValue(2,$num_orden_exa_creatina);
     $sql3->execute();
+/////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_creatina);
+    $sql4->bindValue(2,$num_orden_exa_creatina);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_creatina);
+        $sql6->bindValue(3,$num_orden_exa_creatina);
+        $sql6->execute();
+
+
+}
 }
 
 public function editar_examenes_creatinina($resultado_creatinina,$observaciones_creatinina,$id_pac_exa_creatina,$num_orden_exa_creatina){
@@ -266,6 +423,40 @@ public function editar_examenes_creatinina($resultado_creatinina,$observaciones_
     }elseif ($genero=="Masculino" && $resultado_creatinina>=1.60){
         $estado="Malo";
     }
+
+        ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_creatina);
+    $sql->bindValue(2,$num_orden_exa_creatina);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from creatinina where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_creatina);
+    $sql4->bindValue(2,$num_orden_exa_creatina);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
    
     $sql2="update creatinina set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
@@ -275,6 +466,14 @@ public function editar_examenes_creatinina($resultado_creatinina,$observaciones_
     $sql2->bindValue(4,$id_pac_exa_creatina);
     $sql2->bindValue(5,$num_orden_exa_creatina);
     $sql2->execute();
+
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_creatina);
+    $sql6->bindValue(3,$num_orden_exa_creatina);
+    $sql6->execute();
 }
 
 ################show data creatinina################
@@ -306,7 +505,7 @@ public function registar_examenes_colesterol($resultado,$observaciones_colestero
         $estado="Bueno";
     }elseif($resultado>=191 and $resultado<=250){
         $estado="Intermedio";
-    }elseif($resultado>251){
+    }elseif($resultado>=251){
         $estado="Malo";
     }
 
@@ -326,10 +525,33 @@ public function registar_examenes_colesterol($resultado,$observaciones_colestero
     $sql3->bindValue(1,$id_pac_exa_colesterol);
     $sql3->bindValue(2,$num_orden_exa_colesterol);
     $sql3->execute();
+/////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_glucosa);
+    $sql4->bindValue(2,$num_orden_exa_glucosa);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_colesterol);
+        $sql6->bindValue(3,$num_orden_exa_colesterol);
+        $sql6->execute();
+
+    }
+
 }
-public function editar_examenes_colesterol($resultado,$observaciones_colesterol,$id_pac_exa_colesterol,$num_orden_exa_colesterol,$fecha){
-    
+public function editar_examenes_colesterol($resultado,$observaciones_colesterol,$id_pac_exa_colesterol,$num_orden_exa_colesterol,$fecha){    
     $conectar=parent::conexion();
+
     if ($resultado>=0 and $resultado<=190) {
         $estado="Bueno";
     }elseif($resultado>=191 and $resultado<=250){
@@ -337,6 +559,42 @@ public function editar_examenes_colesterol($resultado,$observaciones_colesterol,
     }elseif($resultado>251){
         $estado="Malo";
     }
+
+     ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_colesterol);
+    $sql->bindValue(2,$num_orden_exa_colesterol);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from colesterol where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_colesterol);
+    $sql4->bindValue(2,$num_orden_exa_colesterol);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+
     $sql2="update colesterol set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
@@ -345,6 +603,14 @@ public function editar_examenes_colesterol($resultado,$observaciones_colesterol,
     $sql2->bindValue(4,$id_pac_exa_colesterol);
     $sql2->bindValue(5,$num_orden_exa_colesterol);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_colesterol);
+    $sql6->bindValue(3,$num_orden_exa_colesterol);
+    $sql6->execute();
+
 }
 #######################SHOW DATA COLESTEROL####################
 
@@ -399,24 +665,94 @@ public function registar_examenes_glucosa($resultado,$observacione_glucosa,$id_p
     $sql3->bindValue(1,$id_pac_exa_glucosa);
     $sql3->bindValue(2,$num_orden_exa_glucosa);
     $sql3->execute();
+    /////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_glucosa);
+    $sql4->bindValue(2,$num_orden_exa_glucosa);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_glucosa);
+        $sql6->bindValue(3,$num_orden_exa_glucosa);
+        $sql6->execute();
+
+    }
+
 }
 
 public function editar_examenes_glucosa($resultado,$observacione_glucosa,$id_pac_exa_glucosa,$num_orden_exa_glucosa,$fecha){
+    $conectar=parent::conexion();
         if ($resultado>=75 and $resultado <=115) {
         $estado="Bueno";
-    }elseif(($resultado>56 && $resultado<=115) or ($resultado>115 && $resultado<=150)){
+    }elseif(($resultado>=56 && $resultado<=74) or ($resultado>115 && $resultado<=150)){
         $estado="Intermedio";
     }elseif(($resultado>150) or ($resultado<55)){
         $estado="Malo";
     }
+
+
+    ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_glucosa);
+    $sql->bindValue(2,$num_orden_exa_glucosa);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from glucosa where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_glucosa);
+    $sql4->bindValue(2,$num_orden_exa_glucosa);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
     $conectar=parent::conexion();
-    $sql2="update glucosa set resultado=?,observacione=? where id_paciente=? and numero_orden=?;";
+    $sql2="update glucosa set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
     $sql2->bindValue(2,$observacione_glucosa);
-    $sql2->bindValue(3,$id_pac_exa_glucosa);
-    $sql2->bindValue(4,$num_orden_exa_glucosa);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_glucosa);
+    $sql2->bindValue(5,$num_orden_exa_glucosa);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_glucosa);
+    $sql6->bindValue(3,$num_orden_exa_glucosa);
+    $sql6->execute();
+
+
 }
 
 /////////////GET DATOS GLUCOSA PARA FUNCION SHOW DATA
@@ -500,7 +836,7 @@ public function registar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vc
     
     if (($hb_hemato>=12.5 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
         $estado="Bueno";
-    }elseif($hb_hemato<12.5 && ($gb_hemato>=4500 && $gb_hemato>=10500) &&($plaquetas_hemato>=150000 or $plaquetas_hemato>=40000)){
+    }else{
         $estado="Malo";
     }
 
@@ -542,6 +878,28 @@ public function registar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vc
     $sql3->bindValue(1,$id_paciente);
     $sql3->bindValue(2,$numero_orden);
     $sql3->execute();
+
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_paciente);
+        $sql6->bindValue(3,$numero_orden);
+        $sql6->execute();
+
+    }
 }
 /////////////GET DATOS HEMOGRAMA PARA FUNCION SHOW DATA
 public function show_datos_hemograma($id_paciente,$numero_orden){
@@ -556,13 +914,51 @@ public function show_datos_hemograma($id_paciente,$numero_orden){
 ////////////////////EDITAR HEMATOLOGIA
 public function editar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_hemato,$cmhc_hemato,$hcm_hemato,$gb_hemato,$linfocitos_hemato,$monocitos_hemato,$eosinofilos_hemato,$basinofilos_hemato,$banda_hemato,$segmentados_hemato,$metamielo_hemato,$mielocitos_hemato,$blastos_hemato,$plaquetas_hemato,$reti_hemato,$eritro_hemato,$otros_hema,$id_paciente,$numero_orden,$fecha,$gota_hema){
 
-        if (($hb_hemato>=12 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
+        $conectar=parent::conexion();
+
+    if (($hb_hemato>=12 && $hb_hemato<=17) &&($gb_hemato>=4500 && $gb_hemato<=10500)&&($plaquetas_hemato>=150000 && $plaquetas_hemato<= 400000)) {
         $estado="Bueno";
     }elseif(($hb_hemato<12) or ($gb_hemato<=4500 && $gb_hemato>=10500) or ($plaquetas_hemato<=150000 or $plaquetas_hemato>=40000)){
         $estado="Malo";
     }
+
+
+        ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from hemograma where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
     
-    $conectar=parent::conexion();
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+    
+
     $sql2="update hemograma set gr_hemato=?,ht_hemato=?,hb_hemato=?,vcm_hemato=?,cmhc_hemato=?,gota_hema=?,gb_hemato=?,linfocitos_hemato=?,monocitos_hemato=?,eosinofilos_hemato=?,basinofilos_hemato=?,banda_hemato=?,segmentados_hemato=?,metamielo_hemato=?,mielocitos_hemato=?,blastos_hemato=?,plaquetas_hemato=?,reti_hemato=?,eritro_hemato=?,otros_hema=?,hcm_hemato=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$gr_hemato);
@@ -599,6 +995,14 @@ public function editar_examenes_hemograma($gr_hemato,$ht_hemato,$hb_hemato,$vcm_
         $sql2->bindValue(1,$id_paciente);
         $sql2->bindValue(2,$numero_orden);
         $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_paciente);
+    $sql6->bindValue(3,$numero_orden);
+    $sql6->execute();
+
     }
 /*===================FINALIZA EXAMEN 0===========================
 ======================DE HEMOGRAMA=====================*/
@@ -655,6 +1059,31 @@ public function agregar_examen_heces($numero_orden_paciente,$color_heces,$consis
     $sql3->bindValue(1,$id_paciente);
     $sql3->bindValue(2,$numero_orden_paciente);
     $sql3->execute();
+
+/////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden_paciente);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_paciente);
+        $sql6->bindValue(3,$numero_orden_paciente);
+        $sql6->execute();
+
+    }
+
+
 }
 /////////////GET DATOS HECES PARA FUNCION SHOW DATA
 public function show_datos_heces($id_paciente,$numero_orden){
@@ -667,7 +1096,7 @@ public function show_datos_heces($id_paciente,$numero_orden){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
 # Edita EXamen heces
-public function editar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente){
+public function editar_examen_heces($numero_orden_paciente,$color_heces,$consistencia_heces,$mucus_heces,$macroscopicos_heces,$microscopicos_heces,$hematies_heces,$leucocitos_heces,$activos_heces,$quistes_heces,$metazoarios_heces,$protozoarios_heces,$observaciones_heces,$id_paciente,$tratamiento_heces,$diagnostico_heces){
 
     $conectar=parent::conexion();
 
@@ -682,7 +1111,40 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
         $estado="Bueno";
      }else{
         $estado="Malo";
-     }  
+     }
+
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden_paciente);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from heces where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden_paciente);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    } 
 
     $sql2="update heces set color=?,consistencia=?,mucus=?,macroscopicos=?,microscopicos=?,hematies=?,leucocitos=?,protozoarios=?,activos=?,quistes=?,metazoarios=?,observaciones=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
@@ -702,6 +1164,23 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
     $sql2->bindValue(14,$id_paciente);
     $sql2->bindValue(15,$numero_orden_paciente);    
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_paciente);
+    $sql6->bindValue(3,$numero_orden_paciente);
+    $sql6->execute();
+
+    $examen = "Heces";
+    $sql7 = "insert into diagnosticos values(null,?,?,?,?,?);";
+    $sql7 = $conectar->prepare($sql7);
+    $sql7->bindValue(1,$examen);
+    $sql7->bindValue(2,$diagnostico_heces);
+    $sql7->bindValue(3,$tratamiento_heces);
+    $sql7->bindValue(4,$id_paciente);
+    $sql7->bindValue(5,$numero_orden_paciente);
+    $sql7->execute();
 }
    public function finalizar_heces($id_paciente,$numero_orden){
         $conectar=parent::conexion();
@@ -711,6 +1190,8 @@ public function editar_examen_heces($numero_orden_paciente,$color_heces,$consist
         $sql2->bindValue(2,$numero_orden);
         $sql2->execute();
     }
+
+
 /*=================================================================================================
 **********************************INICIO DE EXAMEN ORINA*****************************                          
 ===================================================================================================*/
@@ -776,9 +1257,32 @@ public function agregar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$de
     $sql3->bindValue(1,$id_paciente);
     $sql3->bindValue(2,$numero_orden_paciente);
     $sql3->execute();
+
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden_paciente);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_paciente);
+        $sql6->bindValue(3,$numero_orden_paciente);
+        $sql6->execute();
+
+    }
+    
 }
 ########EDITAR EXAMEN ORINA
-public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente){
+public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$densidad_orina,$esterasas_orina,$nitritos_orina,$ph_orina,$proteinas_orina,$glucosa_orina,$cetonas_orina,$urobilinogeno_orina,$bilirrubina_orina,$sangre_oculta_orina,$cilindros_orina,$leucocitos_orina,$hematies_orina,$epiteliales_orina,$filamentos_orina,$bacterias_orina,$cristales_orina,$observaciones_orina,$id_paciente,$numero_orden_paciente,$tratamiento_orina,$diagnostico_orina){
 
     $conectar=parent::conexion();
     $esterasas_orinass=preg_replace("/[[:space:]]/"," ",trim($esterasas_orina));
@@ -786,11 +1290,45 @@ public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$den
     $sangre_oculta_orinas=preg_replace("/[[:space:]]/"," ",trim($sangre_oculta_orina));
     $bacterias_orinass=preg_replace("/[[:space:]]/"," ",trim($bacterias_orina));
 
-    if (($esterasas_orinass=="Negativo" or $esterasas_orinass=="negativo") && ($nitritos_orinas=="Negativo" or $nitritos_orinas=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orinas=="negativo") && ($sangre_oculta_orinas=="Negativo" or $sangre_oculta_orinas=="negativo") && ($bacterias_orinas=="No se observan" or $bacterias_orinas=="no se observan")) {
+    if (($esterasas_orinass=="Negativo" or $esterasas_orinass=="negativo") && ($nitritos_orinass=="Negativo" or $nitritos_orinass=="negativo") && ($glucosa_orina=="Negativo" or $glucosa_orinas=="negativo") && ($sangre_oculta_orinas=="Negativo" or $sangre_oculta_orinas=="negativo") && ($bacterias_orinass=="No se observan" or $bacterias_orinass=="no se observan")) {
            $estado ="Bueno";
        }else{
         $estado="Malo";
        } 
+
+   ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden_paciente);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    $sql4="select estado from examen_orina where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_paciente);
+    $sql4->bindValue(2,$numero_orden_paciente);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
 
     $sql2="update examen_orina set color=?,olor=?,aspecto=?,densidad=?,est_leuco=?,ph=?,proteinas=?,glucosa=?,cetonas=?,urobigilogeno=?,bilirrubina=?,sangre_oculta=?,cilindros=?,leucocitos=?,hematies=?,cel_epiteliales=?,filamentos_muco=?,bacterias=?,cristales=?,observaciones=?,nitritos_orina=?,estado=? where id_paciente=? and numero_orden=?;";
 
@@ -820,8 +1358,25 @@ public function editar_examen_orina($color_orina,$olor_orina,$aspecto_orina,$den
     $sql2->bindValue(23,$id_paciente);
     $sql2->bindValue(24,$numero_orden_paciente);
     $sql2->execute();
-}
 
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_paciente);
+    $sql6->bindValue(3,$numero_orden_paciente);
+    $sql6->execute();
+
+    $examen = "Orina";
+    $sql7 = "insert into diagnosticos values(null,?,?,?,?,?);";
+    $sql7 = $conectar->prepare($sql7);
+    $sql7->bindValue(1,$examen);
+    $sql7->bindValue(2,$diagnostico_orina);
+    $sql7->bindValue(3,$tratamiento_orina);
+    $sql7->bindValue(4,$id_paciente);
+    $sql7->bindValue(5,$numero_orden_paciente);
+    $sql7->execute();
+}
 ########SHOW DATA ORINA
 public function show_datos_orina($id_paciente,$numero_orden){
     $conectar= parent::conexion();
@@ -879,6 +1434,29 @@ public function registar_examenes_sgot($resultado_sgot,$observacione_sgot,$id_pa
     $sql3->bindValue(1,$id_pac_exa_sgot);
     $sql3->bindValue(2,$num_orden_exa_sgot);
     $sql3->execute();
+
+///////////////////////////GET ESTADO DE LA ORDEN/////////////
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_sgot);
+    $sql4->bindValue(2,$num_orden_exa_sgot);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_sgot);
+        $sql6->bindValue(3,$num_orden_exa_sgot);
+        $sql6->execute();
+
+    }
 }
 
 public function editar_examenes_sgot($resultado_sgot,$observacione_sgot,$id_pac_exa_sgot,$num_orden_exa_sgot){
@@ -893,15 +1471,57 @@ public function editar_examenes_sgot($resultado_sgot,$observacione_sgot,$id_pac_
     }elseif($resultado_sgot>40){
         $estado="Malo";
     }
+
+    ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_sgot);
+    $sql->bindValue(2,$num_orden_exa_sgot);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from sgot where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_sgot);
+    $sql4->bindValue(2,$num_orden_exa_sgot);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+
     $sql2="update sgot set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado_sgot);
     $sql2->bindValue(2,$observacione_sgot);
     $sql2->bindValue(3,$estado);
-
     $sql2->bindValue(4,$id_pac_exa_sgot);
     $sql2->bindValue(5,$num_orden_exa_sgot);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_sgot);
+    $sql6->bindValue(3,$num_orden_exa_sgot);
+    $sql6->execute();
 }
 ##################sgor data show##########
 public function show_datos_sgot($id_paciente,$numero_orden){
@@ -951,8 +1571,29 @@ public function registar_examenes_sgpt($resultado_sgpt,$observacione_sgpt,$id_pa
     $sql3->bindValue(1,$id_pac_exa_sgpt);
     $sql3->bindValue(2,$num_orden_exa_sgpt);
     $sql3->execute();
-}
+    /////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_sgpt);
+    $sql4->bindValue(2,$num_orden_exa_sgpt);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
 
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_sgpt);
+        $sql6->bindValue(3,$num_orden_exa_sgpt);
+        $sql6->execute();
+
+}
+}
 public function editar_examenes_sgpt($resultado_sgpt,$observacione_sgpt,$id_pac_exa_sgpt,$num_orden_exa_sgpt){
 
     $conectar=parent::conexion();
@@ -965,15 +1606,55 @@ public function editar_examenes_sgpt($resultado_sgpt,$observacione_sgpt,$id_pac_
         $estado="Malo";
     }
 
+##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_sgpt);
+    $sql->bindValue(2,$num_orden_exa_sgpt);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from sgpt where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_sgpt);
+    $sql4->bindValue(2,$num_orden_exa_sgpt);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
     $sql2="update sgpt set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado_sgpt);
     $sql2->bindValue(2,$observacione_sgpt);
     $sql2->bindValue(3,$estado);
-
     $sql2->bindValue(4,$id_pac_exa_sgpt);
     $sql2->bindValue(5,$num_orden_exa_sgpt);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_sgpt);
+    $sql6->bindValue(3,$num_orden_exa_sgpt);
+    $sql6->execute();
 }
 
 ##################SGPT SHOW DATA######
@@ -1004,6 +1685,8 @@ public function registar_examenes_baciloscopia($resultado,$observaciones_bacilos
     }else{
         $estado="Bueno";
     }
+
+
     $conectar=parent::conexion();
     $sql2="insert into baciloscopia values(null,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -1019,16 +1702,115 @@ public function registar_examenes_baciloscopia($resultado,$observaciones_bacilos
     $sql3->bindValue(1,$id_pac_exa_baciloscopia);
     $sql3->bindValue(2,$num_orden_exa_baciloscopia);
     $sql3->execute();
+
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_baciloscopia);
+    $sql4->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_baciloscopia);
+        $sql6->bindValue(3,$num_orden_exa_baciloscopia);
+        $sql6->execute();
+
+    }
 }
 
+public function buscar_existe_antigenos($id_pac_exa_antigenos,$num_orden_exa_antigenos){
+
+    $conectar= parent::conexion();
+    $sql= "select*from antigenos where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_antigenos);
+    $sql->bindValue(2,$num_orden_exa_antigenos);
+    $sql->execute();
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function registar_examenes_antigenos($muestra_antigenos,$resultado,$observaciones_antigenos,$id_pac_exa_antigenos,$num_orden_exa_antigenos){
+    $conectar=parent::conexion();
+    date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
+    $sql2="insert into antigenos values(null,?,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$muestra_antigenos);
+    $sql2->bindValue(2,$resultado);
+    $sql2->bindValue(3,$num_orden_exa_antigenos);
+    $sql2->bindValue(4,$id_pac_exa_antigenos);
+    $sql2->bindValue(5,$observaciones_antigenos);
+    $sql2->bindValue(6,$hoy);
+    $sql2->execute();
+}
+
+public function editar_examenes_antigenos($muestra_antigenos,$resultado,$observaciones_antigenos,$id_pac_exa_antigenos,$num_orden_exa_antigenos){
+
+    $conectar=parent::conexion();
+
+    $sql2="update antigenos set muestra=?,resultado=?,observaciones=? where id_paciente=? and numero_orden=?;";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$muestra_antigenos);
+    $sql2->bindValue(2,$resultado);
+    $sql2->bindValue(3,$observaciones_antigenos);
+    $sql2->bindValue(4,$id_pac_exa_antigenos);
+    $sql2->bindValue(5,$num_orden_exa_antigenos);
+    $sql2->execute();
+
+
+}
+
+
 public function editar_examenes_baciloscopia($resultado,$observaciones_baciloscopia,$id_pac_exa_baciloscopia,$num_orden_exa_baciloscopia){
-    
+    $conectar=parent::conexion();
     if ($resultado=="Positivo" or $resultado=="positivo") {
         $estado="Malo";
     }else{
         $estado="Bueno";
     }
-    $conectar=parent::conexion();
+
+    ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_baciloscopia);
+    $sql->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from baciloscopia where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_baciloscopia);
+    $sql4->bindValue(2,$num_orden_exa_baciloscopia);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+
     $sql2="update baciloscopia set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado);
@@ -1037,6 +1819,13 @@ public function editar_examenes_baciloscopia($resultado,$observaciones_bacilosco
     $sql2->bindValue(4,$id_pac_exa_baciloscopia);
     $sql2->bindValue(5,$num_orden_exa_baciloscopia);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_baciloscopia);
+    $sql6->bindValue(3,$num_orden_exa_baciloscopia);
+    $sql6->execute();
 }
 #################SHOW DATA BACILOSCOPIa##########
 public function show_datos_baciloscopia($id_paciente,$numero_orden){
@@ -1070,7 +1859,7 @@ $detalles = json_decode($_POST['arrayChecks']);
 
 public function get_examenes_ingresar($id_paciente,$numero_orden){
 $conectar= parent::conexion();         
-$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,p.empresa,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=?;";
+$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,p.empresa,p.departamento,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=?;";
 $sql=$conectar->prepare($sql);
 $sql->bindValue(1,$id_paciente);
 $sql->bindValue(2,$numero_orden);
@@ -1091,14 +1880,13 @@ public function buscar_existe_rpr($id_pac_exa_rpr,$num_orden_exa_rpr){
 
 public function registar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_exa_rpr,$num_orden_exa_rpr){
 
-    if($resultado_rpr == "Reactivo"){
+    if($resultado_rpr == "Reactivo" or $resultado_rpr=="REACTIVO" or $resultado_rpr=="Reactivo"){
       $estado="Malo";  
     }else{
     $estado="Bueno";
     }
-
-
     $conectar=parent::conexion();
+
 
     $sql2="insert into rpr values(null,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
@@ -1115,17 +1903,75 @@ public function registar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_
     $sql3->bindValue(1,$id_pac_exa_rpr);
     $sql3->bindValue(2,$num_orden_exa_rpr);
     $sql3->execute();
+
+        /////////////////////GET ESTADO DE LA ORDEN
+    $sql4="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_rpr);
+    $sql4->bindValue(2,$num_orden_exa_rpr);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    if ($estado=="Malo") {
+        $esta=$state+1;
+        $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+        $sql6=$conectar->prepare($sql6);
+        $sql6->bindValue(1,$esta);
+        $sql6->bindValue(2,$id_pac_exa_rpr);
+        $sql6->bindValue(3,$num_orden_exa_rpr);
+        $sql6->execute();
+
+    }
 }
 
 public function editar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_exa_rpr,$num_orden_exa_rpr){
 
-    if($resultado_rpr == "Reactivo"){
+    if($resultado_rpr == "Reactivo" or $resultado_rpr=="REACTIVO" or $resultado_rpr=="Reactivo"){
       $estado="Malo";  
     }else{
     $estado="Bueno";
     }
 
     $conectar=parent::conexion();
+ ##########SELECCIONAR EL ESTADO ACTUAL DE ORDEN#######
+    $sql="select estado from detalle_orden where id_paciente=? and numero_orden=?;";           
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_pac_exa_rpr);
+    $sql->bindValue(2,$num_orden_exa_rpr);
+    $sql->execute();
+    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $state=$row["estado"];
+
+    ###############SELECCIONAR ESTADO ACTUAL DEL EXAMEN
+    $sql4="select estado from rpr where id_paciente=? and numero_orden=?;";           
+    $sql4=$conectar->prepare($sql4);
+    $sql4->bindValue(1,$id_pac_exa_rpr);
+    $sql4->bindValue(2,$num_orden_exa_rpr);
+    $sql4->execute();
+    $resultados = $sql4->fetchAll(PDO::FETCH_ASSOC);
+    foreach($resultados as $b=>$row){
+        $re["est"] = $row["estado"];
+    }
+    $estado_act=$row["estado"];
+    
+    if($estado_act=="Malo" and ($estado=="Bueno" or $estado=="Intermedio")) {
+          $estado_orden=$state-1;  
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and $estado=="Malo"){
+          $estado_orden=$state+1;
+    }elseif ($estado_act=="Malo" and $estado=="Malo") {
+        $estado_orden=$state;
+    }elseif(($estado_act=="Bueno" or $estado_act=="Intermedio") and ($estado=="Bueno" or $estado=="Intermedio")){
+        $estado_orden=$state;
+    }
+
+
     $sql2="update rpr set resultado=?,observacione=?,estado=? where id_paciente=? and numero_orden=?;";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$resultado_rpr);
@@ -1134,6 +1980,14 @@ public function editar_examenes_rpr($resultado_rpr,$observaciones_rpr,$id_pac_ex
     $sql2->bindValue(4,$id_pac_exa_rpr);
     $sql2->bindValue(5,$num_orden_exa_rpr);
     $sql2->execute();
+
+    $sql6="update detalle_orden set estado=? where id_paciente=? and numero_orden=?;";
+    $sql6=$conectar->prepare($sql6);
+    $sql6->bindValue(1,$estado_orden);
+    $sql6->bindValue(2,$id_pac_exa_rpr);
+    $sql6->bindValue(3,$num_orden_exa_rpr);
+    $sql6->execute();
+
 }
 #################SHOW DATA RPR
 public function show_datos_rpr($id_paciente,$numero_orden){
@@ -1145,6 +1999,21 @@ public function show_datos_rpr($id_paciente,$numero_orden){
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
+
+public function registrar_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,$num_orden_exa_hdl){
+    
+    $estado = "";
+    $conectar= parent::conexion();
+    $sql2="insert into hdl values(null,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado_hdl);
+    $sql2->bindValue(2,$num_orden_exa_hdl);
+    $sql2->bindValue(3,$estado);
+    $sql2->bindValue(4,$id_pac_exa_hdl);
+    $sql2->bindValue(5,$observaciones_hdl);
+    $sql2->execute();
+
+}
 
 }//FIN DE LA CLASE
 

@@ -1,2 +1,71 @@
 [22-Dec-2019 20:59:55 UTC] PHP Parse error:  syntax error, unexpected 'strtoupper' (T_STRING), expecting ',' or ';' in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/laboratorios-lomed.php on line 28
 [22-Dec-2019 20:59:58 UTC] PHP Parse error:  syntax error, unexpected 'strtoupper' (T_STRING), expecting ',' or ';' in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/laboratorios-lomed.php on line 28
+[25-Oct-2020 11:50:02 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 11:50:02 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:00:19 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:00:19 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:05:53 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:05:53 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:06:20 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:06:20 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:03 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:03 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:07 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:07 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:08 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:13:08 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 18:15:54 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/imprimir_resultados_pdf.php on line 123
+[25-Oct-2020 18:16:55 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/imprimir_resultados_pdf.php on line 124
+[25-Oct-2020 12:19:34 America/El_Salvador] PHP Warning:  require_once(resultados/Trigliceridos.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:19:34 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Trigliceridos.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:20:46 America/El_Salvador] PHP Warning:  require_once(resultados/Creatinina.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:20:46 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Creatinina.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:20:54 America/El_Salvador] PHP Warning:  require_once(resultados/Creatinina.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[25-Oct-2020 12:20:54 America/El_Salvador] PHP Fatal error:  require_once(): Failed opening required 'resultados/Creatinina.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/plantillas/quimica.php on line 20
+[31-Oct-2020 14:16:45 America/El_Salvador] PHP Notice:  Undefined variable: reporteria in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:16:45 America/El_Salvador] PHP Fatal error:  Uncaught Error: Call to a member function get_items_heces() on null in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php:3
+Stack trace:
+#0 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modal_examenes.php(3): require_once()
+#1 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_ingresar.php(7): require_once('/home/u57902430...')
+#2 {main}
+  thrown in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:46 America/El_Salvador] PHP Notice:  Undefined variable: reporteria in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:46 America/El_Salvador] PHP Fatal error:  Uncaught Error: Call to a member function get_items_heces() on null in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php:3
+Stack trace:
+#0 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modal_examenes.php(3): require_once()
+#1 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_ingresar.php(7): require_once('/home/u57902430...')
+#2 {main}
+  thrown in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:55 America/El_Salvador] PHP Notice:  Undefined variable: reporteria in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:55 America/El_Salvador] PHP Fatal error:  Uncaught Error: Call to a member function get_items_heces() on null in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php:3
+Stack trace:
+#0 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modal_examenes.php(3): require_once()
+#1 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_ingresar.php(7): require_once('/home/u57902430...')
+#2 {main}
+  thrown in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:57 America/El_Salvador] PHP Notice:  Undefined variable: reporteria in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[31-Oct-2020 14:17:57 America/El_Salvador] PHP Fatal error:  Uncaught Error: Call to a member function get_items_heces() on null in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php:3
+Stack trace:
+#0 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modal_examenes.php(3): require_once()
+#1 /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_ingresar.php(7): require_once('/home/u57902430...')
+#2 {main}
+  thrown in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/modals_examenes/general_heces.php on line 3
+[03-Nov-2020 15:43:58 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[03-Nov-2020 15:43:58 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[03-Nov-2020 15:44:20 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[03-Nov-2020 15:44:20 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:13 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:13 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:21 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:21 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:26 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:28:26 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:29:02 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[04-Nov-2020 21:29:02 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[06-Nov-2020 15:10:03 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[06-Nov-2020 15:10:03 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinicas.php on line 4
+[07-Nov-2020 18:57:08 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinica.php on line 3
+[07-Nov-2020 18:57:08 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinica.php on line 3
+[07-Nov-2020 18:57:41 UTC] PHP Warning:  require_once(encabezado.php): failed to open stream: No such file or directory in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinica.php on line 3
+[07-Nov-2020 18:57:41 UTC] PHP Fatal error:  require_once(): Failed opening required 'encabezado.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/examenes_clinica.php on line 3
+[27-Jan-2021 17:10:27 America/El_Salvador] PHP Notice:  Undefined index: categoria in /home/u579024306/domains/opticaavplussv.com/public_html/laboratorios/ingresar_diagnostico.php on line 17

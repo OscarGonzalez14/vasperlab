@@ -32,7 +32,6 @@ class Conectar {
 
 
 		 public function ruta(){
-
 		 	return "http://localhost/laboratorios/";
 		 }
 

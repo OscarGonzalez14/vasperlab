@@ -119,7 +119,7 @@
               <tr><td colspan="30" style="width: 30%;text-align: center;"><b>VARIOS</b></td></tr>
                 <tr>
                   <td colspan="15" style="width: 15%">Plaquetas</td>
-                  <td colspan="15" style="width: 15%"><input type="text" class="form-control" id="plaquetas_hemato" style="text-align: right;" value="/mm3"></td>
+                  <td colspan="15" style="width: 15%"><input type="text" class="form-control" id="plaquetas_hemato" style="text-align: right;"></td>
                 </tr>
                 <tr>
                   <td colspan="15" style="width: 15%">Reticulocitos</td>

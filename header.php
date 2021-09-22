@@ -32,12 +32,15 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
 <!-- Mis estilos -->
   <link rel="stylesheet" href="css/styles.css">
 <!--Datatables-->
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
  
 
 
@@ -178,16 +181,16 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+         
          <li class="nav-item">
-            <a href="pacientes.php" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+            <a href="diagnosticos.php" class="nav-link">
+              <i class="nav-icon fas fa-file"></i>
               <p>
-                Pacientes & Ordenes
+                Examenes & Diagnosticos
                 <span class="right badge badge-danger" style="visibility:hidden">New</span>
               </p>
             </a>
           </li>
-
           <li class="nav-item">
             <a href="pacientes_clinica.php" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
@@ -197,7 +200,6 @@
               </p>
             </a>
           </li>
-
          <li class="nav-item">
             <a href="examenes.php" class="nav-link">
               <i class="nav-icon fas fa-flask"></i>
@@ -288,6 +290,7 @@
 <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="plugins/toastr/toastr.min.js"></script>
+<script src="plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

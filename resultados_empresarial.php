@@ -26,7 +26,7 @@ require_once('modals/ver_detalles_solicitud.php');
   </nav>
 <h5 style="text-transform: uppercase;text-align: center;"><strong>PACIENTES <?php echo $_SESSION["usuario"];?></strong></h5>
 <input type="hidden" name="" id="user_clinica" value="<?php echo $_SESSION["nombres"];?>">
-<div class="form-group col-sm-3" style="margin: 25px">
+<!--<div class="form-group col-sm-3" style="margin: 25px">
   <label for="">Seleccione Empresa</label>
     <select class="form-control input-dark" id="consulta_ex" required="">
       <option value=''>Seleccionar...</option>
@@ -35,7 +35,7 @@ require_once('modals/ver_detalles_solicitud.php');
       <option value='Ecofibra'>Ecofibra</option>
       <option value='Plegadizo'>Plegadizo</option>
     </select>
-</div>
+</div>-->
 <div style="margin: 25px">
 
 	<table class="table-hover table-bordered" id="data_examenes_clinica_empresarial" width="100%" data-order='[[ 0, "desc" ]]'>
@@ -46,7 +46,8 @@ require_once('modals/ver_detalles_solicitud.php');
             <th style="text-align:center">Cod. Emp</th>
             <th style="text-align:center">Empresa</th>
             <th style="text-align:center">Departamento</th>
-            <th style="text-align:center">Examenes</th>            
+            <th style="text-align:center">Examenes</th>
+            <th style="text-align:center">Estado</th>          
             <th style="text-align:center">Detalle Examenes</th>
             <th style="text-align:center">Imprimir</th>
           </tr>

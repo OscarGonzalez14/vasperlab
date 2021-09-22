@@ -105,6 +105,19 @@ case 'select_departamento':
       <option value='SEGURIDAD Y SALUD OCUPACIONAL'>SEGURIDAD Y SALUD OCUPACIONAL</option>
        ";
     echo $html;
+}elseif ($_POST["empresa"] == 'Alimentos MOR') {
+  $html = "
+    <option value='Santa Fe'>SANTA FÉ</option>
+    <option value='Planta'>PLANTA</option>
+  ";
+  echo $html;
+}elseif ($_POST["empresa"] == 'McCormick') {
+  $html = "
+    <option value='Planta 1'>PLANTA 1</option>
+    <option value='Planta 2'>PLANTA 2</option>
+  ";
+  echo $html;
 }
+
     break;
 }

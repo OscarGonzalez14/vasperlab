@@ -27,7 +27,7 @@ public function login(){
     if(is_array($resultado) and count($resultado)>0){
         $_SESSION["id_usuario"] = $resultado["id_usuario"];           
         $_SESSION["usuario"] = $resultado["usuario"];
-        header("Location:".Conectar::ruta()."resultados_empresarial.php");
+        header("Location:".Conectar::ruta()."examenes_clinicas.php");
 
       exit();
     } else {                         
@@ -109,7 +109,8 @@ public function login_usuarios(){
           if(is_array($resultado) and count($resultado)>0){
           $_SESSION["nombres"] = $resultado["nombres"];
           $_SESSION["usuario"] = $resultado["usuario"];
-        header("Location: resultados_empresarial.php");
+          $_SESSION["categoria"] = $resultado["categoria"];
+        header("Location: examenes.php");
 
               exit();
 

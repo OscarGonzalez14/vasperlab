@@ -6,11 +6,11 @@ require_once("../config/conexion.php");
 class Pacientes extends Conectar{  
 ////////////////////CLASE REGISTRA CPACIENTES
 
-public function agregar_paciente($nombrePaciente,$edad_paciente,$tipo_paciente,$empresa_paciente,$codigo_emp,$departamento){
+public function agregar_paciente($nombrePaciente,$edad_paciente,$tipo_paciente,$empresa_paciente,$codigo_emp,$departamento,$fecha_nacimiento){
 
 	$conectar=parent::conexion();   
 
-    $sql2="insert into pacientes_o values(null,?,?,?,?,?,?);";
+    $sql2="insert into pacientes_o values(null,?,?,?,?,?,?,?);";
 
     $sql2=$conectar->prepare($sql2); 
     
@@ -19,10 +19,12 @@ public function agregar_paciente($nombrePaciente,$edad_paciente,$tipo_paciente,$
     $sql2->bindValue(3,$codigo_emp); 
     $sql2->bindValue(4,$tipo_paciente); 
     $sql2->bindValue(5,$empresa_paciente);
-    $sql2->bindValue(6,$departamento);         
+    $sql2->bindValue(6,$departamento);
+    $sql2->bindValue(7,$fecha_nacimiento);        
               
     $sql2->execute();
 }
+
 
 public function get_pacientes(){
     $conectar= parent::conexion();         
@@ -68,24 +70,35 @@ public function get_correlativo_orden(){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function comprobar_existe_orden(){
+    $conectar= parent::conexion();
+    $sql= "select*from detalle_orden where numero_orden=? and id_paciente=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$_POST["correlativo_de_orden"]);
+    $sql->bindValue(2,$_POST["id_paciente_orden"]);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 public function agregar_orden(){
 
     $conectar=parent::conexion();
     $str = '';
     $detalles = array();
     $detalles = json_decode($_POST['arrayChecks']);
+    $estado_eval ="Sin Evaluar";
 
     foreach($detalles as $d=>$v){
-        $examen = $v->examen;
-        $categoria = $v->categoria;
+    $examen = $v->examen;
+    $categoria = $v->categoria;
 
-        $correlativo_de_orden = $_POST["correlativo_de_orden"];
-        $examenes_paciente = $_POST["examenes_paciente"];
-        $fecha_orden = $_POST["fecha_orden"];
-        $id_paciente_orden = $_POST["id_paciente_orden"];
-        $nom_empresa = $_POST["nom_empresa"];
-        $tipo_orden = $_POST["tipo_orden"];
-        $estado_orden = $_POST["estado_orden"];
+    $correlativo_de_orden = $_POST["correlativo_de_orden"];
+        //$examenes_paciente = $_POST["examenes_paciente"];
+    $fecha_orden = $_POST["fecha_orden"];
+    $id_paciente_orden = $_POST["id_paciente_orden"];
+    $nom_empresa = "0";
+    $tipo_orden = $_POST["tipo_orden"];
+    $estado_orden = $_POST["estado_orden"];
 
     $sql="insert into detalle_item_orden values(null,?,?,?,?,?,'0');";
     $sql=$conectar->prepare($sql);
@@ -94,10 +107,10 @@ public function agregar_orden(){
     $sql->bindValue(3,$id_paciente_orden);
     $sql->bindValue(4,$categoria);
     $sql->bindValue(5,$correlativo_de_orden);
-    $sql->execute(); 
-  }   
+    $sql->execute();
+    }   
 
-    $sql2="insert into detalle_orden values(null,?,?,?,?,?,?);";
+    $sql2="insert into detalle_orden values(null,?,?,?,?,?,?,?);";
 
     $sql2=$conectar->prepare($sql2); 
     //$sql2->bindValue(1,$numero_orden_diario);
@@ -106,13 +119,53 @@ public function agregar_orden(){
     $sql2->bindValue(3,$correlativo_de_orden); 
     $sql2->bindValue(4,$fecha_orden);
     $sql2->bindValue(5,$estado_orden);
-    $sql2->bindValue(6,$tipo_orden);                  
+    $sql2->bindValue(6,$tipo_orden);
+    $sql2->bindValue(7,$estado_eval);                
               
     $sql2->execute();
-
-    print_r($_POST);
 }
 
+public function edita_orden(){
+    $conectar=parent::conexion();
+    $str = '';
+    $detalles = array();
+    $detalles = json_decode($_POST['arrayChecks']);
+
+    foreach($detalles as $d=>$v){
+    $examen = $v->examen;
+    $categoria = $v->categoria;
+
+    $correlativo_de_orden = $_POST["correlativo_de_orden"];
+    $fecha_orden = $_POST["fecha_orden"];
+    $id_paciente_orden = $_POST["id_paciente_orden"];
+    //$nom_empresa = $_POST["empresa_paciente"];
+    $tipo_orden = $_POST["tipo_orden"];
+    $estado_orden = $_POST["estado_orden"];
+
+
+    $sql11="select *from detalle_item_orden where numero_orden=? and id_paciente=? and examen=?;";            
+    $sql11=$conectar->prepare($sql11);
+    $sql11->bindValue(1,$correlativo_de_orden);
+    $sql11->bindValue(2,$id_paciente_orden);
+    $sql11->bindValue(3,$examen);
+    $sql11->execute();
+    $resultados = $sql11->fetchAll(PDO::FETCH_ASSOC);
+
+    print_r($_POST);
+    print_r($resultados);
+
+    if(is_array($resultados)==true and count($resultados)==0) {
+    $sql="insert into detalle_item_orden values(null,?,?,?,?,?,'0');";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$examen);
+    $sql->bindValue(2,$fecha_orden);
+    $sql->bindValue(3,$id_paciente_orden);
+    $sql->bindValue(4,$categoria);
+    $sql->bindValue(5,$correlativo_de_orden);
+    $sql->execute();
+    } 
+   }/////////////FIN FOREACH
+}//////////FIN FUNCION
 public function eliminar_paciente($id_paciente){
     $conectar=parent::conexion();
 

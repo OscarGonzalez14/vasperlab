@@ -26,7 +26,8 @@
             <th ># Orden:</span></th>
             <th >Paciente</th>
             <th >Categoría</th>
-            <th >Imprimir</th>
+            <th >Form. 1</th>
+            <th >Form. 2</th>
           </tr>
         </thead>
         <tbody style="text-align:center">

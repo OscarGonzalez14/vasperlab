@@ -14,7 +14,7 @@ class Ordenes extends Conectar{
 /////////////////////LISTAR SOLICITUDES EN PROCESO
   public function get_solicitudes_proceso(){
     $conectar= parent::conexion();         
-    $sql= "SELECT d.numero_orden,p.nombre,p.cod_emp,d.fecha,p.empresa,p.departamento,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where d.estado='1' order by d.id_detalle_orden DESC;";
+    $sql= "SELECT d.numero_orden,p.nombre,p.cod_emp,d.fecha,p.empresa,p.departamento,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente  order by d.id_detalle_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +23,7 @@ class Ordenes extends Conectar{
 /////////////////////LISTAR SOLICITUDES EN PROCESO
   public function get_show_cat_print($id_paciente,$numero_orden){
     $conectar= parent::conexion();         
-    $sql= "select p.nombre,d.numero_orden,d.categoria,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente
+    $sql= "select p.nombre,p.cod_emp,d.numero_orden,d.categoria,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente
       where d.id_paciente=? and d.numero_orden=? group by d.categoria;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$id_paciente);
@@ -35,7 +35,7 @@ class Ordenes extends Conectar{
 /////////////////////LISTAR SOLICITUDES EN PROCESO LABORATORIOS
   public function get_solicitudes_proceso_lab(){
     $conectar= parent::conexion();         
-    $sql= "SELECT d.numero_orden,p.nombre,p.cod_emp,d.fecha,d.empresa,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where d.estado='1' AND tipo_orden='laboratorio';";
+    $sql= "SELECT d.numero_orden,p.nombre,p.cod_emp,d.fecha,d.empresa,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where d.estado='1' AND tipo_orden='laboratorio' order by p.id_paciente DESC;";
     $sql=$conectar->prepare($sql);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -117,5 +117,73 @@ public function set_estado_solicitud($id_paciente,$numero_orden){
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  /////////GET ORDENES
+  public function get_examenes_orden_pac($id_paciente,$numero_orden){
+  $conectar= parent::conexion();         
+  $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=?;";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();
+return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+//////////ESTADO EXAMENES
+public function estado_examenes_pac($id_paciente,$numero_orden,$exa){
+    $conectar= parent::conexion();
+    $sql3='select estado from '.$exa.' where id_paciente=? and numero_orden=?;';           
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_paciente);
+    $sql3->bindValue(2,$numero_orden);
+    $sql3->execute();
+    return $resultado = $sql3->fetchAll(PDO::FETCH_ASSOC);
+}
+////////////////////////GET PACIENTES BUENOS
+public function get_pacientes_buenos($empresa_act){
+    $conectar= parent::conexion();
+    $sql3='select p.nombre,p.cod_emp,p.empresa,p.departamento,d.estado,d.estado_eval,p.id_paciente,d.numero_orden from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where d.estado="1" and p.empresa=?;';           
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$empresa_act);
+    $sql3->execute();
+    return $resultado = $sql3->fetchAll(PDO::FETCH_ASSOC);
+}
+//////////////////GET PACIENTES INTERMEDIOS
+public function get_pacientes_intermedios($empresa_act){
+    $conectar= parent::conexion();
+    $sql3='select p.nombre,p.cod_emp,p.empresa,p.departamento,d.estado,d.estado_eval,p.id_paciente,d.numero_orden from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where (d.estado>1 and d.estado<3) and p.empresa=?;';           
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$empresa_act);
+    $sql3->execute();
+    return $resultado = $sql3->fetchAll(PDO::FETCH_ASSOC);
+}
+/////////////////GET PACIENTES MALOS
+public function get_pacientes_malos($empresa_act){
+    $conectar= parent::conexion();
+    $sql3='select p.nombre,p.cod_emp,p.empresa,p.departamento,d.estado,d.estado_eval,p.id_paciente,d.numero_orden from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente where d.estado>=3 and p.empresa=?;';           
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$empresa_act);
+    $sql3->execute();
+    return $resultado = $sql3->fetchAll(PDO::FETCH_ASSOC);
+}
+////////////////SET ESTADO EVALUACION 
+public function set_estado_evaluacion($numero_orden,$id_paciente){
+  $conectar= parent::conexion();
+  $sql6="update detalle_orden set estado_eval='Evaluado' where id_paciente=? and numero_orden=?;";
+  $sql6=$conectar->prepare($sql6);
+  $sql6->bindValue(1,$id_paciente);
+  $sql6->bindValue(2,$numero_orden);
+  $sql6->execute();
+}
+
+//////////////DATOS EXAMENS CHECK ORDEN
+  public function get_examenes_edita_orden($id_paciente,$numero_orden){
+    $conectar= parent::conexion();         
+    $sql= "select examen from detalle_item_orden where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(2,$numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }

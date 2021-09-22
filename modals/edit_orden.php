@@ -22,12 +22,12 @@
   <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
  
-<div class="modal fade" role="dialog" id="nueva_orden">
+<div class="modal fade" role="dialog" id="edit_orden">
   <div class="modal-dialog modal-lg" id="new_order_tam">
 
     <div class="modal-content">
      <div class="modal-header" id="head" style="justify-content:space-between">
-       <span><i class="fas fa-plus-square"></i> CREAR NUEVA ORDEN DE EXAMENES || LABORATORIO</span>
+       <span><i class="fas fa-plus-square"></i> EDITAR ORDEN DE EXAMENES || LABORATORIO</span>
         <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
      </div>
 <section style="margin:15px">
@@ -41,11 +41,6 @@
       <input type="text" class="form-control input-dark" id="new_orden_empleado" readonly>
     </div>
 
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Empresa</label>
-      <input type="text" class="form-control input-dark" id="paciente_orden" readonly>
-    </div>
-
     <div class="col-12 col-sm-12">
         <h5 style="background:#DCDCDC; padding: 2px; border-radius: 4px" align="center"><strong>SELECCIONAR EXAMENES DE LA ORDEN</strong></h5>          <!-- /.form-group -->
     </div>
@@ -56,35 +51,32 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">QUIMICA SANGUINEA</td>
         </tr>
         <tr>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="glucosa"> Glucosa</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="glucosa" id="glucosa"> Glucosa</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Glucosa Post-Prandial"> Glucosa Post-Prandial</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Tolerancia a la glucosa"> Tolerancia a la glucosa</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Colesterol"> Colesterol</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> H.D.L-Colsterol</td>                 
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Colesterol" id="Colesterol"> Colesterol</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="H.D.L-Colsterol"> H.D.L-Colsterol</td>                 
         </tr>
         <tr>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="L.D.L-Colesterol"> L.D.L-Colsterol</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Trigliceridos"> Trigliceridos</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="acido_urico"> Ácido Urico</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Creatinina"> Creatinina</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Trigliceridos" id="Trigliceridos"> Trigliceridos</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="acido_urico" id="acido_urico"> Ácido Urico</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Creatinina" id="Creatinina"> Creatinina</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Depuración de creatinina"> Depuración de creatinina</td>
         </tr>
+
         <tr>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Nitrogeno Ureico">Nitrogeno Ureico</td>
-          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Bilirubina"> Bilirubina</td>
-          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgot"> S.G.O.T</td>
-          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgpt"> S.G.P.T</td>
+          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Bilirubina" id="Bilirubina"> Bilirubina</td>
+          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgot" id="sgot"> S.G.O.T</td>
+          <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgpt" id="sgpt"> S.G.P.T</td>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Proteinas Sericas"> Proteinas Sericas</td>
-        </tr>
-        <tr>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> Colesterol de Alta Densidad HDL</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Colesterol-de-Baja-Densidad-LDH"> Colesterol de Baja Densidad LDH</td>
         </tr>
         <tr>
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HECES</td>
         </tr>
         <tr>
-          <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="heces">Examen General Heces</td>
+          <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="heces" id="heces">Examen General Heces</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Sangre Oculta"> Sangre Oculta</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Coprocultivo"> Coprocultivo</td>
           <td colspan="20"><input class="heces" type="checkbox" name="check_box" value="Sustancias Reductoras"> Sustancias Reductoras</td>
@@ -95,7 +87,7 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HEMATOLOGIA</td>
         </tr>
         <tr>
-          <td colspan="20"><input class="hemograma" type="checkbox" name="check_box" value="hemograma">Hemograma</td>
+          <td colspan="20"><input class="hemograma" type="checkbox" name="check_box" value="hemograma" id="hemograma">Hemograma</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="hematocrito_emoglobina"> Hematocrito-Hemoglobina</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="leucograma">Leucograma</td>
           <td colspan="20"><input class="hematologia" type="checkbox" name="check_box" value="plaquetas"> Plaquetas</td>
@@ -106,7 +98,7 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">ORINA</td>
         </tr>
         <tr>
-          <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="orina">Examen general de orina</td>
+          <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="orina" id="orina">Examen general de orina</td>
           <td colspan="40"><input class="orina" type="checkbox" name="check_box" value="Urocultivo"> U2rocultivo</td>
           <td colspan="20"><input class="orina" type="checkbox" name="check_box" value="Prueba de embarazo"> Prueba de embarazo</td>
         </tr>
@@ -114,14 +106,13 @@
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">BACTERIOLOGIA</td>
         </tr>
         <tr>
-          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="baciloscopia">Baciloscopia</td>
-          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="exofaringeo">C. Ex.Faringeo</td>
+          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="baciloscopia" id="baciloscopia">Baciloscopia</td>
+          <td colspan="40"><input class="bacteriologia" type="checkbox" name="check_box" value="exofaringeo" id="exofaringeo">C. Ex.Faringeo</td>
          </tr>
            <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">INMUNOLOGIA</td>
         </tr>
         <tr>
-          <td colspan="40"><input class="inmunologia" type="checkbox" name="check_box" value="vdrl">V.D.R.L</td>
-          <td colspan="40"><input class="inmunologia" type="checkbox" name="check_box" value="antigenos">Antigenos para Covid-19</td>
+          <td colspan="40"><input class="inmunologia" type="checkbox" name="check_box" value="vdrl" id="vdrl">V.D.R.L</td>
         </tr>
       </table>
     </div><!--FIN SECTION EXAMENES SELECTED--><span style="color: white">H</span>

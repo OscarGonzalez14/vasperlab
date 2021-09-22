@@ -60,15 +60,45 @@ case "examenes_clinica_pendientes":
 		}
 
 		$sub_array = array();				
-		$sub_array[] = $row["fecha"];		
-	    $sub_array[] = $row["numero_orden"];
+		$sub_array[] = $row["id_paciente"];		
+	    $sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["cod_emp"];
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["departamento"];				
         $sub_array[] = '<button type="button" class="btn btn-md bg-light show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-eye" style="color:blue"></i></button>';
         $sub_array[] = '<a href="examenes_ingresar.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-file-download" style="color:#1E0F59"></i></button></a>';
-        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';                               
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light edita_orden" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-edit" style="color:green"></i></button></a>';                               
+		$data[] = $sub_array;
+
+	}
+
+        $results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+    break;
+
+ /////////////////////LISTAR EXAMENES DIAGNOSTICO
+    case "examenes_diagnosticos":
+    $datos=$ordenes->get_solicitudes_proceso();
+    //Vamos a declarar un array
+ 	$data= Array();
+    foreach($datos as $row){
+
+		$sub_array = array();				
+		//$sub_array[] = $row["id_paciente"];		
+	    $sub_array[] = $row["fecha"];
+		$sub_array[] = $row["nombre"];
+		$sub_array[] = $row["cod_emp"];
+		$sub_array[] = $row["empresa"];
+		$sub_array[] = $row["departamento"];				
+        $sub_array[] = '<a href="ingresar_diagnostico.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-file-download" style="color:#1E0F59"></i></button></a>';
+                                      
 		$data[] = $sub_array;
 
 	}
@@ -89,6 +119,35 @@ case "examenes_clinica_pendientes_empresarial":
  	$data= Array();
     foreach($datos as $row)
 	{
+		$numero_orden=$row["numero_orden"];
+		$id_paciente=$row["id_paciente"];
+		$malos=0;
+		$items= $ordenes->get_examenes_orden_pac($id_paciente,$numero_orden);
+		foreach ($items as $value){
+		 	$ex=$value["examen"];
+		    if ($ex!="orina") {
+		    	$exa=$value["examen"];
+		    }else{
+		    	$exa="examen_orina";
+		    }
+		  
+		  $estados= $ordenes->estado_examenes_pac($id_paciente,$numero_orden,$exa);
+		  foreach ($estados as $key) {
+		          if ($key["estado"]=="Malo") {
+		          	$malos=$malos+1;
+		          }
+		  }          
+        } 
+        if ($malos==0) {
+        	$resultado="Bueno";
+        	$badge="success";
+        }elseif($malos>=1 and $malos<3){
+        $resultado="Intermedio";
+        	$badge="warning";
+        }elseif($malos>3){
+        $resultado="Malo";
+       $badge="danger";
+        }
 
 		$sub_array = array();				
 	
@@ -98,8 +157,10 @@ case "examenes_clinica_pendientes_empresarial":
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = $row["departamento"];				
         $sub_array[] = '<button type="button" class="btn btn-md bg-light show_solicitudes_det" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-file-alt" style="color:#00001a"></i></button>';
+        $sub_array[] = '<span class="right badge badge-'.$badge.'" style="font-size:12px"> '.$resultado.'</span>';
+
         $sub_array[] = '<a href="examenes_empresarial.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'"><button type="button"  class="btn btn-md bg-light"><i class="fas fa-eye" style="color:blue"></i></button></a>';
-        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';                               
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-id-card-alt" style="color:blue"></i></button></a>';                               
 		$data[] = $sub_array;
 
 	}
@@ -156,13 +217,16 @@ case "examenes_clinica_pendientes_empresarial":
     $datos=$ordenes->get_show_cat_print($_POST["id_paciente"],$_POST["numero_orden"]);
     //Vamos a declarar un array
  	$data= Array();
+ 	$ant = "antigenos_dos";
+
     foreach($datos as $row)
 	{
 		$sub_array = array();				
 	    $sub_array[] = $row["numero_orden"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["categoria"];	
-        $sub_array[] = '<a href="imprimir_resultados_pdf.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'&categoria='.$row["categoria"].'&nombre='.$row["nombre"].'" target="_blank"><button type="button"  class="btn btn-ligth btn-md"><i class="fas fa-print" style="color:green"></i></button></a>';                                 
+        $sub_array[] = '<a href="imprimir_resultados_pdf.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'&categoria='.$row["categoria"].'&nombre='.$row["nombre"].'&cod_emp='.$row["cod_emp"].'" target="_blank"><button type="button"  class="btn btn-ligth btn-md"><i class="fas fa-print" style="color:green"></i></button></a>';
+        $sub_array[] = '<a href="imprimir_resultados_pdf.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'&categoria='.$ant.'&nombre='.$row["nombre"].'&cod_emp='.$row["cod_emp"].'" target="_blank"><button type="button"  class="btn btn-ligth btn-md"><i class="fas fa-print" style="color:green"></i></button></a>';                               
 		$data[] = $sub_array;
 	}
 
@@ -220,4 +284,74 @@ case "examenes_clinica_pendientes_empresarial":
 	echo json_encode($output);    
     break;
 
+
+    //////////////////////GET PACIENTES BUENOS
+    case "get_pacientes_buenos":
+    if ($_POST["estado_pacs"]=="1") {
+    	$datos=$ordenes->get_pacientes_buenos($_POST['empresa_act']);
+    	$resultados="Bueno";
+    	$badge_c="success";
+    }elseif ($_POST["estado_pacs"]=="2") {
+    	$datos=$ordenes->get_pacientes_intermedios($_POST['empresa_act']);
+    	$resultados="Intermedio";
+    	$badge_c="warning";
+    }elseif ($_POST["estado_pacs"]=="3") {
+        $datos=$ordenes->get_pacientes_malos($_POST['empresa_act']);
+        $resultados="Malo";
+        $badge_c="danger";
+    }elseif ($_POST["estado_pacs"]=="4") {
+        $datos=$ordenes->get_pacientes_general($_POST['empresa_act']);
+        $resultados="";
+        $badge_c="ligth";
+    }
+    //Vamos a declarar un array
+ 	$data= Array();
+    foreach($datos as $row)
+	{
+		if ($row["estado_eval"]=="Sin Evaluar") {
+			$color="white";
+			$clase="danger";
+		}elseif($row["estado_eval"]=="Evaluado"){
+			$color="white";
+			$clase ="success";
+		}
+
+		$sub_array = array();				
+	    $sub_array[] = $row["nombre"];
+		$sub_array[] = $row["cod_emp"];
+		$sub_array[] = $row["empresa"];
+	    $sub_array[] = $row["departamento"];
+		$sub_array[] = '<span style="color:'.$color.'" class="right badge badge-'.$clase.'">'.$row["estado_eval"].'</span>';	
+        $sub_array[] = '<span class="right badge badge-'.$badge_c.'" style="font-size:12px;">'.$resultados.'</span>';
+        $sub_array[] = '<button type="button" class="btn btn-md bg-light show_print_categorias" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'"><i class="fas fa-print" style="color:green"></i></button></a>';  
+        $sub_array[] = '<button type="button"  class="btn btn-sm btn-outline-primary btn-flat" style="border-radius:6px" onClick="confirma_evaluacion(\''.$row["numero_orden"].'\','.$row["id_paciente"].',\''.$row["nombre"].'\')">Marcar como Evaluado</button>';                                 
+		$data[] = $sub_array;
+	}
+
+        $results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+    break;
+
+    case 'confirmar_evaluacion':
+    	$ordenes->set_estado_evaluacion($_POST["numero_orden"],$_POST["id_paciente"]);
+    break;
+
+/////////////////////GET EXAMENES FOR EDIT ORDEN
+    case "get_examenes_edita_orden":
+
+    $datos= $ordenes->get_examenes_edita_orden($_POST["id_paciente"],$_POST["numero_orden"]);
+        $data= Array();
+			foreach($datos as $row){
+			   $sub_array = array();
+		       $sub_array[] = $row["examen"];
+		       $data[] = $sub_array;
+			}			 
+
+	echo json_encode($data);
+	break;
   }

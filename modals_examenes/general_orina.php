@@ -33,7 +33,7 @@
   <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px">
   <div class="form-group col-md-2">
     <label for="inputEmail4">Color</label>
-    <input type="text" class="form-control" id="color_orina">
+    <input type="text" class="form-control" id="color_orina" value="Amarillo">
   </div>
 
   <div class="form-group col-md-2">
@@ -43,57 +43,57 @@
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Aspecto</label>
-    <input type="text" class="form-control" id="aspecto_orina">
+    <input type="text" class="form-control" id="aspecto_orina" value="Limpio">
   </div> 
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Densidad</label>
-    <input type="text" class="form-control" id="densidad_orina">
+    <input type="text" class="form-control" id="densidad_orina" value="1.020">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Esterasas</label>
-    <input type="text" class="form-control" id="esterasas_orina">
+    <input type="text" class="form-control" id="esterasas_orina" value="75 leu/ul">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Nitritos</label>
-    <input type="text" class="form-control" id="nitritos_orina">
+    <input type="text" class="form-control" id="nitritos_orina" value="Negativo">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">PH</label>
-    <input type="text" class="form-control" id="ph_orina">
+    <input type="text" class="form-control" id="ph_orina" value="6.0">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Proteinas</label>
-    <input type="text" class="form-control" id="proteinas_orina">
+    <input type="text" class="form-control" id="proteinas_orina" value="Negativo">
   </div>
 
   <div class="form-group col-md-3">
     <label for="inputEmail4">Glucosa</label>
-    <input type="text" class="form-control" id="glucosa_orina">
+    <input type="text" class="form-control" id="glucosa_orina" value="Negativo">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Cetonas</label>
-    <input type="text" class="form-control" id="cetonas_orina">
+    <input type="text" class="form-control" id="cetonas_orina" value="Negativos">
   </div>
 
   <div class="form-group col-md-3">
     <label for="inputEmail4">Urobilinógeno</label>
-    <input type="text" class="form-control" id="urobilinogeno_orina" >
+    <input type="text" class="form-control" id="urobilinogeno_orina"  value="Negativo">
   </div>
 
   <div class="form-group col-md-3">
     <label for="inputEmail4">Bilirrubina</label>
-    <input type="text" class="form-control" id="bilirrubina_orina" >
+    <input type="text" class="form-control" id="bilirrubina_orina"  value="Negativo">
   </div>
 
   <div class="form-group col-md-3">
     <label for="inputEmail4">Sangre Oculta</label>
-    <input type="text" class="form-control" id="sangre_oculta_orina">
+    <input type="text" class="form-control" id="sangre_oculta_orina" value="Negativo">
   </div>
 </div> <!--FIN EXAMEN ORINA SECTION 1-->
 
@@ -103,50 +103,60 @@
   
   <div class="form-group col-md-1">
     <label for="inputEmail4">Cilidros</label>
-    <input type="text" class="form-control" id="cilindros_orina">
+    <input type="text" class="form-control" id="cilindros_orina" value="No se observan">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Leucocitos</label>
-    <input type="text" class="form-control" id="leucocitos_orina">
+    <input type="text" class="form-control" id="leucocitos_orina" value="0-1 x campo">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Hematíes</label>
-    <input type="text" class="form-control" id="hematies_orina">
+    <input type="text" class="form-control" id="hematies_orina" value="No se observan">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Cel. Epiteliales</label>
-    <input type="text" class="form-control" id="epiteliales_orina">
+    <input type="text" class="form-control" id="epiteliales_orina" value="Escamosas escasas">
   </div>
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Filamentos</label>
-    <input type="text" class="form-control" id="filamentos_orina">
+    <input type="text" class="form-control" id="filamentos_orina" value="No se observan">
   </div>
 
   <div class="form-group col-md-3">
     <label for="inputEmail4">Bacterias</label>
-    <input type="text" class="form-control" id="bacterias_orina" >
+    <input type="text" class="form-control" id="bacterias_orina"  value="No se observan">
   </div>
 
 
   <div class="form-group col-md-2">
     <label for="inputEmail4">Cristales</label>
-    <input type="text" class="form-control" id="cristales_orina">
+    <input type="text" class="form-control" id="cristales_orina" value="No se observan">
   </div>
 
   <div class="form-group col-md-10">
     <label for="inputEmail4">Observaciones</label>
-    <input type="text" class="form-control" id="observaciones_orina" >
+    <input type="text" class="form-control" id="observaciones_orina"  value="">
   </div>
-
+    </div>
+  <div class="diags row" style="margin:5px;" id="diag_orina">
+    <div class="form-group col-md-12">
+      <label for="inputEmail4">Diagnostico</label>
+      <textarea class="form-control" id="diagnostico_orina" rows="2"></textarea>
+    </div>
+    <div class="form-group col-md-12">
+     <label for="inputEmail4">Tratamiento</label>
+     <textarea class="form-control" id="tratamiento_orina" rows="2"></textarea>
+    </div>    
+  </div>
   <div class="form-group col-md-12">
     <button class="btn btn-dark btn-block" style="border-radius:0px" data-toggle="modal" data-target="#modalProveedores" onClick="GuardarExamenOrina();" id="guarda_orina">Guardar Examen Orina</button>
   </div> 
 
-  </div>
+
     <div class="row" id="edit_exa_orina" style="margin-bottom: 8px" style="display:none">
     <div class="col-md-1"></div>
     <div class="col-md-4" style="margin-left: 10px"><button type="button" class="btn btn-block btn-danger btn-flat pull-left" onClick="finalizar_orina();">Finalizar</button></div>
@@ -268,7 +278,7 @@ function autocomplete(inp, arr) {
 var color = ["Amarillo"];
 var aspecto = ["Limpio","Turbio","Leve turbio"];
 var densidad  = ["1.020","1.005","1.010","1.015","1.020","1.025","1.030"];
-var esterasas = ["Negativo","10.25 leu/ul","75 leu/ul","125 leu/ul","500 leu/ul"];
+var esterasas = ["Negativo","10-25 leu/ul","75 leu/ul","125 leu/ul","500 leu/ul"];
 var nitritos = ["Negativo","Positivo +","Positivo++","Positivo+++"];
 var ph = ["5.0","5.5","6.0","6.5","7.0","7.5","8.0","8.5","9.0"];
 var proteinas = ["Negativo","15mg/dl","30mg/dl","100mg/dl","300mg/dl","2000mg/dl"];
@@ -285,7 +295,8 @@ var bacterias =  ["No se observa"];
 var cristales =  ["No se observa"];
 var cilindros =  ["No se observan"];
 var hematies =  ["No se observan"];
-
+var epiteliales = ["Escamosas escasas","Escamosas moderada cantidad","Escamosas abundantes"];
+var bacterias = ["No se observan","Escasas","Moderada cantidad","Abundantes"];
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 
 autocomplete(document.getElementById("color_orina"), color);
@@ -307,6 +318,9 @@ autocomplete(document.getElementById("epiteliales_orina"), Epiteliales);
 autocomplete(document.getElementById("filamentos_orina"), filamentos);
 autocomplete(document.getElementById("bacterias_orina"), bacterias);
 autocomplete(document.getElementById("cristales_orina"), cristales);
+autocomplete(document.getElementById("epiteliales_orina"), epiteliales);
+autocomplete(document.getElementById("filamentos_orina"), bacterias);
+autocomplete(document.getElementById("bacterias_orina"), bacterias);
 
 
 </script>

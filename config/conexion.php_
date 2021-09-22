@@ -9,7 +9,7 @@ class Conectar {
 
  		try {
 
- 			$conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=u579024306_avplu","u579024306_root","antoniogz");
+ 			$conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=laboratorios","root","");
 		   
 		     return $conectar;
  			

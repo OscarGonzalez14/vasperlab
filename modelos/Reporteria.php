@@ -265,4 +265,29 @@ public function get_data_rpr($id_paciente,$numero_orden){
 }
 
 
+public function get_data_antigenos($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select p.nombre,p.edad,p.genero,p.cod_emp,p.fecha_nacimiento,a.muestra,a.resultado,a.observaciones,a.fecha,p.cod_emp,a.observacioneS from pacientes_o as p inner join antigenos as a on a.id_paciente=p.id_paciente where a.id_paciente=? and  a.numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+public function get_data_hdl($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observaciones from hdl where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

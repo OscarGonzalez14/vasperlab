@@ -3,12 +3,15 @@ function init(){
   listar_examenes_ingreso();
   mostrar_btns_edit_exa();
   listar_examenes_empresarial();
+  listar_examenes_diagnosticos();
 }
 
 function mostrar_btns_edit_exa(){
   document.getElementById("edit_exa_hemo").style.display = "none";
   document.getElementById("edit_exa_orina").style.display = "none";
   document.getElementById("edit_exa_heces").style.display = "none";
+  document.getElementById("diag_heces").style.display = "none";
+  document.getElementById("diag_orina").style.display = "none";
 }
 
 /////////////////LISTAR EXAMENES INGRESO////////******
@@ -90,7 +93,86 @@ function mostrar_btns_edit_exa(){
          
   }).DataTable();
 }
+/////////////////
+/////////////////LISTAR EXAMENES INGRESO////////******
+  function listar_examenes_diagnosticos(){
+    var id_paciente_examen = $("#id_paciente_examen").val();
+    var n_orden_examen = $("#n_orden_examen").val();
 
+    tabla_examenes_ingreso=$('#ingresar_diagnosticos_examenes').dataTable(
+    {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+      buttons: [              
+                'excelHtml5',
+                'csvHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/examenes.php?op=ingresar_diagnosticos_examen',
+          type : "post",
+          data:{id_paciente_examen:id_paciente_examen,n_orden_examen:n_orden_examen},            
+          error: function(e){
+          console.log(e.responseText);  
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+      
+      "language": {
+ 
+          "sProcessing":     "Procesando...",
+       
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+       
+          "sZeroRecords":    "No se encontraron resultados",
+       
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+       
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+       
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+       
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+       
+          "sInfoPostFix":    "",
+       
+          "sSearch":         "Buscar:",
+       
+          "sUrl":            "",
+       
+          "sInfoThousands":  ",",
+       
+          "sLoadingRecords": "Cargando...",
+       
+          "oPaginate": {
+       
+              "sFirst":    "Primero",
+       
+              "sLast":     "Último",
+       
+              "sNext":     "Siguiente",
+       
+              "sPrevious": "Anterior"
+       
+          },
+       
+          "oAria": {
+       
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+       
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+       
+          }
+
+         }//cerrando language
+         
+  }).DataTable();
+}
 /////////////////LISTAR EXAMENES EMPRESARIAL////////******
   function listar_examenes_empresarial(){
     var id_paciente_examen = $("#id_paciente_examen").val();
@@ -370,13 +452,15 @@ function GuardarExamenHeces(){
   var metazoarios_heces = $("#metazoarios_heces").val();
   var observaciones_heces = $("#observaciones_heces").val();
   var id_paciente = $("#id_pac_exa_heces").val();
-  var numero_orden_paciente = $("#num_orden_exa_heces").val(); 
-
+  var numero_orden_paciente = $("#num_orden_exa_heces").val();
+  
   
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_heces",
     method:"POST",
-    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,
+    leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,
+    id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente,tratamiento_heces:tratamiento_heces,diagnostico_heces:diagnostico_heces},
     cache: false,
     dataType:"html",
     error:function(x,y,z){
@@ -404,16 +488,26 @@ function explode(){
 }
 
 $(document).on('click', '.asigna_datos_orden', function(){
-  var id_paciente = $(this).attr("id");
-  var numero_orden = $(this).attr("name");
-  var paciente = $(this).attr("value");
-  console.log(paciente);
+  let id_paciente = $(this).attr("id");
+  let numero_orden = $(this).attr("name");
+  let paciente = $(this).attr("value");
+  let categoria_user = $("#categoria_usuario").val();
+  console.log(categoria_user);
+  if (categoria_user == "doctor") {
+   show_blocks_diagnostico_heces();
+  }
+
   $(".id_paciente_exa").val(id_paciente);
   $(".num_orden_exa").val(numero_orden);
   $(".paciente_exa").html(paciente);
   $(".num_orden_exa").html(numero_orden);
 
 });
+
+function show_blocks_diagnostico_heces(){
+  document.getElementById("diag_heces").style.display = "block";
+  document.getElementById("diag_orina").style.display = "block";
+}
 
 $(document).on('click', '.reg_examenes', function(){
 document.getElementsByClassName("reg_examenes").style.display = "none";
@@ -478,7 +572,7 @@ $(document).on('click', '.Trigliceridos_show', function(){
       }
     });
 
-  });
+});
 /////////////GUSRADAR COLESTEROL
 function GuardarColesterol(){
     
@@ -507,6 +601,70 @@ function GuardarColesterol(){
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de Colesterol Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+/**************SHOW DATA GLUCOSA*************/
+$(document).on('click', '.Colesterol_show', function(){    
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    //console.log(id_paciente+" ** "+numero_orden);
+    document.getElementById("guardar_hemo").style.display = "none";
+    document.getElementById("edit_exa_hemo").style.display = "flex";
+
+    $.ajax({
+      url:"ajax/examenes.php?op=show_colesterol_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_colesterol").val(data.resultado);
+        $("#observaciones_colesterol").val(data.observacione);
+        $("#id_pac_exa_colesterol").val(data.id_paciente);
+        $("#num_orden_exa_colesterol").val(data.numero_orden);
+
+      }
+    });
+
+  });
+
+//==========================GUARDAR HDL ==================//
+function Guardarhdl(){
+    
+  let resultado_hdl = $("#resultado_hdl").val();
+  let observaciones_hdl = $("#observaciones_hdl").val();
+  let id_pac_exa_hdl = $("#id_pac_exa_hdl").val();
+  let num_orden_exa_hdl = $("#num_orden_exa_hdl").val();
+  let fecha = $("#fecha_hdl").val();
+
+  if (resultado_hdl != ""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_hdl",
+    method:"POST",
+    data:{resultado_hdl:resultado_hdl,observaciones_hdl:observaciones_hdl,id_pac_exa_hdl:id_pac_exa_hdl,num_orden_exa_hdl:num_orden_exa_hdl,fecha:fecha},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+    console.log(data);
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de HDL Registrado!','','success')
         setTimeout ("explode();", 2000);
       }
   }
@@ -888,16 +1046,66 @@ $(document).on('click', '.baciloscopia_show', function(){
 
 
 /*=======================FIN  EXAMEN DE BACILOSCOPIA=============*/
+
+/*=======================GUARDAR EXAMEN DE Antigenos=============*/
+function GuardarAntigenos(){
+  
+  //console.log("Holaaaaa");return false;
+  var muestra_antigenos = $("#muestra_antigenos").val();
+  var resultado = $("#resultado_antigenos").val();
+  var observaciones_antigenos = $("#observaciones_antigenos").val();
+  var id_pac_exa_antigenos = $("#id_pac_exa_antigenos").val();
+  var num_orden_exa_antigenos = $("#num_orden_exa_antigenos").val();
+
+
+//muestra_antigenos:muestra_antigenos,resultado:resultado,observaciones_antigenos:observaciones_antigenos,id_pac_exa_antigenos:id_pac_exa_antigenos,num_orden_exa_antigenos:num_orden_exa_antigenos
+  if (resultado!=""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_antigenos",
+    method:"POST",
+    data:{muestra_antigenos:muestra_antigenos,resultado:resultado,observaciones_antigenos:observaciones_antigenos,id_pac_exa_antigenos:id_pac_exa_antigenos,num_orden_exa_antigenos:num_orden_exa_antigenos},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){   //alert(id_paciente);
+     console.log(data);
+      if(data=='edit'){
+        alert('Se ha editado Exitosamente!')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        alert('Examen Registrado Exitosamente!')
+        setTimeout ("explode();", 2000);
+      }
+    
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+
+}
+
+
+
 /////////////////////////GUARDAR EXOFARIGEO
 function GuardarExo(){
     
-  var aisla = $("#aisla_exo").val();
-  var sensible = $("#sensible_exo").val();
-  var resiste = $("#resiste_exo").val();
+  var ais = $("#aisla_exo").val();
+  var sens = $("#sensible_exo").val();
+  var res = $("#resiste_exo").val();
   var id_paciente = $("#id_paciente_exofarigeo").val();
   var numero_orden = $("#n_orden_exofarigeo").val();
   var refiere = $("#refiere_exo").val();
-  
+
+  var  aisla = ais.toString();
+ // var  sensible = sens.toString();
+  var  resiste = res.toString();
+  var sensible = sens.toString();
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_exo",
     method:"POST",
@@ -922,12 +1130,11 @@ function GuardarExo(){
 
   });
   }
-  /*SHOW DATA EXOFARINGEO*/
+  
+  ///*SHOW DATA EXOFARINGEO*///
 $(document).on('click', '.exofaringeo_show', function(){    
     var id_paciente = $(this).attr("id");
     var numero_orden = $(this).attr("name");
-
-
     $.ajax({
       url:"ajax/examenes.php?op=show_exofaringeo_data",
       method:"POST",
@@ -936,9 +1143,9 @@ $(document).on('click', '.exofaringeo_show', function(){
       dataType:"json",
       success:function(data){
       console.log(data);
-        $("#aisla_exo").val(data.aisla);
-        $("#sensible_exo").val(data.sensible);
-        $("#resiste_exo").val(data.resiste);
+        $("#aisla_exo_data").html(data.aisla);
+        $("#sensible_exo_data").html(data.sensible);
+        $("#resiste_exo_data").html(data.resiste);
         $("#refiere_exo").val(data.refiere);
         $("#id_paciente_exa").val(data.id_paciente);
         $("#num_orden_exa").val(data.numero_orden);
@@ -1094,13 +1301,18 @@ function GuardarExamenHeces(){
   var metazoarios_heces = $("#metazoarios_heces").val();
   var observaciones_heces = $("#observaciones_heces").val();
   var id_paciente = $("#id_pac_exa_heces").val();
-  var numero_orden_paciente = $("#num_orden_exa_heces").val(); 
+  var numero_orden_paciente = $("#num_orden_exa_heces").val();
+  var tratamiento_heces = $("#tratamiento_heces").val();
+  var diagnostico_heces = $("#diagnostico_heces").val(); 
+
 
   
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_heces",
     method:"POST",
-    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    data:{color_heces:color_heces,consistencia_heces:consistencia_heces,mucus_heces:mucus_heces,macroscopicos_heces:macroscopicos_heces,microscopicos_heces:microscopicos_heces,
+    hematies_heces:hematies_heces,leucocitos_heces:leucocitos_heces,protozoarios_heces:protozoarios_heces,activos_heces:activos_heces,quistes_heces:quistes_heces,
+    metazoarios_heces:metazoarios_heces,observaciones_heces:observaciones_heces,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente,tratamiento_heces:tratamiento_heces,diagnostico_heces:diagnostico_heces},
     cache: false,
     dataType:"json",
     error:function(x,y,z){
@@ -1189,7 +1401,7 @@ function finalizar_heces(){
 ==============================================*/
 
 function GuardarExamenOrina(){
-    
+  $("#orina").modal("hide");
   var color_orina = $("#color_orina").val();
   var olor_orina = $("#olor_orina").val();
   var aspecto_orina = $("#aspecto_orina").val();
@@ -1213,6 +1425,8 @@ function GuardarExamenOrina(){
   var observaciones_orina = $("#observaciones_orina").val();
   var id_paciente = $("#id_pac_exa_orina").val();
   var numero_orden_paciente = $("#num_orden_exa_orina").val();
+  var tratamiento_orina = $("#tratamiento_orina").val();
+  var diagnostico_orina = $("#diagnostico_orina").val();
   
     $.ajax({
     url:"ajax/examenes.php?op=registrar_examen_orina",
@@ -1220,7 +1434,8 @@ function GuardarExamenOrina(){
     data:{color_orina:color_orina,olor_orina:olor_orina,aspecto_orina:aspecto_orina,densidad_orina:densidad_orina,esterasas_orina:esterasas_orina,
     nitritos_orina:nitritos_orina,ph_orina:ph_orina,proteinas_orina:proteinas_orina,glucosa_orina:glucosa_orina,cetonas_orina:cetonas_orina,
     urobilinogeno_orina:urobilinogeno_orina,bilirrubina_orina:bilirrubina_orina,sangre_oculta_orina:sangre_oculta_orina,cilindros_orina:cilindros_orina,leucocitos_orina:leucocitos_orina,
-    hematies_orina:hematies_orina,epiteliales_orina:epiteliales_orina,filamentos_orina:filamentos_orina,bacterias_orina:bacterias_orina,cristales_orina:cristales_orina,observaciones_orina:observaciones_orina,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente},
+    hematies_orina:hematies_orina,epiteliales_orina:epiteliales_orina,filamentos_orina:filamentos_orina,bacterias_orina:bacterias_orina,cristales_orina:cristales_orina,
+    observaciones_orina:observaciones_orina,id_paciente:id_paciente,numero_orden_paciente:numero_orden_paciente,tratamiento_orina:tratamiento_orina,diagnostico_orina:diagnostico_orina},
     cache: false,
     dataType:"json",
     error:function(x,y,z){

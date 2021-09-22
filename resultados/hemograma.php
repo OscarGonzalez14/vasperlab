@@ -4,7 +4,7 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
 ?>
 <table class="table2" width="100%" style="border: 1px solid black">
   <tr>
-      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong></td>
+      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong>&nbsp;&nbsp;&nbsp;&nbsp;COD. EMPLEADO: <?php echo $cod_emp;?><strong></td>
     </tr>
     <tr><td style="text-align: center;width: 100%" colspan="100">
       <span style="color: red;font-size: 15px;text-align: center"><strong>HEMOGRAMA</strong></span>
@@ -23,7 +23,7 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
     <td colspan="18" style="width: 15%" class="stilot1">G.B. x mm<sup>3</sup></td>
     <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["gb_hemato"];?></td>
     <td colspan="19" style="width: 15%" class="stilot1">Plaquetas</td>
-    <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["plaquetas_hemato"];?></td>
+    <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["plaquetas_hemato"];?></span>/mm<sup>3</sup></td>
   </tr>
   <tr>
     <td colspan="18" style="width: 15%" class="stilot1">Ht %</td>

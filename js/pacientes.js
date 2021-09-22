@@ -261,13 +261,14 @@ function agregarPaciente(){
   var  empresa_paciente = $("#empresa_paciente").val();
   var  codigo_emp = $("#codigo_emp").val();
   var  departamento = $("#departamento_paciente").val();
-
+  var  fecha_nacimiento = $("#fecha_nac").val();
   if(nombrePaciente != ""){
-    console.log('Message Oscar');
+    setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
+    //console.log('Message Oscar');
     $.ajax({
     url:"ajax/pacientes.php?op=registrar_paciente",
     method:"POST",
-    data:{nombrePaciente:nombrePaciente,edad_paciente:edad_paciente,tipo_paciente:tipo_paciente,empresa_paciente:empresa_paciente,codigo_emp:codigo_emp,departamento:departamento},
+    data:{nombrePaciente:nombrePaciente,edad_paciente:edad_paciente,tipo_paciente:tipo_paciente,empresa_paciente:empresa_paciente,codigo_emp:codigo_emp,departamento:departamento,fecha_nacimiento:fecha_nacimiento},
     cache: false,
     dataType:"html",
     error:function(x,y,z){
@@ -277,12 +278,12 @@ function agregarPaciente(){
     },
       
     success:function(data){
-      setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
-      setTimeout ("explode();", 2000);
+     
   }
 
   }); 
 
+      setTimeout ("explode();", 2000);
    //cierre del condicional de validacion de los campos del producto,proveedor,pago
   }else{
     Swal.fire('Existen campos  vacios o sin seleccionar!','','error')
@@ -381,7 +382,7 @@ function agregarOrden(){
   success:function(data){ 
 
     setTimeout ("Swal.fire('Se ha registrado una nueva orden','','success')", 100);
-    setTimeout ("explode();", 2000);
+    //setTimeout ("explode();", 2000);
   }
 
   });

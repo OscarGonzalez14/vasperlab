@@ -8,6 +8,7 @@ function init(){
   listar_examenes_clinica();
   listar_examenes_laboratorio();
   listar_examenes_clinica_emprearial();
+  listar_examenes_diagnostico();
 }
 
 function listar_solicitudes()
@@ -165,6 +166,83 @@ function listar_examenes_clinica(){
 
   }).DataTable();
 }
+
+///////////////DATATABLES DIAGNOSTICOS
+////////////LISTAR EXAMENES DE CLINICA
+function listar_examenes_diagnostico(){
+  tabla_examenes_clinica=$('#data_diagnosticos').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+      buttons: [
+                'excelHtml5',
+                'csvHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/ordenes.php?op=examenes_diagnosticos',
+          dataType : "json",
+          error: function(e){
+            console.log(e.responseText);
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+
+          "sProcessing":     "Procesando...",
+
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+
+          "sZeroRecords":    "No se encontraron resultados",
+
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+          "sInfoPostFix":    "",
+
+          "sSearch":         "Buscar:",
+
+          "sUrl":            "",
+
+          "sInfoThousands":  ",",
+
+          "sLoadingRecords": "Cargando...",
+
+          "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+          },
+
+          "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+          }
+
+         }//cerrando language
+
+  }).DataTable();
+}
 /////////////FIN DATATABLES EXAMENES CLINICA
 ////////////LISTAR EXAMENES DE CLINICA EMPRESARIAL
 function listar_examenes_clinica_emprearial(){
@@ -188,7 +266,7 @@ function listar_examenes_clinica_emprearial(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 30,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -362,6 +440,89 @@ $(document).on('click', '.agregar_orden_paciente_clinica', function(){
     })
 });
 
+$(document).on('click', '.diag_buenos', function(){
+    //toma el valor del id
+   var empresa_act = $("#empresa_act").val();
+   var estado_pacs = $(this).attr("name");
+  console.log(estado_pacs);
+    tabla_examenes_buenos=$('#estado_pacientes_emp').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+      buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdf'
+            ],
+    "ajax":
+        {
+          url: 'ajax/ordenes.php?op=get_pacientes_buenos',
+          type : "post",
+          dataType : "json",
+          data:{empresa_act:empresa_act,estado_pacs:estado_pacs},
+          error: function(e){
+            console.log(e.responseText);
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+
+          "sProcessing":     "Procesando...",
+
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+
+          "sZeroRecords":    "No se encontraron resultados",
+
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+          "sInfoPostFix":    "",
+
+          "sSearch":         "Buscar:",
+
+          "sUrl":            "",
+
+          "sInfoThousands":  ",",
+
+          "sLoadingRecords": "Cargando...",
+
+          "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+          },
+
+          "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+          }
+
+         }//cerrando language
+
+  }).DataTable();
+ });   
+
 function agregarOrdenClinica(){
 
   var lang = [];
@@ -446,7 +607,7 @@ console.log(length_lang);
       console.log(z);
     },
 
-  success:function(data){
+    success:function(data){
     console.log(data);
     setTimeout ("Swal.fire('Se ha registrado una nueva orden','','success')", 100);
     setTimeout ("explode();", 2000);
@@ -601,7 +762,73 @@ $(document).on('click', '.show_print_categorias', function(){
 
 
 $(document).on('click', '.disabled_input', function(){    
-   $(":input").attr("disabled", true);
+  // $(":input").attr("disabled", true);
+  var inputs = $(":input");
+   $(inputs).attr('readonly', true);
+   
+   console.log(inputs);
 });
 
 init();
+
+///////////
+function confirma_evaluacion(numero_orden,id_paciente,nombre){
+    
+  bootbox.confirm("¿Desea confirmar que "+nombre+ " ha sido evaluado?", function(result){
+    if(result){
+
+  $.ajax({
+    url:"ajax/ordenes.php?op=confirmar_evaluacion",
+    method:"POST",
+    data:{numero_orden:numero_orden,id_paciente:id_paciente},
+    dataType:"json",
+    success:function(data)
+    {
+     
+    }
+  });
+
+}
+});//bootbox
+ setTimeout ("Swal.fire('Paciente Evaluado','','success')", 100);
+ $("#estado_pacientes_emp").DataTable().ajax.reload();
+}
+
+$(document).on('click', '.edita_orden', function(){
+  var id_paciente = $(this).attr("id");
+  var numero_orden = $(this).attr("name");
+  $("#edit_orden").modal("show");
+
+  /////////////ajax lista datos del paciente
+  $.ajax({
+      url:"ajax/ordenes.php?op=get_examenes_edita_orden",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data)
+      {
+        //console.log(data);
+        for(var i in data){ 
+          console.log(data[i]);
+          examen = data[i];
+          document.getElementById(examen).checked = true;
+        }
+      }
+    })
+//////////////////AGREGA ORDEN PACIENTE
+  $.ajax({
+      url:"ajax/pacientes.php?op=agrega_paciente_examen",
+      method:"POST",
+      data:{id_paciente:id_paciente},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+       console.log(data.nombre);
+        $("#new_orden_empleado").val(data.nombre);
+        $("#id_paciente_orden").val(data.id_paciente);
+        $("#paciente_orden").val(data.empresa);
+        $("#correlativo_de_orden").html(numero_orden);      }
+    })
+
+});

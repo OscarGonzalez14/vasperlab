@@ -13,4 +13,6 @@ require_once("modals_examenes/sgot.php");
 require_once("modals_examenes/sgpt.php");
 require_once("modals_examenes/baciloscopia.php");
 require_once("modals_examenes/vdrl.php");
+require_once("modals_examenes/antigenos_cov.php");
+require_once("modals_examenes/colesterol_hdl.php");
 ?>

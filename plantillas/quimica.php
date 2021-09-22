@@ -1,7 +1,7 @@
 <div style="margin-top: 2px;">
 	<table class="table2" width="100%">
 		<tr>
-			<td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong></td>
+			<td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong>&nbsp;&nbsp;&nbsp;&nbsp;Cod. Empleado: <?php echo $cod_emp;?><strong></td>
 		</tr>
     <tr>
     <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>MUESTRA: <strong> SANGRE</td>

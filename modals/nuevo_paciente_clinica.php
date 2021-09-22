@@ -29,12 +29,12 @@
 <section style="margin:15px">
   <div class="form-row">
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-5">
     <label for="exampleFormControlSelect2">Nombre del Paciente</label>
       <input type="text" class="form-control input-dark" id="nombrePaciente" placeholder="Escriba el nombre del Paciente"  onkeyup="mayus(this);" >
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="inputPassword4">Género</label>
       <select class="form-control input-dark" id="tipo_paciente" required="">
         <option value="">Seleccionar genero</option>
@@ -43,7 +43,7 @@
       </select>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
        <label for="inputPassword4">Edad</label>
     <div class="input-group">      
       <input type="number" class="form-control input-dark" id="edad_paciente">
@@ -51,12 +51,19 @@
           <button type="button" class="btn btn-info btn-flat">Años</button>
         </span>
     </div>
+  </div>
+
+  <div class="form-group col-md-3">
+    <label for="exampleFormControlSelect2">Fecha Nac.</label>
+      <input type="date" class="form-control input-dark" id="fecha_nac">
   </div>  
 
   <div class="form-group col-md-4">
       <label for="inputPassword4">Empresa</label>
       <select class="form-control input-dark" id="empresa_paciente" required>
         <option value="">Seleccionar...</option>
+        <option value="McCormick">McCormick</option>
+        <option value="Alimentos MOR">Alimentos MOR</option>
         <option value="Corrugado">Corrugado</option>
         <option value="Plegadizo">Plegadizo</option>
         <option value="Ecofibra">Ecofibra</option>

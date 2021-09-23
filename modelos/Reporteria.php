@@ -80,14 +80,13 @@ public function count_solicitudes_pendientes_emp(){
 }
 
 //////////////////GET DETALLE ORDEN POR PACIENTE7
-public function get_detalle_orden_pacientes($id_paciente,$numero_orden){
+public function get_detalle_orden_pacientes($id_paciente){
   $conectar=parent::conexion();
   parent::set_names();
-  $sql= "SELECT p.nombre,p.empresa,p.departamento,p.cod_emp,d.numero_orden from pacientes_o as p inner join detalle_orden as d on p.id_paciente=d.id_paciente WHERE p.id_paciente=? and d.numero_orden=?;";
-    $sql=$conectar->prepare($sql);
-    $sql->bindValue(1,$id_paciente);
-    $sql->bindValue(2,$numero_orden);
-    $sql->execute();
+  $sql= "select edad from pacientes_o WHERE id_paciente=?;";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->execute();
   
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -283,6 +282,18 @@ public function get_data_hdl($id_paciente,$numero_orden){
   parent::set_names();
   
   $sql= "select resultado,observaciones from hdl where id_paciente=? and  numero_orden=?";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function get_data_ldh($id_paciente,$numero_orden){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql= "select resultado,observaciones from ldh where id_paciente=? and  numero_orden=?";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$id_paciente);
   $sql->bindValue(2,$numero_orden);

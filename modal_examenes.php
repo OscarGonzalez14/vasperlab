@@ -15,4 +15,5 @@ require_once("modals_examenes/baciloscopia.php");
 require_once("modals_examenes/vdrl.php");
 require_once("modals_examenes/antigenos_cov.php");
 require_once("modals_examenes/colesterol_hdl.php");
+require_once("modals_examenes/colesterol_ldh.php");
 ?>

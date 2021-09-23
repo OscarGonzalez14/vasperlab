@@ -2000,6 +2000,16 @@ public function show_datos_rpr($id_paciente,$numero_orden){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
 
+public function buscar_existe_hdl($num_orden){
+    $conectar= parent::conexion();
+
+    $sql= "select*from hdl where numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$num_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 public function registrar_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,$num_orden_exa_hdl){
     
     $estado = "";
@@ -2012,6 +2022,53 @@ public function registrar_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,
     $sql2->bindValue(4,$id_pac_exa_hdl);
     $sql2->bindValue(5,$observaciones_hdl);
     $sql2->execute();
+
+}
+
+public function editar_examenes_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,$num_orden_exa_hdl){
+    $conectar= parent::conexion();
+
+    $sql = "update hdl set resultado=?,observaciones=? where numero_orden=?;";
+    $sql = $conectar->prepare($sql);
+    $sql->bindValue(1,$resultado_hdl);
+    $sql->bindValue(2,$observaciones_hdl);
+    $sql->bindValue(3,$num_orden_exa_hdl);
+    $sql->execute();
+
+}
+
+public function buscar_existe_ldh($num_orden){
+    $conectar= parent::conexion();
+
+    $sql= "select*from ldh where numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$num_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function registrar_ldh($resultado_ldh,$observaciones_ldh,$id_pac_exa_ldh,$num_orden_exa_ldh){
+    $conectar= parent::conexion();
+    $estado_ldh = "";
+    $sql2="insert into ldh values(null,?,?,?,?,?);";
+    $sql2=$conectar->prepare($sql2);
+    $sql2->bindValue(1,$resultado_ldh);
+    $sql2->bindValue(2,$num_orden_exa_ldh);
+    $sql2->bindValue(3,$estado_ldh);
+    $sql2->bindValue(4,$id_pac_exa_ldh);
+    $sql2->bindValue(5,$observaciones_ldh);
+    $sql2->execute();
+
+}
+
+public function editar_ldh($resultado_ldh,$observaciones_ldh,$id_pac_exa_ldh,$num_orden_exa_ldh){
+    $conectar= parent::conexion();
+    $sql = "update ldh set resultado=?,observaciones=? where numero_orden=?;";
+    $sql = $conectar->prepare($sql);
+    $sql->bindValue(1,$resultado_ldh);
+    $sql->bindValue(2,$observaciones_ldh);
+    $sql->bindValue(3,$num_orden_exa_ldh);
+    $sql->execute();
 
 }
 

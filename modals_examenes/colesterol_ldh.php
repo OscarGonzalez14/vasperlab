@@ -1,4 +1,4 @@
- <style>
+<style>
   #tamModal_coles{
     max-width: 65% !important;
   }
@@ -12,7 +12,7 @@
   <div class="modal-dialog" id="tamModal_coles">
     <div class="modal-content">
       <!-- Modal Header -->
-      <div class="modal-header bg-info" id="head_coles">
+      <div class="modal-header bg-dark" id="head_coles">
         <h4 class="modal-title">COLESTEROL DE BAJA DENSIDAD DENSIDAD LDH</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>

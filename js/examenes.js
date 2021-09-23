@@ -673,8 +673,8 @@ function Guardarhdl(){
   }else{
     setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
   }
-
 }
+
 /**************SHOW DATA GLUCOSA*************/
 $(document).on('click', '.Colesterol_show', function(){    
     var id_paciente = $(this).attr("id");
@@ -1657,5 +1657,44 @@ $(document).on('click', '.vdrl_show', function(){
 
   });
 
-///////INIT
+
+//========================== GUARDAR COLESTERAL DE BAJA DENSIDAD LDH ==================//
+function Guardarldh(){
+    
+  let resultado_ldh = $("#resultado_ldh").val();
+  let observaciones_ldh = $("#observaciones_ldh").val();
+  let id_pac_exa_ldh = $("#id_pac_exa_ldh").val();
+  let num_orden_exa_ldh = $("#num_orden_exa_ldh").val();
+  let fecha = $("#fecha_ldh").val();
+
+  if (resultado_ldh != ""){
+    $.ajax({
+    url:"ajax/examenes.php?op=registrar_examen_ldh",
+    method:"POST",
+    data:{resultado_ldh:resultado_ldh,observaciones_ldh:observaciones_ldh,id_pac_exa_ldh:id_pac_exa_ldh,
+    num_orden_exa_ldh:num_orden_exa_ldh,fecha:fecha},
+    dataType:"json",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },      
+    success:function(data){//alert(id_paciente);
+    console.log(data);
+
+      if(data=='edit'){
+        Swal.fire('Se ha editado Exitosamente!','','success')
+        setTimeout ("explode();", 2000);
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Examen de LDH Registrado!','','success')
+        setTimeout ("explode();", 2000);
+      }
+  }
+
+  }); 
+  }else{
+    setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
+  }
+}
 init();

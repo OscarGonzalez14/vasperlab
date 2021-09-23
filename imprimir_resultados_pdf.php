@@ -13,9 +13,12 @@ $categoria =$_GET["categoria"];
 $paciente =$_GET["nombre"];
 $cod_emp =$_GET["cod_emp"];
 
-/*$datos_det_orden_paciente = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"],$_GET["n_orden"]);
-$datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_GET["n_orden"]);
+$data = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"]);
+/*$datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_GET["n_orden"]);
 $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orden"]);*/
+foreach ($data as $key) {
+  $edad = $key["edad"];
+}
 
 ?>
 <!DOCTYPE html>

@@ -78,7 +78,7 @@
         </tr>
         <tr>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> Colesterol de Alta Densidad HDL</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Colesterol-de-Baja-Densidad-LDH"> Colesterol de Baja Densidad LDH</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="ldh"> Colesterol de Baja Densidad LDH</td>
         </tr>
         <tr>
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HECES</td>

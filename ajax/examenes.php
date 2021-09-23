@@ -39,11 +39,19 @@ case 'examenes_ingreso':
     		$text ="Finalizado";
     	}
 
+      if($row["examen"]=="hdl") {
+        $examen = "Colesterol de alta densidad HDL";
+      }elseif ($row["examen"]=="ldh") {
+        $examen = "Colesterol de baja densidad LDH";
+      }else{
+        $examen = $row["examen"];
+      }
+
 		$sub_array = array();				
 		$sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["empresa"];
-		$sub_array[] = strtoupper($row["examen"]);
+		$sub_array[] = strtoupper($examen);
 		$sub_array[] = strtoupper($est);
         $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
 		$data[] = $sub_array;
@@ -891,14 +899,14 @@ case 'ingresar_diagnosticos_examen':
 
 /////////////////////REGISTRAR HDL ///////////////
  case 'registrar_examen_hdl':
-   // $datos = $examenes->buscar_existe_hdl($_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
-     // if(is_array($datos)==true and count($datos)==0){
+   $datos = $examenes->buscar_existe_hdl($_POST["num_orden_exa_hdl"]);
+     if(is_array($datos)==true and count($datos)==0){
      $examenes->registrar_hdl($_POST["resultado_hdl"],$_POST["observaciones_hdl"],$_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
      $messages[]="ok";
-  /*}else{
+  }else{
     $examenes->editar_examenes_hdl($_POST["resultado_hdl"],$_POST["observaciones_hdl"],$_POST["id_pac_exa_hdl"],$_POST["num_orden_exa_hdl"]);
     $errors[]="edit";
-  }*/
+  }
   if (isset($messages)){?>
        <?php
          foreach ($messages as $message) {
@@ -918,6 +926,38 @@ case 'ingresar_diagnosticos_examen':
    <?php
    }
   break;
+
+///////////////// REGISTRAR COLESTEROL DE BAJA DENSIDAD LDH///////////////////
+  case 'registrar_examen_ldh':
+  $datos = $examenes->buscar_existe_hdl($_POST["num_orden_exa_ldh"]);
+  if(is_array($datos)==true and count($datos)==0){
+    $examenes->registrar_ldh($_POST["resultado_ldh"],$_POST["observaciones_ldh"],$_POST["id_pac_exa_ldh"],$_POST["num_orden_exa_ldh"]);
+    $messages[]="ok";
+  }else{
+    $examenes->editar_ldh($_POST["resultado_ldh"],$_POST["observaciones_ldh"],$_POST["id_pac_exa_ldh"],$_POST["num_orden_exa_ldh"]);
+     $errors[]="edit";
+  }
+  if (isset($messages)){?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+
+  break;
+
 
 }
 ?>

@@ -1858,7 +1858,7 @@ $detalles = json_decode($_POST['arrayChecks']);
 
 public function get_examenes_ingresar($id_paciente,$numero_orden){
 $conectar= parent::conexion();         
-$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,d,categoria,p.empresa,p.departamento,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=?;";
+$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,d.categoria,p.empresa,p.departamento,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=? group by d.categoria;";
 $sql=$conectar->prepare($sql);
 $sql->bindValue(1,$id_paciente);
 $sql->bindValue(2,$numero_orden);

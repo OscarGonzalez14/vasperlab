@@ -1,10 +1,13 @@
 <?php 
 $id_paciente =$_GET["id_paciente"];
 $n_orden =$_GET["numero_orden"];
+require_once("modelos/Reporteria.php");
+$reporteria = new Reporteria();
 date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 ?>
 <?php require_once('header.php');?>
-<?php require_once('modal_examenes.php');?>
+<?php require_once('modals/cat_quimica_examenes.php');?>
+
 <style type="text/css">
     .dataTables_filter {
    float: right !important;
@@ -21,7 +24,7 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
             <th style="text-align:center">Fecha</th>
             <th style="text-align:center">Paciente</th>
             <th style="text-align:center">Empresa</th>
-            <th style="text-align:center">Examen</th>            
+            <th style="text-align:center">Categoria</th>            
             <th style="text-align:center">Estado</th>
             <th style="text-align:center">Ingresar</th>
           </tr>
@@ -31,6 +34,7 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
       </table>   <!-- /.content -->
 </div>
 </div>
+
 
 <script src='js/bootbox.min.js'></script>
 <script src='js/pacientes.js'></script>

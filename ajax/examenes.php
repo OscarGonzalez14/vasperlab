@@ -22,13 +22,13 @@ case 'examenes_ingreso':
     if ($estado=='0') {
     	$est = "En Proceso";
     	$clase ="none";
-    	$modal = $row["examen"];
+    	$modal = 'cat'.$row["categoria"];
     	$color ="primary";
     	$text ="Iniciar";
     }elseif ($estado=='1') {
     	$est = "Iniciado";
     	$clase =$row["examen"]."_show";
-    	$modal = $row["examen"];
+    	$modal = 'cat'.$row["categoria"];
     	$color ="warning";
     	$text ="Iniciado";
     }elseif ($estado=='2') {
@@ -51,9 +51,9 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["empresa"];
-		$sub_array[] = strtoupper($examen);
+		$sub_array[] = strtoupper($row["categoria"]);
 		$sub_array[] = strtoupper($est);
-    $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat'.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
 		$data[] = $sub_array;
 	}
 

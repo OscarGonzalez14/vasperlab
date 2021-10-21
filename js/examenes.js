@@ -19,57 +19,55 @@ function mostrar_btns_edit_exa(){
     var id_paciente_examen = $("#id_paciente_examen").val();
     var n_orden_examen = $("#n_orden_examen").val();
 
-    tabla_examenes_ingreso=$('#data_examenes_ingreso').dataTable(
-    {
+    tabla_examenes_ingreso=$('#data_examenes_ingreso').dataTable({
     "aProcessing": true,//Activamos el procesamiento del datatables
-      "aServerSide": true,//Paginación y filtrado realizados por el servidor
-      dom: 'Bfrtip',//Definimos los elementos del control de tabla
-      buttons: [              
-                'excelHtml5',
-                'csvHtml5'
-            ],
-    "ajax":
-        {
-          url: 'ajax/examenes.php?op=examenes_ingreso',
-          type : "post",
-          data:{id_paciente_examen:id_paciente_examen,n_orden_examen:n_orden_examen},            
-          error: function(e){
-            console.log(e.responseText);  
-          }
-        },
+    "aServerSide": true,//Paginación y filtrado realizados por el servidor
+    dom: 'Bfrtip',//Definimos los elementos del control de tabla
+    buttons: [              
+      'excelHtml5',
+      'csvHtml5'
+    ],
+    "ajax":{
+      url: 'ajax/examenes.php?op=examenes_ingreso',
+      type : "post",
+      data:{id_paciente_examen:id_paciente_examen,n_orden_examen:n_orden_examen},            
+      error: function(e){
+        console.log(e.responseText);  
+      }
+    },
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
     "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
       
-      "language": {
+    "language": {
  
-          "sProcessing":     "Procesando...",
+      "sProcessing":     "Procesando...",
        
-          "sLengthMenu":     "Mostrar _MENU_ registros",
+      "sLengthMenu":     "Mostrar _MENU_ registros",
        
-          "sZeroRecords":    "No se encontraron resultados",
+      "sZeroRecords":    "No se encontraron resultados",
        
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+      "sEmptyTable":     "Ningún dato disponible en esta tabla",
        
-          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+      "sInfo":           "Mostrando un total de _TOTAL_ registros",
        
-          "sInfoEmpty":      "Mostrando un total de 0 registros",
+      "sInfoEmpty":      "Mostrando un total de 0 registros",
        
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+      "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
        
-          "sInfoPostFix":    "",
+      "sInfoPostFix":    "",
        
-          "sSearch":         "Buscar:",
+      "sSearch":         "Buscar:",
        
-          "sUrl":            "",
+      "sUrl":            "",
        
-          "sInfoThousands":  ",",
+      "sInfoThousands":  ",",
        
-          "sLoadingRecords": "Cargando...",
+      "sLoadingRecords": "Cargando...",
        
-          "oPaginate": {
+      "oPaginate": {
        
               "sFirst":    "Primero",
        
@@ -163,9 +161,9 @@ function mostrar_btns_edit_exa(){
        
           "oAria": {
        
-              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
        
-              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
        
           }
 
@@ -660,11 +658,11 @@ function Guardarhdl(){
     success:function(data){   //alert(id_paciente);
     console.log(data);
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
+        alert('Se ha editado Exitosamente!');
         setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
-        Swal.fire('Examen de HDL Registrado!','','success')
+        alert('Examen de HDL Registrado!');
         setTimeout ("explode();", 2000);
       }
   }
@@ -1617,12 +1615,12 @@ function Guardarrpr(){
     success:function(data){   //alert(id_paciente);
     console.log(data);
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
+        alert("Se ha editado exitosamente");
         setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de RPR Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        alert("");
       }
   }
 
@@ -1680,15 +1678,13 @@ function Guardarldh(){
       console.log(z);
     },      
     success:function(data){//alert(id_paciente);
-    console.log(data);
 
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
-        return false;
+        alert("Examen LDH editado");
+        setTimeout ("explode();", 1000);
       }else if (data=="ok") {
-        Swal.fire('Examen de LDH Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        alert("Examen LDH guardado");
+        setTimeout ("explode();", 1000);
       }
   }
 
@@ -1697,4 +1693,37 @@ function Guardarldh(){
     setTimeout ("Swal.fire('Debe llenar correctamente los campos','','error')", 100);
   }
 }
+
+$(document).on('click', '.hdl_show', function(){
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    $.ajax({
+      url:"ajax/examenes.php?op=show_hdl_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      $("#resultado_hdl").val(data.resultado);
+      $("#observaciones_hdl").val(data.observaciones);        
+      }
+    });
+ });
+
+
+$(document).on('click', '.ldh_show', function(){
+    var id_paciente = $(this).attr("id");
+    var numero_orden = $(this).attr("name");
+    $.ajax({
+      url:"ajax/examenes.php?op=show_ldh_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      $("#resultado_ldh").val(data.resultado);
+      $("#observaciones_ldh").val(data.observaciones);        
+      }
+    });
+ });
 init();

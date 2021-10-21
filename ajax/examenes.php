@@ -17,35 +17,35 @@ case 'examenes_ingreso':
 	$datos=$examenes->get_examenes_ingresar($_POST["id_paciente_examen"],$_POST["n_orden_examen"]);
     //Vamos a declarar un array
  	$data= Array();
-    foreach($datos as $row){
-    	$estado = $row["estado"];
-    	if ($estado=='0') {
-    		$est = "En Proceso";
-    		$clase ="none";
-    		$modal = $row["examen"];
-    		$color ="primary";
-    		$text ="Iniciar";
-    	}elseif ($estado=='1') {
-    		$est = "Iniciado";
-    		$clase =$row["examen"]."_show";
-    		$modal = $row["examen"];
-    		$color ="warning";
-    		$text ="Iniciado";
-    	}elseif ($estado=='2') {
-    		$est = "Finalizado";
-    		$clase ="";
-    		$modal ="";
-    		$color ="success";
-    		$text ="Finalizado";
-    	}
+  foreach($datos as $row){
+    $estado = $row["estado"];
+    if ($estado=='0') {
+    	$est = "En Proceso";
+    	$clase ="none";
+    	$modal = $row["examen"];
+    	$color ="primary";
+    	$text ="Iniciar";
+    }elseif ($estado=='1') {
+    	$est = "Iniciado";
+    	$clase =$row["examen"]."_show";
+    	$modal = $row["examen"];
+    	$color ="warning";
+    	$text ="Iniciado";
+    }elseif ($estado=='2') {
+    	$est = "Finalizado";
+    	$clase ="";
+    	$modal ="";
+    	$color ="success";
+    	$text ="Finalizado";
+    }
 
-      if($row["examen"]=="hdl") {
-        $examen = "Colesterol de alta densidad HDL";
-      }elseif ($row["examen"]=="ldh") {
-        $examen = "Colesterol de baja densidad LDH";
-      }else{
-        $examen = $row["examen"];
-      }
+    if($row["examen"]=="hdl") {
+      $examen = "Colesterol de alta densidad HDL";
+    }elseif ($row["examen"]=="ldh") {
+      $examen = "Colesterol de baja densidad LDH";
+    }else{
+      $examen = $row["examen"];
+    }
 
 		$sub_array = array();				
 		$sub_array[] = $row["fecha"];
@@ -53,18 +53,18 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = strtoupper($examen);
 		$sub_array[] = strtoupper($est);
-        $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
 		$data[] = $sub_array;
 	}
 
-        $results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
+  $results = array(
+ 	"sEcho"=>1, //Información para el datatables
+ 	"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 	"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 	"aaData"=>$data);
+ 	echo json_encode($results);
 
-    break;
+  break;
 
 ///////////////LISTAR EXAMENES EMPRESARIAL
 case 'examenes_empresarial':
@@ -72,7 +72,7 @@ case 'examenes_empresarial':
     //Vamos a declarar un array
   $data= Array();
 
-    foreach($datos as $row){    
+  foreach($datos as $row){    
         $examen=$row["examen"];
         //$exameness=strtolower($examen);
         $esta="0";
@@ -172,7 +172,7 @@ case 'show_trigliceridos_data':
     echo json_encode($output);
   break;
 
-  //////////===============REGISTRAR EXAMEN DE CRETININA=============
+//////////=============== REGISTRAR EXAMEN DE CRETININA ============= */
  case 'registrar_examen_creatinina':
     $datos = $examenes->buscar_existe_creatinina($_POST["id_pac_exa_creatina"],$_POST["num_orden_exa_creatina"]);
       if(is_array($datos)==true and count($datos)==0){
@@ -929,13 +929,14 @@ case 'ingresar_diagnosticos_examen':
 
 ///////////////// REGISTRAR COLESTEROL DE BAJA DENSIDAD LDH///////////////////
   case 'registrar_examen_ldh':
-  $datos = $examenes->buscar_existe_hdl($_POST["num_orden_exa_ldh"]);
+  $datos = $examenes->buscar_existe_ldh($_POST["num_orden_exa_ldh"]);
   if(is_array($datos)==true and count($datos)==0){
+
     $examenes->registrar_ldh($_POST["resultado_ldh"],$_POST["observaciones_ldh"],$_POST["id_pac_exa_ldh"],$_POST["num_orden_exa_ldh"]);
     $messages[]="ok";
   }else{
     $examenes->editar_ldh($_POST["resultado_ldh"],$_POST["observaciones_ldh"],$_POST["id_pac_exa_ldh"],$_POST["num_orden_exa_ldh"]);
-     $errors[]="edit";
+    $errors[]="edit";
   }
   if (isset($messages)){?>
        <?php
@@ -958,6 +959,29 @@ case 'ingresar_diagnosticos_examen':
 
   break;
 
+  /******************** SHOW DATA HDL **************/
+case 'show_hdl_data':    
+    $datos=$examenes->show_datos_hdl($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observaciones"] = $row["observaciones"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+  echo json_encode($output);
+  break;
+
+  /******************** SHOW DATA LDL **************/
+case 'show_ldh_data':    
+    $datos=$examenes->show_datos_ldh($_POST["id_paciente"],$_POST["numero_orden"]);
+      foreach($datos as $row){
+        $output["resultado"] = $row["resultado"];
+        $output["observaciones"] = $row["observaciones"];
+        $output["id_paciente"] = $row["id_paciente"];
+        $output["numero_orden"] = $row["numero_orden"];        
+      }
+  echo json_encode($output);
+  break;
 
 }
 ?>

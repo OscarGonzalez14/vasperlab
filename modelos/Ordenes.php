@@ -14,7 +14,7 @@ class Ordenes extends Conectar{
 /////////////////////LISTAR SOLICITUDES EN PROCESO
   public function get_solicitudes_proceso(){
     $conectar= parent::conexion();         
-    $sql= "SELECT d.numero_orden,p.nombre,p.cod_emp,d.fecha,p.empresa,p.departamento,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente  order by d.id_detalle_orden DESC;";
+    $sql= "select d.numero_orden,p.nombre,p.cod_emp,d.fecha,p.empresa,p.departamento,p.id_paciente,d.estado from pacientes_o as p inner join detalle_orden as d on d.id_paciente=p.id_paciente  order by d.id_detalle_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);

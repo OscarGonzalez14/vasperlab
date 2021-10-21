@@ -9,7 +9,7 @@ $reporteria=new Reporteria();
 $id_paciente =$_GET["id_paciente"];
 $n_orden =$_GET["n_orden"];
 
-$datos_det_orden_paciente = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"],$_GET["n_orden"]);
+$datos_det_orden_paciente = $reporteria->get_detalle_orden_pacs($_GET["id_paciente"],$_GET["n_orden"]);
 $datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_GET["n_orden"]);
 $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orden"]);
 
@@ -64,7 +64,7 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
 
 ?>
         <td colspan="10" style="color:black;font-size:11px;font-family: Helvetica, Arial, sans-serif;width: 15%" class="stilot1">
-              <img src="images/vasplogo.png" width="100" height="50" />
+              <img src="images/vasperoficial.jpg" width="100" height="45" />
           </td>
   <td colspan="10" style="color:black;font-size:11px;font-family: Helvetica, Arial, sans-serif;width: 15%" class="stilot1"><strong>CÓDIGO:</strong> <?php echo $datos_det_orden_paciente[$i]["cod_emp"];?></td>
 

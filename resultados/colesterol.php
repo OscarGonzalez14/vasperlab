@@ -11,7 +11,7 @@ $datos_colesterol = $reporteria->get_data_colesterol($_GET["id_paciente"],$_GET[
 <tr style="font-size:11px" class="even_row">
     <td style="text-align: center;width:30%;color:red" colspan="30" class="stilot1"><strong>COLESTEROL</strong></td>
     <td style="text-align: center;width:25%" colspan="25" class="stilot1"><span class=""><?php echo $datos_colesterol[$i]["resultado"]." mg/dl";?></span></td>
-    <td style="text-align: center;width:45%" colspan="45" class="stilot1">Menor a 190 mg/dl</td>
+    <td style="text-align: left;width:45%" colspan="45" class="stilot1">Menor a 190 mg/dl</td>
 </tr>
 <?php if ( $datos_colesterol[$i]["observacione"] !=""){?>
 <tr>

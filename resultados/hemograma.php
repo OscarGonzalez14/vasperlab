@@ -2,19 +2,68 @@
 $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["numero_orden"]);
 
 ?>
-<table class="table2" width="100%" style="border: 1px solid black">
-  <tr>
-      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong>&nbsp;&nbsp;&nbsp;&nbsp;COD. EMPLEADO: <?php echo $cod_emp;?><strong></td>
+<style>
+  .round_table {                   
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    -moz-border-radius: 20px;
+    padding: 2px;
+    -webkit-border-radius: 5px;
+  }
+  .round_table {                   
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #0275d8;        
+    padding: 2px;
+  }
+  #watermark {
+    position: fixed;
+    top: 7.5%;
+    margin-left: 4.5%;
+    width: 100%;
+    opacity: .080;    
+    z-index: -1000;
+  }
+  #firma{
+    position: fixed;
+    top: 37.3%;
+    margin-left: 4.5%;
+  }
+  #inscripcion{
+    position: fixed;
+    top: 33.3%;
+    margin-left: 70.5%;
+  }
+</style>
+<!--Marca de agua-->
+<div id="watermark"><img src="images/vasperoficial.jpg" width="700" height="300"/></div>
+<div id="firma">
+  <img src="images/sello_vasper_firma.jpg" height="98" width="185" >
+</div>
+<div id="inscripcion">
+  <img src="images/sello_vasper_ninscrip.jpg" height="120" width="210" >
+</div>
+
+
+<div style="margin-top: 0px;">
+  <table class="round_table" width="100%" style="font-size: 14px; margin-top:0px">
+    <tr>
+      <td colspan="40" style="border-left:0px;width: 40%">&nbsp;&nbsp;&nbsp;&nbsp;<b><
+       <span style="margin-left:8px;color:#034f84">Paciente:</span></b><br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucwords(strtolower($paciente));?>
+      </td>
+      <td width="25" style="border-left:1px solid #0275d8;width: 20%;"><span style="margin-left:5px;color:#034f84">Cod. Empleado</span><br> <span style="margin-left:5px;"><?php echo $cod_emp."<span style='color:white'>.</span>";?></span></td>
+      <td width="25" style="border-left:1px solid #0275d8;width: 20%;"><span style="margin-left:5px;color:#034f84">Muestra</span><br> <span style="margin-left:5px;"> <?php echo "Sangre";?></span></td> 
     </tr>
-    <tr><td style="text-align: center;width: 100%" colspan="100">
-      <span style="color: red;font-size: 15px;text-align: center"><strong>HEMOGRAMA</strong></span>
-    </td></tr>
-  
+  </table>
+</div>
+<h5 style="font-family: Helvetica, Arial, sans-serif;color: red;font-size: 14px;text-align: center;margin-top: 0px !important;margin-bottom: 0px !important;">HEMOGRAMA</h5>
+<table class="table2" width="100%" style="border: 1px solid black;margin-top: 0px !important">
   <tr>
     <th class="#table2 stilot1
-       border-collapse: collapse" colspan="33" style="background:#034f84;color: white;font-size:13px">LINEA ROJA</th>
-    <th class="stilot1" colspan="33" style="background:#034f84;border-left: 2px solid black;color: white;font-size:13px">LINEA BLANCA</th>
-    <th class="stilot1" colspan="34" style="background:#034f84;border-left: 2px solid black;color: white;font-size:13px">VARIOS</th>
+       border-collapse: collapse" colspan="33" style="background:#0072B5;color: white;font-size:13px">LINEA ROJA</th>
+    <th class="stilot1" colspan="33" style="background:#0072B5;border-left: 2px solid black;color: white;font-size:13px">LINEA BLANCA</th>
+    <th class="stilot1" colspan="34" style="background:#0072B5;border-left: 2px solid black;color: white;font-size:13px">VARIOS</th>
   </tr>
 <?php for($i=0;$i<sizeof($items_hemograma);$i++){ ?>
   <tr>
@@ -46,7 +95,7 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
     <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["vcm_hemato"];?></span></td>
   <td colspan="18" style="width: 15%" class="stilot1">Eosinófilos</td>
     <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["eosinofilos_hemato"]."%";?></td>
-      <td colspan="34" style="width: 34%;text-align: center;background:#034f84;color: white;" class="stilot1"><b>OTROS</b>
+      <td colspan="34" style="width: 34%;text-align: center;background:#0072B5;color: white;" class="stilot1"><b>OTROS</b>
   </tr>
   <tr>
     <td colspan="18" style="width: 15%" class="stilot1">H.C.M Pg</td>
@@ -58,10 +107,10 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
   <tr>
     <td colspan="18" style="width: 15%" class="stilot1">C.M.H.C g/dl</td>
     <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["cmhc_hemato"];?></span></td>
-    <td colspan="33" style="width: 34%;text-align: center;background:#034f84;color: white;" class="stilot1"><b>NEUTROFILOS</b> 
+    <td colspan="33" style="width: 34%;text-align: center;background:#0072B5;color: white;" class="stilot1"><b>NEUTROFILOS</b> 
   </tr>
 <tr>
-    <td colspan="33" style="width: 34%;text-align: center;background:#034f84;color: white;" class="stilot1"><b>GOTA GRUESA</b>
+    <td colspan="33" style="width: 34%;text-align: center;background:#0072B5;color: white;" class="stilot1"><b>GOTA GRUESA</b>
       <td colspan="18" style="width: 15%" class="stilot1">En Banda</td>
     <td colspan="15" style="width: 15%" class="stilot1"><span><?php echo $items_hemograma[$i]["banda_hemato"]."%";?></td>
   </tr>

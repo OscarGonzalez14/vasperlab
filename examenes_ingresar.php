@@ -26,7 +26,7 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
             <th style="text-align:center">Ingresar</th>
           </tr>
         </thead>
-        <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                        
+        <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                       
         </tbody>
       </table>   <!-- /.content -->
 </div>

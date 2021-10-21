@@ -14,8 +14,7 @@ $paciente =$_GET["nombre"];
 $cod_emp =$_GET["cod_emp"];
 
 $data = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"]);
-/*$datos_item_examenes = $reporteria->datos_item_examenes($_GET["id_paciente"],$_GET["n_orden"]);
-$get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orden"]);*/
+
 foreach ($data as $key) {
   $edad = $key["edad"];
 }
@@ -33,6 +32,7 @@ foreach ($data as $key) {
         margin-right:30px; 
         margin-bottom: 0;
     }
+
     .stilot1{
        border: 1px solid black;
        padding: 5px;
@@ -59,7 +59,7 @@ foreach ($data as $key) {
        border-collapse: collapse;
        border-radius: 1em;
        /*overflow: hidden;*/
-       font-family: Helvetica, Arial, sans-serif;
+       /*font-family: Helvetica, Arial, sans-serif;*/
 
     }
 
@@ -102,11 +102,11 @@ foreach ($data as $key) {
 <?php
 //echo $categoria;
 if ($categoria=="quimica") {
-  require_once("plantillas/quimica.php");
-  //echo "Hola Mundo";
+
+require_once("plantillas/quimica.php");
+//echo "Hola Mundo";
 }elseif ($categoria=="heces") {
-  require_once("resultados/heces.php");
-  
+  require_once("resultados/heces.php");  
 }elseif ($categoria=="orina") {
   require_once("resultados/orina.php");
 }elseif($categoria=="bacteriologia"){
@@ -129,16 +129,14 @@ $salida_html = ob_get_contents();
 
   //$user=$_SESSION["id_usuario"];
 
-  ob_end_clean();
+ob_end_clean();
 $dompdf = new Dompdf();
 $dompdf->loadHtml($salida_html);
 
 // (Optional) Setup the paper size and orientation
 $dompdf->setPaper('letter', 'portrait');
-
 // Render the HTML as PDF
 $dompdf->render();
-
 // Output the generated PDF to Browser
 //$dompdf->stream();
 $dompdf->stream('document', array('Attachment'=>'0'));

@@ -60,10 +60,9 @@
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Glucosa Post-Prandial"> Glucosa Post-Prandial</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Tolerancia a la glucosa"> Tolerancia a la glucosa</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Colesterol"> Colesterol</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> H.D.L-Colsterol</td>                 
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> Colesterol de Alta Densidad HDL</td>               
         </tr>
-        <tr>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="L.D.L-Colesterol"> L.D.L-Colsterol</td>
+          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="ldh"> Colesterol de Baja Densidad LDH</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Trigliceridos"> Trigliceridos</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="acido_urico"> Ácido Urico</td>
           <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="Creatinina"> Creatinina</td>
@@ -76,10 +75,7 @@
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="sgpt"> S.G.P.T</td>
           <td colspan="20"><input class="quimica" type="checkbox" name="check_box" value="Proteinas Sericas"> Proteinas Sericas</td>
         </tr>
-        <tr>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="hdl"> Colesterol de Alta Densidad HDL</td>
-          <td colspan="20" style="padding: 0px"><input class="quimica" type="checkbox" name="check_box" value="ldh"> Colesterol de Baja Densidad LDH</td>
-        </tr>
+
         <tr>
           <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">HECES</td>
         </tr>

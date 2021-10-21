@@ -83,7 +83,7 @@ public function count_solicitudes_pendientes_emp(){
 public function get_detalle_orden_pacientes($id_paciente){
   $conectar=parent::conexion();
   parent::set_names();
-  $sql= "select edad from pacientes_o WHERE id_paciente=?;";
+  $sql= "select * from pacientes_o WHERE id_paciente=?;";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$id_paciente);
   $sql->execute();

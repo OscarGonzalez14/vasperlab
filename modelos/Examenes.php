@@ -1843,13 +1843,12 @@ public function registar_examenes_check(){
 $conectar=parent::conexion();
 $str = '';
 $detalles = array();
-$detalles = json_decode($_POST['arrayChecks']);
 
-    foreach($detalles as $d=>$v){
+$detalles = json_decode($_POST['arrayChecks']);
+  foreach($detalles as $d=>$v){
     $sql="insert into detalle_item_orden values(null,?,?,?);";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$d);
-    //$sql->bindValue(2,$cod_pac);
     $sql->bindValue(2,$id_paciente);
     $sql->bindValue(3,$fecha);
     $sql->execute(); 
@@ -1859,7 +1858,7 @@ $detalles = json_decode($_POST['arrayChecks']);
 
 public function get_examenes_ingresar($id_paciente,$numero_orden){
 $conectar= parent::conexion();         
-$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,p.empresa,p.departamento,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=?;";
+$sql= "select p.nombre,p.empresa,d.examen,d.numero_orden,d,categoria,p.empresa,p.departamento,d.fecha,d.estado,p.id_paciente from pacientes_o as p inner join detalle_item_orden as d on d.id_paciente=p.id_paciente where d.id_paciente=? and d.numero_orden=?;";
 $sql=$conectar->prepare($sql);
 $sql->bindValue(1,$id_paciente);
 $sql->bindValue(2,$numero_orden);
@@ -2023,6 +2022,12 @@ public function registrar_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,
     $sql2->bindValue(5,$observaciones_hdl);
     $sql2->execute();
 
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='hdl';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_pac_exa_hdl);
+    $sql3->bindValue(2,$num_orden_exa_hdl);
+    $sql3->execute();
+
 }
 
 public function editar_examenes_hdl($resultado_hdl,$observaciones_hdl,$id_pac_exa_hdl,$num_orden_exa_hdl){
@@ -2036,6 +2041,17 @@ public function editar_examenes_hdl($resultado_hdl,$observaciones_hdl,$id_pac_ex
     $sql->execute();
 
 }
+
+public function show_datos_hdl($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from hdl where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 
 public function buscar_existe_ldh($num_orden){
     $conectar= parent::conexion();
@@ -2059,6 +2075,12 @@ public function registrar_ldh($resultado_ldh,$observaciones_ldh,$id_pac_exa_ldh,
     $sql2->bindValue(5,$observaciones_ldh);
     $sql2->execute();
 
+    $sql3="update detalle_item_orden set estado='1' where id_paciente=? and numero_orden=? and examen='ldh';";
+    $sql3=$conectar->prepare($sql3);
+    $sql3->bindValue(1,$id_pac_exa_ldh);
+    $sql3->bindValue(2,$num_orden_exa_ldh);
+    $sql3->execute();
+
 }
 
 public function editar_ldh($resultado_ldh,$observaciones_ldh,$id_pac_exa_ldh,$num_orden_exa_ldh){
@@ -2071,6 +2093,16 @@ public function editar_ldh($resultado_ldh,$observaciones_ldh,$id_pac_exa_ldh,$nu
     $sql->execute();
 
 }
+
+public function show_datos_ldh($id_paciente,$numero_orden){
+    $conectar= parent::conexion();
+    $sql="select*from ldh where id_paciente=? and numero_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->bindValue(2, $numero_orden);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 }//FIN DE LA CLASE
 

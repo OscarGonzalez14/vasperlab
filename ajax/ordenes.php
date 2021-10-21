@@ -60,7 +60,7 @@ case "examenes_clinica_pendientes":
 		}
 
 		$sub_array = array();				
-		$sub_array[] = $row["id_paciente"];		
+		$sub_array[] = $row["numero_orden"];		
 	    $sub_array[] = $row["fecha"];
 		$sub_array[] = $row["nombre"];
 		$sub_array[] = $row["cod_emp"];

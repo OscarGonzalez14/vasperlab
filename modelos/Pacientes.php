@@ -7,22 +7,52 @@ class Pacientes extends Conectar{
 ////////////////////CLASE REGISTRA CPACIENTES
 
 public function agregar_paciente($nombrePaciente,$edad_paciente,$tipo_paciente,$empresa_paciente,$codigo_emp,$departamento,$fecha_nacimiento){
-
 	$conectar=parent::conexion();   
-
     $sql2="insert into pacientes_o values(null,?,?,?,?,?,?,?);";
-
-    $sql2=$conectar->prepare($sql2); 
-    
+    $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$nombrePaciente); 
     $sql2->bindValue(2,$edad_paciente);
     $sql2->bindValue(3,$codigo_emp); 
     $sql2->bindValue(4,$tipo_paciente); 
     $sql2->bindValue(5,$empresa_paciente);
     $sql2->bindValue(6,$departamento);
-    $sql2->bindValue(7,$fecha_nacimiento);        
-              
+    $sql2->bindValue(7,$fecha_nacimiento);             
     $sql2->execute();
+}
+
+/*public function agregar_paciente($nombrePaciente,$edad_paciente,$codigo_emp,$genero_paciente,$empresa_paciente,$departamento,$fecha_nacimiento){
+  $conectar= parent::conexion();
+
+  $sql= "insert into pacientes_o values(null,?,?,?,?,?,?,?);";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$nombrePaciente);
+  $sql->bindValue(2,$edad_paciente);
+  $sql->bindValue(3,$codigo_emp);
+  $sql->bindValue(4,$genero_paciente);
+  $sql->bindValue(5,$empresa_paciente);
+  $sql->bindValue(6,$departamento);
+  $sql->bindValue(7,$fecha_nacimiento);
+  $sql->execute();
+}*/
+
+public function registrarEmpresa($nomEmpresa,$dirEmpresa,$nitEmpresa,$telEmpresa,$respEmpresa,$correoEmpresa,$encargado,$registro,$giro){
+
+  $conectar= parent::conexion();
+  parent::set_names();
+  $sql="insert into empresas values(null,?,?,?,?,?,?,?,?,?);";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1, $nomEmpresa);
+  $sql->bindValue(2, $dirEmpresa);
+  $sql->bindValue(3, $nitEmpresa);
+  $sql->bindValue(4, $telEmpresa);
+  $sql->bindValue(5, $respEmpresa);
+  $sql->bindValue(6, $correoEmpresa);
+  $sql->bindValue(7, $encargado);
+  $sql->bindValue(8, $registro);
+  $sql->bindValue(9, $giro);
+  $sql->execute();
+
+    //print_r($_POST);
 }
 
 
@@ -166,6 +196,7 @@ public function edita_orden(){
     } 
    }/////////////FIN FOREACH
 }//////////FIN FUNCION
+/*
 public function eliminar_paciente($id_paciente){
     $conectar=parent::conexion();
 
@@ -178,7 +209,29 @@ public function eliminar_paciente($id_paciente){
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$id_paciente);
     $sql->execute();
-}
+}*/
+
+
+////////////VALIDACION PARA ELIMINAR PACIENTE SI EXISTE CONSULTA
+   public function valida_paciente_orden($id_paciente){
+    $conectar= parent::conexion();
+    /*$sql="select p.nombre,d.id_paciente from pacientes_o as p INNER JOIN detalle_orden as d on p.id_paciente=d.id_paciente WHERE d.id_paciente=?;";*/
+    $sql="select * from detalle_orden where id_paciente=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  //////////////FUNCION PARA ELIMINAR PACIENTE
+  public function eliminar_paciente($id_paciente){
+    $conectar=parent::conexion();
+    $sql="delete from pacientes_o where id_paciente=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->execute();
+    return $resultado=$sql->fetch(PDO::FETCH_ASSOC);
+  }
 
 }//FIN DE LA CLASE
 

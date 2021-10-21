@@ -64,10 +64,14 @@ case "listar_pacientes_registrados_clinicas":
 /////////////////FIN LISTAR PACIENTES ENPRESAS CLINICAS
 
 case "registrar_paciente":
-
-$paciente->agregar_paciente($_POST["nombrePaciente"],$_POST["edad_paciente"],$_POST["tipo_paciente"],$_POST["empresa_paciente"],$_POST["codigo_emp"],$_POST["departamento"],$_POST["fecha_nacimiento"]);
-
+$datos=$paciente->agregar_paciente($_POST["nombrePaciente"],$_POST["edad_paciente"],$_POST["tipo_paciente"],$_POST["empresa_paciente"],$_POST["codigo_emp"],$_POST["departamento"],$_POST["fecha_nacimiento"]);
 break;
+
+/*case "registrar_paciente":
+$datos=$paciente->agregar_paciente($_POST["nombrePaciente"],$_POST["genero_paciente"],$_POST["edad_paciente"],$_POST["fecha_nacimiento"],$_POST["empresa_paciente"],$_POST["departamento"],$_POST["codigo_emp"]);
+break;*/
+
+
 
 case "listar_pacientes":
     $datos=$paciente->get_pacientes();
@@ -159,9 +163,42 @@ case "listar_pacientes":
     case 'eliminar_paciente':
       $paciente->eliminar_paciente($_POST["id_paciente"]);
     break;
-   
-}
 
+case "eliminar_pacientes":
+
+  $datos=$pacientes->valida_paciente_orden($_POST["id_paciente"]);
+
+  if (is_array($datos)==true and count($datos)==0 ){ //Si existe consulta(no eliminar)
+    $paciente->eliminar_pacientes($_POST["id_paciente"]);
+    $messages[]="ok";
+  }else{
+    $errors[]="existe";
+  }
+  if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+//fin 
+  break;
+
+}
 ?>
    
    

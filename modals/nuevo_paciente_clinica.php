@@ -81,7 +81,7 @@
       <label for="inputEmail4">#Cod. Empleado</label>
       <input type="text" class="form-control input-dark" id="codigo_emp" placeholder="Código de empleado" required="" onkeyup="mayus(this);" >
     </div>
-  <button class="btn btn-primary btn-block" style="border-radius:0px" onClick="agregarPaciente();"><i class="fas fa-save"></i> Guardar</button>
+  <button class="btn btn-primary btn-block" style="border-radius:0px" onClick="agregarPaciente();"><i class="fas fa-save"> Guardar</i></button>
 </section>
     </div>
   </div>
@@ -89,6 +89,8 @@
 
 
 <script src="plugins/select2/js/select2.full.min.js"></script>
+<script type="text/javascript" src="js/cleave.js"></script>
+
 
 <script type="text/javascript">
   function mayus(e) {

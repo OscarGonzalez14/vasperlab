@@ -251,7 +251,6 @@ function listar_pacientes()
   }).DataTable();
 }
 
-
 function agregarPaciente(){
     
   //var  numero_orden_diario = $("#numero_orden_diario").val();
@@ -282,7 +281,7 @@ function agregarPaciente(){
   }
 
   }); 
-
+    setTimeout ("Swal.fire('Paciente Creado Existosamente','','success')", 100);
       setTimeout ("explode();", 2000);
    //cierre del condicional de validacion de los campos del producto,proveedor,pago
   }else{
@@ -291,7 +290,40 @@ function agregarPaciente(){
   }  
   
 }
-
+/*
+function agregarPaciente(){
+  var  nombrePaciente = $("#nombrePaciente").val();
+  var  genero_paciente = $("#genero_paciente").val();
+  var  edad_paciente = $("#edad_paciente").val();
+  var  fecha_nacimiento = $("#fecha_nac").val();
+  var  empresa_paciente = $("#empresa_paciente").val();
+  var  departamento = $("#departamento_paciente").val();
+  var  codigo_emp = $("#codigo_emp").val();
+  if(nombrePaciente != ""){
+    setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
+    //console.log('Message Oscar');
+    $.ajax({
+    url:"ajax/pacientes.php?op=registrar_paciente",
+    method:"POST",
+    data:{nombrePaciente:nombrePaciente,genero_paciente:genero_paciente,edad_paciente:edad_paciente,fecha_nacimiento:fecha_nacimiento,empresa_paciente:empresa_paciente,departamento:departamento,codigo_emp:codigo_emp},
+    cache: false,
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    }, 
+    success:function(data){   
+  }
+  }); 
+      setTimeout ("explode();", 2000);
+   //cierre del condicional de validacion de los campos del producto,proveedor,pago
+  }else{
+    Swal.fire('Existen campos  vacios o sin seleccionar!','','error')
+    return false;
+  }   
+}
+*/
 function explode(){
   location.reload();
 }
@@ -413,16 +445,37 @@ function eliminar_paciente_o(id_paciente){
 
    }
 
-//////////////////////SEELCT DEPARTAMENTOS DINAMICO
-//VALDAR TIPO DE PAGO
-$(document).ready(function(){
-  $("#empresa_paciente").change(function () {         
-    $("#empresa_paciente option:selected").each(function () {
-      empresa = $(this).val();
-      $.post('ajax/departamentos.php?op=select_departamento', { empresa: empresa }, function(data){
-        $("#departamento_paciente").html(data);
-      });            
-    });
-  })
-});
+
+//function eliminar_paciente (id_paciente)
+
+
+
+////ELIMINAR PACIENTE QUE NO POSEEN EXAMENES
+function eliminar_pacientes(id_paciente){
+    
+  bootbox.confirm("¿Está Seguro de eliminar el paciente?", function(result){
+    if(result){
+
+  $.ajax({
+    url:"ajax/pacientes.php?op=eliminar_pacientes",
+    method:"POST",
+    data:{id_paciente:id_paciente},
+    dataType:"json",
+    success:function(data)
+    {
+      console.log(data);
+      if(data=='ok'){
+        setTimeout ("Swal.fire('Paciente Eliminado Existosamente','','success')", 100);
+      }else if(data=='existe'){
+        setTimeout ("Swal.fire('Paciente posee una orden','','error')", 100);
+      } 
+      $("#data_examenes_clinica").DataTable().ajax.reload();
+    }
+  });
+
+}
+});//bootbox
+
+}
+
 init();

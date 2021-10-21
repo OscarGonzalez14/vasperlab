@@ -18,8 +18,8 @@
 	<table class="table-hover table-bordered" id="data_examenes_clinica" width="100%" data-order='[[ 0, "desc" ]]' style="text-align: center;text-align:center">
         <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 12px">
           <tr>
-            <th style="text-align:center">ID</th>
-            <th style="text-align:center">#Fecha</th>
+            <th style="text-align:center"># Orden</th>
+            <th style="text-align:center">Fecha</th>
             <th style="text-align:center">Paciente</th>
             <th style="text-align:center">Cod. Emp</th>
             <th style="text-align:center">Empresa</th>
@@ -27,7 +27,7 @@
             <th style="text-align:center">Ver</th>            
             <th style="text-align:center">Ingresar</th>
             <th style="text-align:center">Imprimir</th>
-            <th style="text-align:center">Edita Orden</th>
+            <th style="text-align:center">Editar</th>
           </tr>
         </thead>
         <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                        

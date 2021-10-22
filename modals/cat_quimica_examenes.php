@@ -1,10 +1,19 @@
  <style>
     #catquimicaModal{
-      max-width: 60% !important;
+      max-width: 70% !important;
     }
      #head_coles{
         color: white;
         text-align: center;
+    }
+    .titulo{
+     background: #363945;
+     display: block;
+     color: white;
+     border-radius: 2px;
+     text-align: center;
+     padding: 2px;
+     font-family: Helvetica, Arial, sans-serif;
     }
 </style>
 
@@ -45,7 +54,7 @@
       }
       ?>
       </table>
-
+    <button class="btn btn-block btn-primary" style="border-radius: 0px">  GUARDAR EXAMENES</button>
     </div>            
     </div>
     </div><!-- Modal body -->

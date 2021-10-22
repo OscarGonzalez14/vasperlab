@@ -18,76 +18,76 @@ function listar_pacientes_registrados()
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [        
- 
-                'excelHtml5',
-                
-                'csvHtml5'
 
-            ],
-    "ajax":
-        {
-          url: 'ajax/pacientes.php?op=listar_pacientes_registrados',
-          type : "get",
-          dataType : "json",            
-          error: function(e){
-            console.log(e.responseText);  
-          }
-        },
-    "bDestroy": true,
-    "responsive": true,
-    "bInfo":true,
+      'excelHtml5',
+
+      'csvHtml5'
+
+      ],
+      "ajax":
+      {
+        url: 'ajax/pacientes.php?op=listar_pacientes_registrados',
+        type : "get",
+        dataType : "json",            
+        error: function(e){
+          console.log(e.responseText);  
+        }
+      },
+      "bDestroy": true,
+      "responsive": true,
+      "bInfo":true,
     "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
       
       "language": {
- 
-          "sProcessing":     "Procesando...",
-       
-          "sLengthMenu":     "Mostrar _MENU_ registros",
-       
-          "sZeroRecords":    "No se encontraron resultados",
-       
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
-       
-          "sInfo":           "Mostrando un total de _TOTAL_ registros",
-       
-          "sInfoEmpty":      "Mostrando un total de 0 registros",
-       
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-       
-          "sInfoPostFix":    "",
-       
-          "sSearch":         "Buscar:",
-       
-          "sUrl":            "",
-       
-          "sInfoThousands":  ",",
-       
-          "sLoadingRecords": "Cargando...",
-       
-          "oPaginate": {
-       
-              "sFirst":    "Primero",
-       
-              "sLast":     "Último",
-       
-              "sNext":     "Siguiente",
-       
-              "sPrevious": "Anterior"
-       
-          },
-       
-          "oAria": {
-       
-              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-       
-              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-       
-          }
+
+        "sProcessing":     "Procesando...",
+
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+
+        "sZeroRecords":    "No se encontraron resultados",
+
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+        "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+        "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+        "sInfoPostFix":    "",
+
+        "sSearch":         "Buscar:",
+
+        "sUrl":            "",
+
+        "sInfoThousands":  ",",
+
+        "sLoadingRecords": "Cargando...",
+
+        "oPaginate": {
+
+          "sFirst":    "Primero",
+
+          "sLast":     "Último",
+
+          "sNext":     "Siguiente",
+
+          "sPrevious": "Anterior"
+
+        },
+
+        "oAria": {
+
+          "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+        }
 
          }//cerrando language
          
-  }).DataTable();
+       }).DataTable();
 }
 
 /////////////////////LISTAR PACIENTES EN EMPRESAS-CLINICAS*******
@@ -101,74 +101,74 @@ function listar_pacientes_registrados_clinicas()
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [              
 
-                'excelHtml5',
-                'csvHtml5',
+      'excelHtml5',
+      'csvHtml5',
 
-            ],
-    "ajax":
-        {
-          url: 'ajax/pacientes.php?op=listar_pacientes_registrados_clinicas',
-          type : "post",
-          data:{usuario_clinica:usuario_clinica},            
-          error: function(e){
-            console.log(e.responseText);  
-          }
-        },
-    "bDestroy": true,
-    "responsive": true,
-    "bInfo":true,
+      ],
+      "ajax":
+      {
+        url: 'ajax/pacientes.php?op=listar_pacientes_registrados_clinicas',
+        type : "post",
+        data:{usuario_clinica:usuario_clinica},            
+        error: function(e){
+          console.log(e.responseText);  
+        }
+      },
+      "bDestroy": true,
+      "responsive": true,
+      "bInfo":true,
     "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
       
       "language": {
- 
-          "sProcessing":     "Procesando...",
-       
-          "sLengthMenu":     "Mostrar _MENU_ registros",
-       
-          "sZeroRecords":    "No se encontraron resultados",
-       
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
-       
-          "sInfo":           "Mostrando un total de _TOTAL_ registros",
-       
-          "sInfoEmpty":      "Mostrando un total de 0 registros",
-       
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-       
-          "sInfoPostFix":    "",
-       
-          "sSearch":         "Buscar:",
-       
-          "sUrl":            "",
-       
-          "sInfoThousands":  ",",
-       
-          "sLoadingRecords": "Cargando...",
-       
-          "oPaginate": {
-       
-              "sFirst":    "Primero",
-       
-              "sLast":     "Último",
-       
-              "sNext":     "Siguiente",
-       
-              "sPrevious": "Anterior"
-       
-          },
-       
-          "oAria": {
-       
-              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-       
-              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-       
-          }
+
+        "sProcessing":     "Procesando...",
+
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+
+        "sZeroRecords":    "No se encontraron resultados",
+
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+        "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+        "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+        "sInfoPostFix":    "",
+
+        "sSearch":         "Buscar:",
+
+        "sUrl":            "",
+
+        "sInfoThousands":  ",",
+
+        "sLoadingRecords": "Cargando...",
+
+        "oPaginate": {
+
+          "sFirst":    "Primero",
+
+          "sLast":     "Último",
+
+          "sNext":     "Siguiente",
+
+          "sPrevious": "Anterior"
+
+        },
+
+        "oAria": {
+
+          "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+        }
 
          }//cerrando language
          
-  }).DataTable();
+       }).DataTable();
 }
 
 /////////////////////FIN LSTAR PACIENTES CLINICAS
@@ -180,80 +180,80 @@ function listar_pacientes()
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [              
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdf'
-            ],
-    "ajax":
-        {
-          url: 'ajax/pacientes.php?op=listar_pacientes',
-          type : "get",
-          dataType : "json",            
-          error: function(e){
-            console.log(e.responseText);  
-          }
-        },
-    "bDestroy": true,
-    "responsive": true,
-    "bInfo":true,
+      'copyHtml5',
+      'excelHtml5',
+      'csvHtml5',
+      'pdf'
+      ],
+      "ajax":
+      {
+        url: 'ajax/pacientes.php?op=listar_pacientes',
+        type : "get",
+        dataType : "json",            
+        error: function(e){
+          console.log(e.responseText);  
+        }
+      },
+      "bDestroy": true,
+      "responsive": true,
+      "bInfo":true,
     "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
       
       "language": {
- 
-          "sProcessing":     "Procesando...",
-       
-          "sLengthMenu":     "Mostrar _MENU_ registros",
-       
-          "sZeroRecords":    "No se encontraron resultados",
-       
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
-       
-          "sInfo":           "Mostrando un total de _TOTAL_ registros",
-       
-          "sInfoEmpty":      "Mostrando un total de 0 registros",
-       
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-       
-          "sInfoPostFix":    "",
-       
-          "sSearch":         "Buscar:",
-       
-          "sUrl":            "",
-       
-          "sInfoThousands":  ",",
-       
-          "sLoadingRecords": "Cargando...",
-       
-          "oPaginate": {
-       
-              "sFirst":    "Primero",
-       
-              "sLast":     "Último",
-       
-              "sNext":     "Siguiente",
-       
-              "sPrevious": "Anterior"
-       
-          },
-       
-          "oAria": {
-       
-              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-       
-              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-       
-          }
+
+        "sProcessing":     "Procesando...",
+
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+
+        "sZeroRecords":    "No se encontraron resultados",
+
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+        "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+        "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+        "sInfoPostFix":    "",
+
+        "sSearch":         "Buscar:",
+
+        "sUrl":            "",
+
+        "sInfoThousands":  ",",
+
+        "sLoadingRecords": "Cargando...",
+
+        "oPaginate": {
+
+          "sFirst":    "Primero",
+
+          "sLast":     "Último",
+
+          "sNext":     "Siguiente",
+
+          "sPrevious": "Anterior"
+
+        },
+
+        "oAria": {
+
+          "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+        }
 
          }//cerrando language
          
-  }).DataTable();
+       }).DataTable();
 }
 
 
 function agregarPaciente(){
-    
+
   //var  numero_orden_diario = $("#numero_orden_diario").val();
   var  nombrePaciente = $("#nombrePaciente").val();
   var  edad_paciente = $("#edad_paciente").val();
@@ -264,36 +264,26 @@ function agregarPaciente(){
   var  fecha_nacimiento = $("#fecha_nac").val();
   if(nombrePaciente != ""){
     $.ajax({
-    url:"ajax/pacientes.php?op=registrar_paciente",
-    method:"POST",
-    data:{nombrePaciente:nombrePaciente,edad_paciente:edad_paciente,tipo_paciente:tipo_paciente,empresa_paciente:empresa_paciente,codigo_emp:codigo_emp,departamento:departamento,fecha_nacimiento:fecha_nacimiento},
-    cache: false,
-    dataType:"html",
-    error:function(x,y,z){
-      console.log(x);
-      console.log(y);
-      console.log(z);
-    },
+      url:"ajax/pacientes.php?op=registrar_paciente",
+      method:"POST",
+      data:{nombrePaciente:nombrePaciente,edad_paciente:edad_paciente,tipo_paciente:tipo_paciente,empresa_paciente:empresa_paciente,codigo_emp:codigo_emp,departamento:departamento,fecha_nacimiento:fecha_nacimiento},
+      cache: false,
+      dataType:"html",
+      error:function(x,y,z){
+        console.log(x);
+        console.log(y);
+        console.log(z);
+      },
       
-    success:function(data){
-    setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
-    setTimeout ("explode();", 2000); 
+      success:function(data){
+      }
+    });
+
   }
-
-  }); 
-
-  
-   //cierre del condicional de validacion de los campos del producto,proveedor,pago
-  }else{
-    Swal.fire('Existen campos  vacios o sin seleccionar!','','error')
-    return false;
-  }  
-  
-}
-
-function explode(){
-  location.reload();
-}
+  setTimeout ("Swal.fire('Paciente ha sido registrado','','success')", 100);
+  $('#data_pacientes_reg').DataTable().ajax.reload();
+  $('#new_aro').modal('hide');
+}  
 
 ////LLENADO DE CAMPOS DE´PACINTE EN NUEVO EXAMEN
 $(document).on('click', '.agrega_paciente', function(){
@@ -313,7 +303,7 @@ $(document).on('click', '.agrega_paciente', function(){
         $("#num_orden_paciente").val(data.numero_orden);        
       }
     })
-});
+  });
 //RELLENAR CAMPOS DE PACIENTE EN NUEVA ORDEN
 ////LLENADO DE CAMPOS EN COMPRAS DE PROVEEDOR
 $(document).on('click', '.agregar_oden_paciente', function(){
@@ -344,73 +334,75 @@ $(document).on('click', '.agregar_oden_paciente', function(){
         $("#correlativo_de_orden").html(data.correlativo_de_orden);       
       }
     })
-});
+  });
 
 function agregarOrden(){
 
   var lang = [];
   // Initializing array with Checkbox checked values
   $("input[name='check_box']:checked").each(function(){
-      var obj = {
-        examen : this.value,
-        categoria : this.className
-      }
-      lang.push(obj);
+    var obj = {
+      examen : this.value,
+      categoria : this.className
+    }
+    lang.push(obj);
   });
   console.log(lang);
 
 ///return false;
 
-  var correlativo_de_orden = $("#correlativo_de_orden").html();
-  var examenes_paciente = $("#examenes_paciente").val();
-  var fecha_orden = $("#fecha_orden").val();
-  var id_paciente_orden = $("#id_paciente_orden").val();
-  
-  $.ajax({
-    url:"ajax/pacientes.php?op=registrar_orden",
-    method:"POST",
-    data:{'arrayChecks':JSON.stringify(lang),correlativo_de_orden:correlativo_de_orden,examenes_paciente:examenes_paciente,fecha_orden:fecha_orden,id_paciente_orden:id_paciente_orden},
-    cache: false,
-    dataType:"html",
-    error:function(x,y,z){
-      console.log(x);
-      console.log(y);
-      console.log(z);
-    },
-      
+var correlativo_de_orden = $("#correlativo_de_orden").html();
+var examenes_paciente = $("#examenes_paciente").val();
+var fecha_orden = $("#fecha_orden").val();
+var id_paciente_orden = $("#id_paciente_orden").val();
+
+$.ajax({
+  url:"ajax/pacientes.php?op=registrar_orden",
+  method:"POST",
+  data:{'arrayChecks':JSON.stringify(lang),correlativo_de_orden:correlativo_de_orden,examenes_paciente:examenes_paciente,fecha_orden:fecha_orden,id_paciente_orden:id_paciente_orden},
+  cache: false,
+  dataType:"html",
+  error:function(x,y,z){
+    console.log(x);
+    console.log(y);
+    console.log(z);
+  },
+
   success:function(data){ 
 
     setTimeout ("Swal.fire('Se ha registrado una nueva orden','','success')", 100);
     //setTimeout ("explode();", 2000);
   }
 
-  });
+});
 
 }
 
 function eliminar_paciente_o(id_paciente){
-    
+
   bootbox.confirm("¿Está Seguro de eliminar el paciente?", function(result){
     if(result)
     {
 
-        $.ajax({
-          url:"ajax/pacientes.php?op=eliminar_paciente",
-          method:"POST",
-          data:{id_paciente:id_paciente},
+      $.ajax({
+        url:"ajax/pacientes.php?op=eliminar_paciente",
+        method:"POST",
+        data:{id_paciente:id_paciente},
 
-          success:function(data)
-          {
-            explode();
-          }
-        });
+        success:function(data)
+        {
+        setTimeout ("Swal.fire('Paciente ha sido eliminado','','success')", 100);
+        setTimeout ("explode();", 2000);
+        }
+
+      });
 
     }
-
+    $('#data_pacientes_reg').DataTable().ajax.reload();
      });//bootbox
+  
 
-
-   }
+}
 
 //////////////////////SEELCT DEPARTAMENTOS DINAMICO
 //VALDAR TIPO DE PAGO

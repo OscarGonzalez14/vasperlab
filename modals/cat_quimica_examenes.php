@@ -35,7 +35,7 @@
       <table width="100%" class="table-hover table-bordered table-striped">
       <?php
       foreach ($examenes_quimica as $value) {
-         $examen = $value["examen"];
+         $examen = strtolower($value["examen"]);
          if($c_quimica % 2 ==0){
             echo "<tr>";
             $color ='blue';

@@ -22,6 +22,9 @@
   color:white;
 }
 </style>
+<header>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</header>
 <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
 <div style="margin:10px;">

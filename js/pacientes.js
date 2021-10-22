@@ -263,8 +263,6 @@ function agregarPaciente(){
   var  departamento = $("#departamento_paciente").val();
   var  fecha_nacimiento = $("#fecha_nac").val();
   if(nombrePaciente != ""){
-    setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
-    //console.log('Message Oscar');
     $.ajax({
     url:"ajax/pacientes.php?op=registrar_paciente",
     method:"POST",
@@ -278,12 +276,13 @@ function agregarPaciente(){
     },
       
     success:function(data){
-     
+    setTimeout ("Swal.fire('Se ha registrado paciente','','success')", 100);
+    setTimeout ("explode();", 2000); 
   }
 
   }); 
 
-      setTimeout ("explode();", 2000);
+  
    //cierre del condicional de validacion de los campos del producto,proveedor,pago
   }else{
     Swal.fire('Existen campos  vacios o sin seleccionar!','','error')

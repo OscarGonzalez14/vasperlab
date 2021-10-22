@@ -22,6 +22,7 @@
         <button type="button" class="btn btn-info btn-flat" onClick="GuardarAcidoUrico();">mg/dl</button>
       </span>
       </div>
+      
       <div class="form-group col-md-12">
         <label for="inputEmail4">Observaciones</label>
         <input type="text" class="form-control" id="observaciones_acido_urico" required="" style="text-align: right;">

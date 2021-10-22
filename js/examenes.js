@@ -470,9 +470,8 @@ function GuardarTrigliceridos(){
     
   var resultado = $("#resultado_triglicerido").val();
   var observaciones_trigliceridos = $("#observaciones_trigliceridos").val();
-  var id_pac_exa_trigliceridos = $("#id_pac_exa_trigliceridos").val();
-  var num_orden_exa_trigliceridos = $("#num_orden_exa_trigliceridos").val();
-
+  var id_pac_exa_trigliceridos = $("#id_pac_quimica").val();
+  var num_orden_exa_trigliceridos = $("#num_orden_quimica").val();
   
   if (resultado !=""){
     $.ajax({
@@ -489,11 +488,10 @@ function GuardarTrigliceridos(){
     console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de Trigliceridos Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        
       }
   }
 
@@ -657,8 +655,8 @@ function GuardarCreatinina(){
     
   var resultado_creatinina = $("#resultado_creatinina").val();
   var observaciones_creatinina = $("#observaciones_creatinina").val();
-  var id_pac_exa_creatina = $("#id_pac_exa_creatina").val();
-  var num_orden_exa_creatina = $("#num_orden_exa_creatina").val();
+  var id_pac_exa_creatina = $("#id_pac_quimica").val();
+  var num_orden_exa_creatina = $("#num_orden_quimica").val();
   var fecha = $("#fecha").val();
 
 
@@ -677,11 +675,10 @@ function GuardarCreatinina(){
     console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de Creatinina Registrado!','','success')
-        setTimeout ("explode();", 2000);
+
       }
   }
 
@@ -1673,7 +1670,7 @@ $(document).on('click', '.ldh_show', function(){
  });
 
 function regExaQuim(passedArray){
-
+//console.log(passedArray);return false;
  for(i in passedArray){
   let exa = passedArray[i];
   if(exa=='colesterol'){
@@ -1682,7 +1679,13 @@ function regExaQuim(passedArray){
     GuardarGlucosa();
   }else if(exa=='acido_urico'){
     GuardarAcidoUrico();
+  }else if(exa=='trigliceridos'){
+    GuardarTrigliceridos();
+  }else if(exa=='creatinina'){
+    GuardarCreatinina();
   }
+
+
  }
  alert('Orden actualizada exitosamente'); explode();
 }

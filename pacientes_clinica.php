@@ -49,7 +49,7 @@
 </div>
 </div>
 
-<script src='js/bootbox.min.js'></script>
+<script type="text/javascript" src="js/bootbox.min.js"></script>
 <script src='js/pacientes.js'></script>
 <script src='js/ordenes.js'></script>
 

@@ -16,6 +16,20 @@
      font-family: Helvetica, Arial, sans-serif;
     }
 </style>
+<script>
+
+$(document).on('keypress', 'input,select', function (e) {
+    if (e.which == 13) {
+        e.preventDefault();
+        var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
+        console.log($next.length);
+        if (!$next.length) {
+       $next = $('[tabIndex=1]');        }
+        $next.focus() .click();
+    }
+});
+</script>
+
 
 <div class="modal fade bd-example-modal-lg" id="catquimica">
   <div class="modal-dialog" id="catquimicaModal">
@@ -34,8 +48,10 @@
 
       <table width="100%" class="table-hover table-bordered table-striped">
       <?php
+      $exa_quimica = Array();
       foreach ($examenes_quimica as $value) {
-         $examen = $value["examen"];
+         $examen = strtolower($value["examen"]);
+         array_push($exa_quimica, $examen);
          if($c_quimica % 2 ==0){
             echo "<tr>";
             $color ='blue';
@@ -54,11 +70,12 @@
       }
       ?>
       </table>
-    <button class="btn btn-block btn-primary" style="border-radius: 0px">  GUARDAR EXAMENES</button>
+    <script>let arrayExa=<?php echo json_encode($exa_quimica);?></script>
+    <button class="btn btn-block btn-primary" style="border-radius: 0px" onClick="regExaQuim(arrayExa);"><i class="fas fa-save"></i> GUARDAR EXAMENES</button>
     </div>            
     </div>
     </div><!-- Modal body -->
-      <input type="hidden" class="id_paciente_exa" id="id_pac_exa_acido_urico">
-      <input type="hidden" class="num_orden_exa" id="num_orden_exa_acido_urico">
-      <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
+      <input type="hidden" class="id_paciente_exa" id="id_pac_quimica" value="<?php echo $id_paciente;?>">
+      <input type="hidden" class="num_orden_exa" id="num_orden_quimica" value="<?php echo $n_orden;?>">
+      <input type="hidden" id="fecha" value="<?php echo $hoy;?>">      
     </div>

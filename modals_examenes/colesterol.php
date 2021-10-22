@@ -1,3 +1,18 @@
+<script>
+      $.ajax({
+      url:"ajax/examenes.php?op=show_colesterol_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#resultado_colesterol").val(data.resultado);
+        $("#observaciones_colesterol").val(data.observacione);
+      }
+    });
+</script>
+
 <div style="margin: 8px">
   <h5 class="titulo">Colesterol</h5>
   <div class="form-row">

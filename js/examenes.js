@@ -390,52 +390,6 @@ function GurdarExamenOrina(){
 
 }
 
-/*function clear_disable_inputs_orina(){
-  $("#color_orina").val("");
-  $('#color_orina').attr('readonly', true);
-
-  $("#olor_orina").val("");
-  $("#olor_orina").attr('readonly', true);
-
-  $("#aspecto_orina").val("");
-  $("#aspecto_orina").attr('readonly', true);
-
-  $("#densidad_orina").val("");
-  $("#densidad_orina").attr('readonly', true);
-
-  $("#esterasas_orina").val("");
-  $("#esterasas_orina").attr('readonly', true);
-
-  $("#nitritos_orina").val("");
-  $("#nitritos_orina").attr('readonly', true);
-
-  $("#ph_orina").val("");
-  $("#ph_orina").attr('readonly', true);
-
-  $("#proteinas_orina").val("");
-  $("#proteinas_orina").attr('readonly', true);
-
-  $("#glucosa_orina").val("");
-  $("#glucosa_orina").attr('readonly', true);
-
-  $("#cetonas_orina").val("");
-  $("#cetonas_orina").attr('readonly', true);
-
-$("#urobilinogeno_orina").val("");
-$("#bilirrubina_orina").val("");
-$("#sangre_oculta_orina").val("");
-$("#cilindros_orina").val("");
-$("#leucocitos_orina").val("");
-$("#hematies_orina").val("");
-$("#epiteliales_orina").val("");
-$("#filamentos_orina").val("");
-$("#bacterias_orina").val("");
-$("#cristales_orina").val("");
-$("#observaciones_orina").val("");*/
-//$("#id_paciente").val("");
-
-//}
-
 function GuardarExamenHeces(){    
   var color_heces = $("#color_heces").val();
   var consistencia_heces = $("#consistencia_heces").val();
@@ -573,11 +527,11 @@ $(document).on('click', '.Trigliceridos_show', function(){
 });
 /////////////GUSRADAR COLESTEROL
 function GuardarColesterol(){
-    
+   
   var resultado = $("#resultado_colesterol").val();
   var observaciones_colesterol = $("#observaciones_colesterol").val();
-  var id_pac_exa_colesterol = $("#id_pac_exa_colesterol").val();
-  var num_orden_exa_colesterol = $("#num_orden_exa_colesterol").val();
+  var id_pac_exa_colesterol = $("#id_pac_quimica").val();
+  var num_orden_exa_colesterol = $("#num_orden_quimica").val();
   var fecha = $("#fecha").val();
 
   if (resultado!=""){
@@ -595,11 +549,8 @@ function GuardarColesterol(){
     console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
-        return false;
       }else if (data=="ok") {
-        Swal.fire('Examen de Colesterol Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        Swal.fire('Examen de Colesterol Registrado!','','success')        
       }
   }
 
@@ -918,11 +869,11 @@ $(document).on('click', '.sgpt_show', function(){
 
 ///////////////////   GUARDAR GLUCOSA
 function GuardarGlucosa(){
-    
+  
   var resultado = $("#resultado_glucosa").val();
   var observacione_glucosa = $("#observacione_glucosa").val();
-  var id_pac_exa_glucosa = $("#id_pac_exa_glucosa").val();
-  var num_orden_exa_glucosa = $("#num_orden_exa_glucosa").val();
+  var id_pac_exa_glucosa = $("#id_pac_quimica").val();
+  var num_orden_exa_glucosa = $("#num_orden_quimica").val();
   var fecha = $("#fecha").val();
   
   if (resultado!=""){
@@ -940,11 +891,8 @@ function GuardarGlucosa(){
      console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
-        return false;
       }else if (data=="ok") {
-        Swal.fire('Examen de Glucosa Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        Swal.fire('Examen de Glucosa Registrado!','','success')        
       }
     
   }
@@ -1531,9 +1479,8 @@ function finalizar_orina(){
     
   var resultado = $("#resultado_acido_urico").val();
   var observacione_urico = $("#observaciones_acido_urico").val();
-  var id_pac_exa_urico= $("#id_pac_exa_acido_urico").val();
-  var num_orden_exa_urico = $("#num_orden_exa_acido_urico").val();
-
+  var id_pac_exa_urico= $("#id_pac_quimica").val();
+  var num_orden_exa_urico = $("#num_orden_quimica").val();
  
   if (resultado!=""){
     $.ajax({
@@ -1550,11 +1497,9 @@ function finalizar_orina(){
      console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de Ácido Urico Registrado!','','success')
-        setTimeout ("explode();", 2000);
       }
     
   }
@@ -1726,4 +1671,19 @@ $(document).on('click', '.ldh_show', function(){
       }
     });
  });
+
+function regExaQuim(passedArray){
+
+ for(i in passedArray){
+  let exa = passedArray[i];
+  if(exa=='colesterol'){
+    GuardarColesterol();
+  }else if(exa=='glucosa'){
+    GuardarGlucosa();
+  }else if(exa=='acido_urico'){
+    GuardarAcidoUrico();
+  }
+ }
+ alert('Orden actualizada exitosamente'); explode();
+}
 init();

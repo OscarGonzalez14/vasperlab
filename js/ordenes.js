@@ -558,7 +558,6 @@ function agregarOrdenClinica(){
 
   success:function(data){
     console.log(data);
-
     setTimeout ("Swal.fire('Se ha registrado una nueva orden','','success')", 100);
     setTimeout ("explode();", 2000);
   }

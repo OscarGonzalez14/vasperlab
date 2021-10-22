@@ -5,18 +5,24 @@ require_once("modelos/Reporteria.php");
 $reporteria = new Reporteria();
 date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 ?>
-<?php require_once('header.php');?>
-<?php require_once('modals/cat_quimica_examenes.php');?>
+
 
 <style type="text/css">
     .dataTables_filter {
    float: right !important;
 }
 </style>
+<script>
+  let id_paciente = <?php echo json_encode($id_paciente); ?>;
+  let numero_orden = <?php echo json_encode($n_orden); ?>;
+</script>
+<?php require_once('header.php');?>
+<?php require_once('modals/cat_quimica_examenes.php');?>
 <div class="content-wrapper">
 <input type="hidden" id="n_orden_examen" value="<?php echo $n_orden;?>">
 <input type="hidden" id="id_paciente_examen" value="<?php echo $id_paciente;?>">
 <div style="margin: 5px">
+
     <h5 align="center"><strong>INGRESAR RESULTADOS&nbsp;-&nbsp; <span>ORDEN:&nbsp;</span><span style="color:blue"><?php echo $n_orden;?></span></strong></h5>
 	<table class="table-hover table-bordered" id="data_examenes_ingreso" width="100%" data-order='[[ 0, "desc" ]]'>
         <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 12px">

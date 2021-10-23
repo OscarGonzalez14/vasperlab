@@ -15,8 +15,9 @@
 
 <div style="margin: 8px">
   <h5 class="titulo">Creatinina</h5>
+  
     <div class="form-row">
-      <div class="input-group">      
+      <div class="input-group form-group  col-md-12">      
         <input type="number" class="form-control" id="resultado_creatinina" style="text-align: right;" placeholder="RESULTADO CREATININA">
         <span class="input-group-append">
           <button type="button" class="btn btn-info btn-flat" onClick="GuardarCreatinina();">mg/dl</button>
@@ -26,6 +27,5 @@
         <label for="inputEmail4">Observaciones</label>
         <input type="text" class="form-control" id="observaciones_creatinina" required="" style="text-align: right;">
       </div>
-      </div>
-
+  </div>
 </div>

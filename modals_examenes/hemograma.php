@@ -1,6 +1,6 @@
  <style>
     #tamModal_hemo{
-      max-width: 75% !important;
+      max-width: 95% !important;
     }
      #head_hemo{
         color: white;
@@ -8,7 +8,44 @@
     }
 </style>
 
-<div class="modal fade bd-example-modal-lg" id="hemograma">
+<script>  
+    $.ajax({
+      url:"ajax/examenes.php?op=show_hemograma_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#gr_hemato").val(data.gr_hemato);
+        $("#ht_hemato").val(data.ht_hemato);
+        $("#hb_hemato").val(data.hb_hemato);
+        $("#vcm_hemato").val(data.vcm_hemato);
+        $("#cmhc_hemato").val(data.cmhc_hemato);
+        $("#hcm_hemato").val(data.hcm_hemato);
+        $("#gota_hema").val(data.gota_hema);
+        $("#gb_hemato").val(data.gb_hemato);
+        $("#linfocitos_hemato").val(data.linfocitos_hemato);
+        $("#monocitos_hemato").val(data.monocitos_hemato);
+        $("#eosinofilos_hemato").val(data.eosinofilos_hemato);
+        $("#basinofilos_hemato").val(data.basinofilos_hemato);
+        $("#banda_hemato").val(data.banda_hemato);
+        $("#segmentados_hemato").val(data.segmentados_hemato);
+        $("#metamielo_hemato").val(data.metamielo_hemato);
+        $("#mielocitos_hemato").val(data.mielocitos_hemato);
+        $("#blastos_hemato").val(data.blastos_hemato);
+        $("#plaquetas_hemato").val(data.plaquetas_hemato);
+        $("#reti_hemato").val(data.reti_hemato);
+        $("#eritro_hemato").val(data.eritro_hemato);
+        $("#otros_hema").val(data.otros_hema);
+        $("#id_paciente_hematologia").val(data.id_paciente);
+        $("#n_orden_hematologia").val(data.numero_orden);
+
+      }
+    });
+</script>
+
+<div class="modal fade bd-example-modal-lg" id="cathemograma">
   <div class="modal-dialog" id="tamModal_hemo">
     <div class="modal-content">
       <!-- Modal Header -->
@@ -141,8 +178,8 @@
         </table>        
       </div>
 
-      <input type="hidden" id="id_paciente_hematologia" class="id_paciente_exa">
-      <input type="hidden" id="n_orden_hematologia" class="num_orden_exa">
+      <input type="hidden" id="id_paciente_hematologia" value="<?php echo $id_paciente;?>">
+      <input type="hidden" id="n_orden_hematologia" value="<?php echo $n_orden;?>">
       <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
       <!-- Modal footer -->
       <div class="modal-footer">
@@ -159,3 +196,54 @@
     </div>
   </div>
 </div>
+
+<script>  
+ Number.prototype.format = function(n, x, s, c) {
+                let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                    num = this.toFixed(Math.max(0, ~~n));
+                return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+            };
+            // Restricts input for the given textbox to the given inputFilter.
+            function setInputFilter(textbox, inputFilter) {
+                ["input"].forEach(function(event) {
+                    textbox.addEventListener(event, function() {
+                        if (this.id === "gr_hemato" || this.id === "gb_hemato" || this.id === "plaquetas_hemato") {
+                            if (this.value !== "") {
+                                let str = this.value;
+                                let oldstr= str.substring(0, str.length - 1);
+                                let millares = ",";
+                                let decimales = ".";
+                                str = str.split(millares).join("");
+                                if (isNaN(str)) {
+                                    this.value = oldstr;
+                                } else {
+                                    let numero = parseInt(str);
+                                    this.value = numero.format(0, 3, millares, decimales);
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+            setInputFilter(document.getElementById("gr_hemato"), function(value) {
+                //declare an object RegExp
+                let regex = new RegExp(/^-?\d*$/);
+                //test the regexp
+                return regex.test(value);
+            });
+
+            setInputFilter(document.getElementById("gb_hemato"), function(value) {
+                //declare an object RegExp
+                let regex = new RegExp(/^-?\d*$/);
+                //test the regexp
+                return regex.test(value);
+            });
+            setInputFilter(document.getElementById("plaquetas_hemato"), function(value) {
+                //declare an object RegExp
+                let regex = new RegExp(/^-?\d*$/);
+                //test the regexp
+                return regex.test(value);
+            });
+
+
+</script>

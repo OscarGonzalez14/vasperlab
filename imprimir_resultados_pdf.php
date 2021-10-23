@@ -11,7 +11,7 @@ $id_paciente =$_GET["id_paciente"];
 $n_orden =$_GET["numero_orden"];
 $categoria =$_GET["categoria"];
 $paciente =$_GET["nombre"];
-$cod_emp =$_GET["cod_emp"];
+$cod_emp = $_GET["cod_emp"];
 
 $data = $reporteria->get_detalle_orden_pacientes($_GET["id_paciente"]);
 

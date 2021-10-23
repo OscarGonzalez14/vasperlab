@@ -718,8 +718,8 @@ function Guardarsgot(){
     
   var resultado_sgot = $("#resultado_sgot").val();
   var observacione_sgot = $("#observacione_sgot").val();
-  var id_pac_exa_sgot = $("#id_pac_exa_sgot").val();
-  var num_orden_exa_sgot = $("#num_orden_exa_sgot").val();
+  var id_pac_exa_sgot = $("#id_pac_quimica").val();
+  var num_orden_exa_sgot = $("#num_orden_quimica").val();
   var fecha = $("#fecha").val();
 
 
@@ -738,11 +738,9 @@ function Guardarsgot(){
     console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de SGOT Registrado!','','success')
-        setTimeout ("explode();", 2000);
       }
   }
 
@@ -782,8 +780,8 @@ function Guardarsgpt(){
     
   var resultado_sgpt = $("#resultado_sgpt").val();
   var observacione_sgpt = $("#observacione_sgpt").val();
-  var id_pac_exa_sgpt = $("#id_pac_exa_sgpt").val();
-  var num_orden_exa_sgpt = $("#num_orden_exa_sgpt").val();
+  var id_pac_exa_sgpt = $("#id_pac_quimica").val();
+  var num_orden_exa_sgpt = $("#num_orden_quimica").val();
   var fecha = $("#fecha").val();
 
 
@@ -802,11 +800,9 @@ function Guardarsgpt(){
     console.log(data);
       if(data=='edit'){
         Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
         Swal.fire('Examen de SGPT Registrado!','','success')
-        setTimeout ("explode();", 2000);
       }
   }
 
@@ -1101,8 +1097,8 @@ $(document).on('click', '.exofaringeo_show', function(){
 
 
   //////////////////GUARDAR EXAMEN HEMOGRAMA
-  function GuardarHemograma(){
-    
+  function GuardarHemograma(){  
+
   var gr_hemato = $("#gr_hemato").val();
   var ht_hemato = $("#ht_hemato").val();
   var hb_hemato = $("#hb_hemato").val();
@@ -1145,12 +1141,15 @@ $(document).on('click', '.exofaringeo_show', function(){
     success:function(data){   //alert(id_paciente);
           console.log(data);
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
+       // Swal.fire('Se ha editado Exitosamente!','','success')
+         alert('Cambios guardados exitosamente');
+         $("#cathemograma").modal('hide');
         return false;
       }else if (data=="ok") {
-        Swal.fire('Examen Hemograma Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        //Swal.fire('Examen Hemograma Registrado!','','success')
+        //setTimeout ("explode();", 2000);
+          alert('Cambios guardados exitosamente');
+  $("#cathemograma").modal('hide');
       }
   }
 
@@ -1344,7 +1343,7 @@ function finalizar_heces(){
 ==============================================*/
 
 function GuardarExamenOrina(){
-  $("#orina").modal("hide");
+  $('#catorina').modal('hide');
   var color_orina = $("#color_orina").val();
   var olor_orina = $("#olor_orina").val();
   var aspecto_orina = $("#aspecto_orina").val();
@@ -1390,12 +1389,12 @@ function GuardarExamenOrina(){
   success:function(data){
         console.log(data);
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
+        alert('Examen editado');
+        $('#catorina').modal('hide');
         return false;
       }else if (data=="ok") {
-        Swal.fire('Examen de Orina Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        alert('Examen editado');
+        $('#catorina').modal('hide');
       } 
   }
   }); 
@@ -1683,6 +1682,10 @@ function regExaQuim(passedArray){
     GuardarTrigliceridos();
   }else if(exa=='creatinina'){
     GuardarCreatinina();
+  }else if(exa=='sgot'){
+    Guardarsgot();
+  }else if(exa=='sgpt'){
+    Guardarsgpt();
   }
 
 

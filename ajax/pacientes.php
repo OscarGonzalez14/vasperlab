@@ -66,6 +66,9 @@ case "listar_pacientes_registrados_clinicas":
 case "registrar_paciente":
 
 $paciente->agregar_paciente($_POST["nombrePaciente"],$_POST["edad_paciente"],$_POST["tipo_paciente"],$_POST["empresa_paciente"],$_POST["codigo_emp"],$_POST["departamento"],$_POST["fecha_nacimiento"]);
+ $mensaje ="existe";
+ echo json_encode($mensaje);
+
 
 break;
 

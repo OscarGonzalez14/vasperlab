@@ -3,7 +3,7 @@
       max-width: 80% !important;
     }
      #head_orina{
-        background: #e49b0f;
+        background: #D27D2D;
         color: white;
         text-align: center;
     }
@@ -19,18 +19,57 @@
 
 </style>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="orina" style="border-radius:0px !important;">
-  <div class="modal-dialog modal-lg" role="document" id="tamModal_orina">
+<script>  
 
+    $.ajax({
+      url:"ajax/examenes.php?op=show_orina_data",
+      method:"POST",
+      data:{id_paciente:id_paciente,numero_orden:numero_orden},
+      cache:false,
+      dataType:"json",
+      success:function(data){
+      console.log(data);
+        $("#color_orina").val(data.color);
+        $("#olor_orina").val(data.olor);
+        $("#aspecto_orina").val(data.aspecto);
+        $("#densidad_orina").val(data.densidad);
+        $("#esterasas_orina").val(data.est_leuco);
+        $("#nitritos_orina").val(data.nitritos_orina);
+        $("#ph_orina").val(data.ph);
+        $("#proteinas_orina").val(data.proteinas);
+        $("#glucosa_orina").val(data.glucosa);
+        $("#cetonas_orina").val(data.cetonas);
+        $("#urobilinogeno_orina").val(data.urobigilogeno);
+        $("#bilirrubina_orina").val(data.bilirrubina);
+        $("#sangre_oculta_orina").val(data.sangre_oculta);
+        $("#cilindros_orina").val(data.cilindros);
+        $("#leucocitos_orina").val(data.leucocitos);
+        $("#hematies_orina").val(data.hematies);
+        $("#epiteliales_orina").val(data.cel_epiteliales);
+        $("#filamentos_orina").val(data.filamentos_muco);
+        $("#bacterias_orina").val(data.bacterias);
+        $("#cristales_orina").val(data.cristales);
+        $("#observaciones_orina").val(data.observaciones);
+        $("#id_pac_exa_orina").val(data.id_paciente);
+        $("#num_orden_exa_orina").val(data.numero_orden);
+      }
+    });
+</script>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="catorina" style="border-radius:0px !important;">
+  <div class="modal-dialog" id="tamModal_orina">
     <div class="modal-content">
-     <div class="modal-header" id="head_orina" style="justify-content:space-between">
-       <span><i class="fas fa-plus-square"></i> Examen General de Orina</span>
-        <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
-     </div>
-<td colspan="100" style="text-align: center;" class="bg-light"><b><span style="color: blue">PACIENTE:</span>&nbsp;<span id="paciente_exa" class="paciente_exa"></span></b></td>
-<div style="text-align: center;background: #343a40;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN QUIMICO - ORINA</strong></div>
+      <!-- Modal Header -->
+      <div class="modal-header" id="head_orina">
+        <h5 class="modal-title">EXAMEN GENERAL DE ORINA</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
 
-  <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px">
+      <!-- Modal body -->
+      <div class="modal-body">
+
+  <div style="text-align: center;background: #343a40;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN QUIMICO - ORINA</strong></div>
+      <div class="form-row" style="margin: 5px;border:solid 2px gray;border-radius: 5px">
   <div class="form-group col-md-2">
     <label for="inputEmail4">Color</label>
     <input type="text" class="form-control" id="color_orina" value="Amarillo">
@@ -95,7 +134,7 @@
     <label for="inputEmail4">Sangre Oculta</label>
     <input type="text" class="form-control" id="sangre_oculta_orina" value="Negativo">
   </div>
-</div> <!--FIN EXAMEN ORINA SECTION 1-->
+</div><!--fin row 1-->
 
 <div style="text-align: center;background: #343a40;color: white;border-radius: 4px;margin: 5px"><strong>EXAMEN MICROSCOPICO</strong></div>
 <!--EXAMEN ORINA SECTION 2-->
@@ -141,23 +180,10 @@
     <label for="inputEmail4">Observaciones</label>
     <input type="text" class="form-control" id="observaciones_orina"  value="">
   </div>
-    </div>
-  <div class="diags row" style="margin:5px;" id="diag_orina">
-    <div class="form-group col-md-12">
-      <label for="inputEmail4">Diagnostico</label>
-      <textarea class="form-control" id="diagnostico_orina" rows="2"></textarea>
-    </div>
-    <div class="form-group col-md-12">
-     <label for="inputEmail4">Tratamiento</label>
-     <textarea class="form-control" id="tratamiento_orina" rows="2"></textarea>
-    </div>    
-  </div>
-  <div class="form-group col-md-12">
-    <button class="btn btn-dark btn-block" style="border-radius:0px" data-toggle="modal" data-target="#modalProveedores" onClick="GuardarExamenOrina();" id="guarda_orina">Guardar Examen Orina</button>
-  </div> 
+</div>
 
 
-    <div class="row" id="edit_exa_orina" style="margin-bottom: 8px" style="display:none">
+  <div class="row" id="edit_exa_orina" style="margin-bottom: 8px" style="display:none">
     <div class="col-md-1"></div>
     <div class="col-md-4" style="margin-left: 10px"><button type="button" class="btn btn-block btn-danger btn-flat pull-left" onClick="finalizar_orina();">Finalizar</button></div>
     <div class="col-md-3" style="width: 100%"></div>
@@ -166,13 +192,18 @@
   </div>
 
 <!--FIN EXAMEN ORINA SECTION 2-->
-<input type="hidden" class="id_paciente_exa" id="id_pac_exa_orina">
-<input type="hidden" class="num_orden_exa" id="num_orden_exa_orina">
-<input type="hidden" id="fecha" value="<?php echo $hoy;?>">
-</div>
-  
-    </div><!--Fin modal Content-->
+<input type="hidden" class="id_paciente_exa" id="id_pac_exa_orina" value="<?php echo $id_paciente;?>">
+<input type="hidden" class="num_orden_exa" id="num_orden_exa_orina" value="<?php echo $n_orden;?>">
 
+</div><!--FIN MODAL BODY-->
+
+<input type="hidden" id="fecha" value="<?php echo $hoy;?>">
+<!-- Modal footer -->
+<div class="modal-footer">
+<button class="btn btn-dark btn-block" style="border-radius:0px" data-toggle="modal" data-target="#modalProveedores" onClick="GuardarExamenOrina();" id="guarda_orina">Guardar Examen Orina</button>
+</div>
+
+</div>
   </div>
 </div>
 

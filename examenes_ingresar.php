@@ -18,6 +18,9 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 </script>
 <?php require_once('header.php');?>
 <?php require_once('modals/cat_quimica_examenes.php');?>
+<?php require_once('modals_examenes/general_orina.php');?> 
+<?php require_once('modals_examenes/hemograma.php');?>
+
 <div class="content-wrapper">
 <input type="hidden" id="n_orden_examen" value="<?php echo $n_orden;?>">
 <input type="hidden" id="id_paciente_examen" value="<?php echo $id_paciente;?>">
@@ -33,6 +36,7 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
             <th style="text-align:center">Categoria</th>            
             <th style="text-align:center">Estado</th>
             <th style="text-align:center">Ingresar</th>
+            <th style="text-align:center">Imprimir</th>
           </tr>
         </thead>
         <tbody style="text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px">                                       

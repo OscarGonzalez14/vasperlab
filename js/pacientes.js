@@ -275,15 +275,15 @@ function agregarPaciente(){
       console.log(x);
       console.log(y);
       console.log(z);
-    },
-      
-    success:function(data){
-     
+    },      
+      success:function(data){
+      console.log(data)
+      Swal.fire('Se ha registrado una nueva orden','','success')     
   }
 
   }); 
 
-      setTimeout ("explode();", 2000);
+  setTimeout ("explode();", 2000);
    //cierre del condicional de validacion de los campos del producto,proveedor,pago
   }else{
     Swal.fire('Existen campos  vacios o sin seleccionar!','','error')

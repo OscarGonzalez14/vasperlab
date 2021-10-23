@@ -53,7 +53,8 @@ case 'examenes_ingreso':
 		$sub_array[] = $row["empresa"];
 		$sub_array[] = strtoupper($row["categoria"]);
 		$sub_array[] = strtoupper($est);
-    $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat'.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+    $sub_array[] = '<button type="button"  class="btn btn-'.$color.' btn-sm btn-flat'.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';
+      $sub_array[] = '<a href="imprimir_resultados_pdf.php?id_paciente='.$row["id_paciente"].'&numero_orden='.$row["numero_orden"].'&categoria='.$row["categoria"].'&nombre='.$row["nombre"].'&cod_emp='.$row["cod_emp"].'" target="_blank"><button type="button"  class="btn btn-ligth btn-md"><i class="fas fa-print" style="color:green"></i></button></a>';                                 
 		$data[] = $sub_array;
 	}
 
@@ -115,7 +116,8 @@ case 'examenes_empresarial':
     $sub_array[] = $row["empresa"];
     $sub_array[] = strtoupper($row["examen"]);
     $sub_array[] = '<span class="right badge badge-'.$badge.'" style="font-size:12px"> '.$esta.'</span>';
-        $sub_array[] = '<button type="button"  class="disabled_input btn btn-primary btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';                                 
+        $sub_array[] = '<button type="button"  class="disabled_input btn btn-primary btn-sm btn-flat asigna_datos_orden focus '.$clase.'" id="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" data-toggle="modal" data-target="#'.$modal.'" value="'.$row["nombre"].'" data-backdrop="static" data-keyboard="false">'.$text.'</button>';
+
     $data[] = $sub_array;
   }
 

@@ -166,19 +166,26 @@ public function edita_orden(){
     } 
    }/////////////FIN FOREACH
 }//////////FIN FUNCION
-public function eliminar_paciente($id_paciente){
+//validar paciente si existe orden asociada
+   public function valida_orden_paciente($id_paciente){
+    $conectar= parent::conexion();
+    $sql="select*from detalle_orden where id_paciente=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $id_paciente);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  //Luego de validar, eliminar paciente
+  public function eliminar_paciente($id_paciente){
     $conectar=parent::conexion();
-
-    $sql="delete FROM detalle_orden where id_paciente=?;";
+    $sql="delete from pacientes_o where id_paciente=?";
     $sql=$conectar->prepare($sql);
-    $sql->bindValue(1,$id_paciente);
+    $sql->bindValue(1, $id_paciente);
     $sql->execute();
+    return $resultado=$sql->fetch(PDO::FETCH_ASSOC);
+  }
 
-    $sql="delete from pacientes_o where id_paciente=?;";
-    $sql=$conectar->prepare($sql);
-    $sql->bindValue(1,$id_paciente);
-    $sql->execute();
-}
 
 }//FIN DE LA CLASE
 

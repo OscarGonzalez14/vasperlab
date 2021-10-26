@@ -26,7 +26,7 @@
     <!-- Content Header (Page header) -->
 <div style="margin:10px;">
 
-  <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#new_aro" data-backdrop="static" data-keyboard="false">CREAR PACIENTE</button>
+  <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#new_aro" data-backdrop="static" onclick="limpiar_modal_paciente();" data-keyboard="false">CREAR PACIENTE</button>
 </div> 
 
 <div style="margin: 5px">

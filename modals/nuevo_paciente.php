@@ -1,6 +1,6 @@
  <style>
   #tamModal{
-    width: 85% !important;
+    width: 100% !important;
   }
     
   #head{
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="new_aro" style="border-radius:0px !important;">
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="nuevo_paciente_clinica" style="border-radius:0px !important;">
   <div class="modal-dialog modal-lg" role="document" id="tamModal">
 
     <div class="modal-content">
@@ -34,12 +34,12 @@
 
     <div class="form-group col-md-6">
     <label for="exampleFormControlSelect2">Nombre del Paciente</label>
-      <input type="text" class="form-control input-dark" id="nombrePaciente" placeholder="Escriba el nombre del Paciente"  onkeyup="mayus(this);" >
+      <input type="text" class="form-control input-dark limpiar" id="nombrePaciente" placeholder="Escriba el nombre del Paciente"  onkeyup="mayus(this);" >
     </div>
 
     <div class="form-group col-md-3">
       <label for="inputPassword4">Género</label>
-      <select class="form-control input-dark" id="tipo_paciente" required="">
+      <select class="form-control input-dark limpiar" id="tipo_paciente" required="">
         <option value="">Seleccionar genero</option>
         <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
@@ -49,7 +49,7 @@
     <div class="form-group col-md-3">
        <label for="inputPassword4">Edad</label>
     <div class="input-group">      
-      <input type="number" class="form-control input-dark" id="edad_paciente">
+      <input type="number" class="form-control input-dark limpiar" id="edad_paciente">
         <span class="input-group-append">
           <button type="button" class="btn btn-info btn-flat">Años</button>
         </span>
@@ -58,7 +58,7 @@
 
     <div class="form-group col-md-3">
       <label for="inputPassword4">Tipo Paciente</label>
-      <select class="form-control input-dark" id="tipo_paciente" required="">
+      <select class="form-control input-dark limpiar" id="tipo_paciente" required="">
         <option value="">Seleccionar Tipo paciente</option>
         <option value="Sucursal">Sucursal</option>
         <option value="Clinica">Clínica</option>
@@ -67,7 +67,7 @@
 
     <div class="form-group col-md-6">
       <label for="inputPassword4">Seleccione Empresa</label>
-      <select class="form-control input-dark" id="empresa_paciente" required>
+      <select class="form-control input-dark limpiar" id="empresa_paciente" required>
         <option value="">Seleccionar Empresa</option>
         <option value="Indufoam">Indufoam</option>
       </select>
@@ -75,7 +75,7 @@
 
     <div class="form-group col-md-3">
       <label for="inputEmail4">Código Empleado</label>
-      <input type="text" class="form-control input-dark" id="codigo_emp" placeholder="Código de empleado" required="" onkeyup="mayus(this);" >
+      <input type="text" class="form-control input-dark limpiar" id="codigo_emp" placeholder="Código de empleado" required="" onkeyup="mayus(this);" >
     </div>
 
 <input type="hidden" id="categoria_producto" value="aros"/>

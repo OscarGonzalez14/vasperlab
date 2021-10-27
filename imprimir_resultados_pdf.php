@@ -113,10 +113,10 @@ require_once("plantillas/quimica.php");
   require_once("plantillas/bacteriologia.php");
 }elseif($categoria=="hemograma"){
   require_once("resultados/hemograma.php");
+}elseif ($categoria=="vdrl") {
+  require_once("resultados/rpr.php");
 }elseif ($categoria=="inmunologia") {
   require_once("resultados/antigenos.php");
-}elseif ($categoria=="antigenos_dos") {
-  require_once("resultados/antigenos_dos.php");
 }
 ?>
 </div>

@@ -925,8 +925,8 @@ function GuardarBaciloscopia(){
     
   var resultado = $("#resultado_baciloscopia").val();
   var observaciones_baciloscopia = $("#observaciones_baciloscopia").val();
-  var id_pac_exa_baciloscopia = $("#id_pac_exa_baciloscopia").val();
-  var num_orden_exa_baciloscopia = $("#num_orden_exa_baciloscopia").val();
+  var id_pac_exa_baciloscopia = $("#id_pac_bacteriologia").val();
+  var num_orden_exa_baciloscopia = $("#num_orden_bacteriologia").val();
 
   if (resultado!=""){
     $.ajax({
@@ -941,14 +941,7 @@ function GuardarBaciloscopia(){
     },      
     success:function(data){   //alert(id_paciente);
      console.log(data);
-      if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
-        return false;
-      }else if (data=="ok") {
-        Swal.fire('Examen de Baciloscopia Registrado!','','success')
-        setTimeout ("explode();", 2000);
-      }
+     
     
   }
 
@@ -1037,8 +1030,8 @@ function GuardarExo(){
   var ais = $("#aisla_exo").val();
   var sens = $("#sensible_exo").val();
   var res = $("#resiste_exo").val();
-  var id_paciente = $("#id_paciente_exofarigeo").val();
-  var numero_orden = $("#n_orden_exofarigeo").val();
+  var id_paciente = $("#id_pac_bacteriologia").val();
+  var numero_orden = $("#num_orden_bacteriologia").val();
   var refiere = $("#refiere_exo").val();
 
   var  aisla = ais.toString();
@@ -1056,16 +1049,8 @@ function GuardarExo(){
       console.log(z);
     },      
     success:function(data){   //alert(id_paciente);
-         console.log(data);
-      if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
-        return false;
-      }else if (data=="ok") {
-        Swal.fire('Examen Exofaringeo Registrado!','','success')
-        setTimeout ("explode();", 2000);
-      }
-  }
+    console.log(data);
+    }  
 
   });
   }
@@ -1266,12 +1251,12 @@ function GuardarExamenHeces(){
     success:function(data){ 
     console.log(data);
       if(data=='edit'){
-        Swal.fire('Se ha editado Exitosamente!','','success')
-        setTimeout ("explode();", 2000);
+        alert('Se ha editado Exitosamente!')
+        $('#catheces').modal('hide');
         return false;
       }else if (data=="ok") {
-        Swal.fire('Examen Heces Registrado!','','success')
-        setTimeout ("explode();", 2000);
+        alert('Examen Heces Registrado!')
+        $('#catheces').modal('hide');
       }
   }
 
@@ -1560,8 +1545,8 @@ function Guardarrpr(){
         setTimeout ("explode();", 2000);
         return false;
       }else if (data=="ok") {
-        Swal.fire('Examen de RPR Registrado!','','success')
-        alert("");
+        alert("Examen registrado exitosamente");
+        $("#catinmunologia").modal('hide');
       }
   }
 
@@ -1690,6 +1675,24 @@ function regExaQuim(passedArray){
 
 
  }
- alert('Orden actualizada exitosamente'); explode();
+ alert('Examenes registrados exitosamente');
+ $('#catquimica').modal('hide');
 }
+
+function regExaBact(arrayBacteriologia){
+  //console.log(arrayBacteriologia);
+  for(i in arrayBacteriologia){
+    let exa_bacteriologia = arrayBacteriologia[i];
+    if(exa_bacteriologia=='baciloscopia'){
+     GuardarBaciloscopia();
+    }else if(exa_bacteriologia=='exofaringeo'){
+     GuardarExo();
+    }
+  }
+
+  alert('Examenes registrados exitosamente');
+ explode()
+}
+
+
 init();

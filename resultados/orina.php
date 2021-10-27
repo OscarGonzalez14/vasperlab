@@ -1,10 +1,52 @@
 <?php
 $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_orden"]);
 ?>
+
+<style>
+  .round_table {                   
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    -moz-border-radius: 20px;
+    padding: 2px;
+    -webkit-border-radius: 5px;
+  }
+  .round_table {                   
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #0275d8;        
+    padding: 2px;
+  }
+  #watermark {
+    position: fixed;
+    top: 18.5%;
+    margin-left: 4.5%;
+    width: 100%;
+    opacity: .080;    
+    z-index: -1000;
+  }
+  #firma{
+    position: fixed;
+    top:51.2%;
+    margin-left: 4.5%;
+  }
+  #inscripcion{
+    position: fixed;
+    top: 51.3%;
+    margin-left: 70.5%;
+  }
+</style>
+
+<div id="watermark"><img src="images/vasperoficial.jpg" width="710" height="300"/></div>
+<div id="firma">
+  <img src="images/sello_vasper_firma.jpg" height="93" width="180" >
+</div>
+<div id="inscripcion">
+  <img src="images/sello_vasper_ninscrip.jpg" height="120" width="210" >
+</div>
+
 <table class="table2" width="100%">
-  <tr>
-      <td colspan="100" style="color:black;font-size:12px;font-family: Helvetica, Arial, sans-serif;width:100%"><strong>PACIENTE: <?php echo $paciente?><strong>&nbsp;&nbsp;&nbsp;&nbsp;COD. EMPLEADO: <?php echo $cod_emp;?><strong></td>
-    </tr>
+
     <tr><td style="text-align: center;width: 100%" colspan="100">
       <span style="color: red;font-size: 15px;text-align: center"><strong>EXAMEN GENERAL DE ORINA</strong></span>
     </td></tr>

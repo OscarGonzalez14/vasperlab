@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="antigenos">
+<div class="modal fade bd-example-modal-lg" id="catinmunologia">
   <div class="modal-dialog" id="tamModal_coles">
     <div class="modal-content">
       <!-- Modal Header -->
@@ -39,8 +39,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-block" onClick="GuardarAntigenos();">Guardar</button>
       </div>
-    <input type="hidden" class="id_paciente_exa" id="id_pac_exa_antigenos">
-      <input type="hidden" class="num_orden_exa" id="num_orden_exa_antigenos">
+    <input type="hidden" class="id_paciente_exa" id="id_pac_exa_antigenos" value="<?php echo $id_paciente;?>">
+      <input type="hidden" class="num_orden_exa" id="num_orden_exa_antigenos" value="<?php echo $n_orden;?>">
       <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
     </div>
   </div>

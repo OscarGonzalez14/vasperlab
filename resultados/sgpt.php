@@ -11,7 +11,7 @@ $datos_sgpt = $reporteria->get_data_sgpt($_GET["id_paciente"],$_GET["numero_orde
 <tr style="font-size:11px" class="even_row">
     <td style="text-align: center;width:30%;color: red" colspan="30" class="stilot1"><strong> Alanina Aminotransferasa ALT/SGPT</strong></td>
     <td style="text-align: center;width:25%" colspan="25" class="stilot1"><span class=""><?php echo $datos_sgpt[$i]["resultado"]."UL";?></span></td>
-    <td style="text-align: center;width:45%" colspan="45" class="stilot1">3-35 U/L</td>
+    <td style="text-align: left;width:45%" colspan="45" class="stilot1">3-35 U/L</td>
 </tr>
 <?php if ( $datos_sgpt[$i]["observacione"] !=""){?>
 <tr>

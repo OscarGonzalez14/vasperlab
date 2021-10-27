@@ -116,7 +116,7 @@
            <td style="background:#034f84;color:white;text-align: center;border-radius: 2px;font-size: 14px;padding: 1px;" colspan="100">INMUNOLOGIA</td>
         </tr>
         <tr>
-          <td colspan="40"><input class="inmunologia" type="checkbox" name="check_box" value="vdrl">V.D.R.L</td>
+          <td colspan="40"><input class="vdrl" type="checkbox" name="check_box" value="vdrl">V.D.R.L</td>
           <td colspan="40"><input class="inmunologia" type="checkbox" name="check_box" value="antigenos">Antigenos para Covid-19</td>
         </tr>
       </table>

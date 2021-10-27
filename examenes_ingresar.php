@@ -16,9 +16,15 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
   let id_paciente = <?php echo json_encode($id_paciente); ?>;
   let numero_orden = <?php echo json_encode($n_orden); ?>;
 </script>
-<?php require_once('header.php');?>
+<?php require_once('header.php');
+require_once("modals_examenes/antigenos_cov.php");
+;?>
+
+<?php require_once('modals_examenes/vdrl.php');?>
+<?php require_once('modals_examenes/general_orina.php');?>
 <?php require_once('modals/cat_quimica_examenes.php');?>
-<?php require_once('modals_examenes/general_orina.php');?> 
+<?php require_once('modals/cat_bacteriologia.php');?>
+<?php require_once('modals_examenes/general_heces.php');?>
 <?php require_once('modals_examenes/hemograma.php');?>
 
 <div class="content-wrapper">

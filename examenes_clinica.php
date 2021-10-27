@@ -12,7 +12,7 @@
 </style>
 
 <div class="content-wrapper" >
-
+<button type="button" class="btn btn-md bg-primary agregar_oden_paciente" id="" data-toggle="modal" data-target="#nueva_orden" data-backdrop="static" data-keyboard="false"><i class="fas fa-file-medical" style="color:blue"></i> Crear Orden</button>
 <div style="margin: 5px">
     <h5 align="center"><strong>SOLICITUDES DE EXAMEN DE CLÍNICA A PENDIENTES</strong></h5>
 	<table class="table-hover table-bordered" id="data_examenes_clinica" width="100%" data-order='[[ 0, "desc" ]]' style="text-align: center;text-align:center">

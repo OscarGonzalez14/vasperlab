@@ -312,4 +312,17 @@ public function get_examenes_cat_quimica($numero_orden,$id_paciente){
 
 }
 
+public function get_examenes_cat_bacteriologia($numero_orden,$id_paciente){
+  $conectar=parent::conexion();
+  parent::set_names();
+  
+  $sql = "select examen,categoria from detalle_item_orden where id_paciente=? and numero_orden=? and categoria='bacteriologia';";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$id_paciente);
+  $sql->bindValue(2,$numero_orden);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
 }

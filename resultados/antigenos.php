@@ -82,7 +82,7 @@ $datos_antigenos = $reporteria->get_data_antigenos($_GET["id_paciente"],$_GET["n
     <tr>
       <td style="color: white">H</td>
     </tr>
-		<tr>
+    <tr>
     <td bgcolor="#D3D3D3" colspan="30" style="color:black;font-size:14px;font-family: Helvetica, Arial, sans-serif;width:30%;border: #888888 solid 1px;text-align:center"><span>EXAMEN</span></td>
     <td bgcolor="#D3D3D3" colspan="40" style="color:black;font-size:14px;font-family: Helvetica, Arial, sans-serif;width:40%;border: #888888 solid 1px;text-align:center"><span class="Estilo11">RESULTADO</span></td>
     <td bgcolor="#D3D3D3" colspan="30" style="color:black;font-size:14px;font-family: Helvetica, Arial, sans-serif;width:30%;border: #888888 solid 1px;text-align:center"><span class="Estilo11">MUESTRA</span></td>

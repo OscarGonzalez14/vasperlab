@@ -27,7 +27,7 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
   }
   #firma{
     position: fixed;
-    top: 38.8%;
+    top: 38.2%;
     margin-left: 4.5%;
   }
   #inscripcion{
@@ -37,7 +37,7 @@ $items_hemograma = $reporteria->get_items_hemograma($_GET["id_paciente"],$_GET["
   }
 </style>
 <!--Marca de agua-->
-<div id="watermark"><img src="images/vasperoficial.jpg" width="700" height="300"/></div>
+<div id="watermark"><img src="images/vasperoficial.jpg" width="700" height="365"/></div>
 <div id="firma">
   <img src="images/sello_vasper_firma.jpg" height="89" width="180" >
 </div>

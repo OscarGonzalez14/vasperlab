@@ -32,7 +32,7 @@ $(document).on('keypress', 'input,select', function (e) {
 
 
 <div class="modal fade bd-example-modal-lg" id="catquimica">
-  <div class="modal-dialog" id="catquimicaModal">
+  <div class="modal-dialog modal-dialog-scrollable" id="catquimicaModal">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header bg-info" id="head_coles">

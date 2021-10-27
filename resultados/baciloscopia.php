@@ -9,9 +9,9 @@ $datos_baciloscopia = $reporteria->get_data_baciloscopia($_GET["id_paciente"],$_
 
 ?>
 <tr style="font-size:11px" class="even_row">
-    <td style="text-align: center;width:30%;color: red" colspan="30" class="stilot1"><strong>BACILOSCOPIA</strong></td>
-    <td style="text-align: center;width:25%" colspan="25" class="stilot1"><span class=""><?php echo $datos_baciloscopia[$i]["resultado"];?></span></td>
-    <td style="text-align: center;width:45%" colspan="45" class="stilot1">Esputo</td>
+    <td style="text-align: center;width:35%;color: red" colspan="30" class="stilot1"><strong>BACILOSCOPIA</strong></td>
+    <td style="text-align: center;width:40%" colspan="25" class="stilot1"><span class=""><?php echo $datos_baciloscopia[$i]["resultado"];?></span></td>
+    <td style="text-align: center;width:25%" colspan="45" class="stilot1">Esputo</td>
 </tr>
 <?php if ( $datos_baciloscopia[$i]["observacione"] !=""){?>
 <tr>
@@ -24,3 +24,4 @@ $datos_baciloscopia = $reporteria->get_data_baciloscopia($_GET["id_paciente"],$_
 ?>
 </table>
 </div>
+<br>

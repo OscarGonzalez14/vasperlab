@@ -66,6 +66,7 @@
             <option style="color: #F00" data-color="#F00">TMP+SMT</option>
             <option style="color: #F00" data-color="#F00">GENTAMICINA</option>
             <option style="color: #F00" data-color="#F00">AMPICILINA</option>
+            <option style="color: #F00" data-color="#F00">PIPERACILINA/TAZOBACTAM</option>
           </select>
       </div>
 
@@ -97,6 +98,7 @@
             <option style="color: #F00" data-color="#F00">TMP+SMT</option>
             <option style="color: #F00" data-color="#F00">GENTAMICINA</option>
             <option style="color: #F00" data-color="#F00">AMPICILINA</option>
+            <option style="color: #F00" data-color="#F00">PIPERACILINA/TAZOBACTAM</option>
           </select>
       </div>
     <div class="form-group col-md-12">

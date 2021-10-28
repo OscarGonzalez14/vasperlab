@@ -37,8 +37,8 @@
     </div>
   <div class="form-row">
     <div class="form-group col-md-8">
-      <label for="inputEmail4">Nombre de paciente</label>
-      <input type="text" class="form-control input-dark" id="new_orden_empleado" readonly>
+      <label for="inputEmail4">Paciente</label>
+      <input type="text" class="form-control input-dark" id="new_orden_empleado" readonly placeholder="Click para buscar paciente">
     </div>
 
     <div class="form-group col-md-4">

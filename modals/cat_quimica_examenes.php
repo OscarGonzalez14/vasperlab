@@ -16,20 +16,6 @@
      font-family: Helvetica, Arial, sans-serif;
     }
 </style>
-<script>
-
-$(document).on('keypress', 'input,select', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
-        console.log($next.length);
-        if (!$next.length) {
-       $next = $('[tabIndex=1]');        }
-        $next.focus() .click();
-    }
-});
-</script>
-
 
 <div class="modal fade bd-example-modal-lg" id="catquimica">
   <div class="modal-dialog modal-dialog-scrollable" id="catquimicaModal">

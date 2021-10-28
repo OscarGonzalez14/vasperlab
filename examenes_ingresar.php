@@ -15,7 +15,36 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 <script>
   let id_paciente = <?php echo json_encode($id_paciente); ?>;
   let numero_orden = <?php echo json_encode($n_orden); ?>;
+  document.addEventListener('keydown',handleInputFocusTransfer);
+
+function handleInputFocusTransfer(e){
+
+  const focusableInputElements= document.querySelectorAll(`input`);  
+  const focusable= [...focusableInputElements]; 
+  const index = focusable.indexOf(document.activeElement); 
+
+  let nextIndex = 0;
+  if (e.keyCode === 38) {
+    e.preventDefault();
+    nextIndex= index > 0 ? index-1 : 0;
+    focusableInputElements[nextIndex].focus();
+  }
+  else if (e.keyCode === 40) {
+    e.preventDefault();
+    nextIndex= index+1 < focusable.length ? index+1 : index;
+    focusableInputElements[nextIndex].focus();
+  }else if(e.keyCode === 37){
+    e.preventDefault();
+    nextIndex= index > 0 ? index-1 : 0;
+    focusableInputElements[nextIndex].focus();
+  }else if(e.keyCode === 39){
+    e.preventDefault();
+    nextIndex= index+1 < focusable.length ? index+1 : index;
+    focusableInputElements[nextIndex].focus();
+  }
+}
 </script>
+
 <?php require_once('header.php');
 require_once("modals_examenes/antigenos_cov.php");
 ;?>

@@ -318,6 +318,18 @@ $(document).on('click', '.agrega_paciente', function(){
 //RELLENAR CAMPOS DE PACIENTE EN NUEVA ORDEN
 ////LLENADO DE CAMPOS EN COMPRAS DE PROVEEDOR
 $(document).on('click', '.agregar_oden_paciente', function(){
+
+    $.ajax({
+      url:"ajax/ordenes.php?op=correlativo_orden_laboratorio",
+      method:"POST",
+      cache:false,
+      dataType:"json",
+      success:function(data){ 
+       console.log(data)      
+        $("#correlativo_orders").html(data.correlativo_de_orden);       
+      }
+    })
+
     //toma el valor del id
     var id_paciente = $(this).attr("id");
     $.ajax({
@@ -336,15 +348,6 @@ $(document).on('click', '.agregar_oden_paciente', function(){
       }
     })
 
-    $.ajax({
-      url:"ajax/ordenes.php?op=correlativo_orden_laboratorio",
-      method:"POST",
-      cache:false,
-      dataType:"json",
-      success:function(data){       
-        $("#correlativo_de_orden").html(data.correlativo_de_orden);       
-      }
-    })
 });
 
 function agregarOrden(){

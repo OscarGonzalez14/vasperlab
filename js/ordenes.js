@@ -588,7 +588,7 @@ console.log(length_lang);
     return false;
   }else{
 
-  var correlativo_de_orden = $("#correlativo_de_orden").html();
+  var correlativo_de_orden = $("#correlativo_orders").html();
   var nom_empresa = '';
   var fecha_orden = $("#fecha_orden").val();
   var id_paciente_orden = $("#id_paciente_orden").val();
@@ -616,6 +616,59 @@ console.log(length_lang);
   });
 }
 }
+
+////////////////////////orden empresarial
+function agregarOrdenClinic(){
+
+  let lang = [];
+  // Initializing array with Checkbox checked values
+  $("input[name='check_box']:checked").each(function(){
+      let obj = {
+        examen : this.value,
+        categoria : this.className
+      }
+      lang.push(obj);
+  });
+console.log(lang);
+//return false;
+let length_lang = lang.length;
+console.log(length_lang);
+//return false;
+  if(length_lang==0){
+    setTimeout ("Swal.fire('Debe agrear al menos un examen a la orden','','error')", 100);
+    return false;
+  }else{
+
+  var correlativo_de_orden = $("#correlativo_orders").html();
+  var nom_empresa = '';
+  var fecha_orden = $("#fecha_orden").val();
+  let id_pacs_orden = $("#empleado_clinic").val();
+  var tipo_orden = $("#tipo_orden").val();
+  var estado_orden = $("#estado_orden").val();
+  let id_paciente_orden = id_pacs_orden.toString();
+  $.ajax({
+    url:"ajax/pacientes.php?op=registrar_orden",
+    method:"POST",
+    data:{'arrayChecks':JSON.stringify(lang),'correlativo_de_orden':correlativo_de_orden,'fecha_orden':fecha_orden,'id_paciente_orden':id_paciente_orden,'nom_empresa':nom_empresa,'tipo_orden':tipo_orden,'estado_orden':estado_orden},
+    cache: false,
+    dataType:"html",
+    error:function(x,y,z){
+      console.log(x);
+      console.log(y);
+      console.log(z);
+    },
+
+    success:function(data){
+    console.log(data);
+    setTimeout ("Swal.fire('Se ha registrado una nueva orden','','success')", 100);
+    $("#nueva_orden_clinic").modal('hide');
+    $("#data_examenes_clinica").DataTable().ajax.reload();
+  }
+
+  });
+}
+}
+
 
 /////////////////mostrar detalles de solicitud
 $(document).on('click', '.show_solicitudes_det', function(){
@@ -832,3 +885,12 @@ $(document).on('click', '.edita_orden', function(){
     })
 
 });
+
+
+function clear_inputs_order(cn){
+  var cbarray = document.getElementsByName(cn);
+  for(var i = 0; i < cbarray.length; i++){
+    cbarray[i].checked = false;
+  }   
+  $("#empleado_clinic").val('').trigger('change'); 
+}

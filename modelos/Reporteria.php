@@ -325,4 +325,15 @@ public function get_examenes_cat_bacteriologia($numero_orden,$id_paciente){
 
 }
 
+public function getPacientesOrder(){
+  $conectar=parent::conexion();
+  parent::set_names();
+
+  $sql = "select id_paciente,cod_emp,nombre,empresa,departamento FROM `pacientes_o` where `empresa`='Corrugado' or empresa='Flexible' or empresa='Ecofibra' or empresa='Plegadizo'";
+  $sql=$conectar->prepare($sql);
+  $sql->execute();  
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);  
+
+}
+
 }

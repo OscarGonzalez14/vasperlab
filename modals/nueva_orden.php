@@ -33,7 +33,7 @@
 <section style="margin:15px">
 
     <div class="form-group col-md-6">
-      <span style="font-size:16px"><strong>Orden #&nbsp;</strong></span><strong><span style="font-size:24px" id="correlativo_de_orden"></span></strong><br>
+      <span style="font-size:16px"><strong>Orden #&nbsp;</strong></span><strong><span style="font-size:24px" id="correlativo_orders"></span></strong><br>
     </div>
   <div class="form-row">
     <div class="form-group col-md-8">

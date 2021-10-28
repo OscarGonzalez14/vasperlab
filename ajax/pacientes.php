@@ -154,9 +154,11 @@ case "listar_pacientes":
     $datos = $paciente->comprobar_existe_orden($_POST["correlativo_de_orden"],$_POST["id_paciente_orden"]);
     if(is_array($datos)==true and count($datos)==0){   
       $paciente->agregar_orden();
+      $mensaje="oKK";
     }else{
       $paciente->edita_orden();
     }
+    echo json_encode($mensaje);
     break;
 
     case 'eliminar_paciente':

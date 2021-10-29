@@ -63,9 +63,9 @@ $get_categorias = $reporteria->get_categorias($_GET["id_paciente"],$_GET["n_orde
   for($i=0;$i<sizeof($datos_det_orden_paciente);$i++){
 
 ?>
-        <td colspan="10" style="color:black;font-size:11px;font-family: Helvetica, Arial, sans-serif;width: 15%" class="stilot1">
-              <img src="images/vasperoficial.jpg" width="100" height="45" />
-          </td>
+  <td colspan="10" style="color:black;font-size:11px;font-family: Helvetica, Arial, sans-serif;width: 15%" class="stilot1">
+      <img src="images/vasperoficial.jpg" width="100" height="45" />
+  </td>
   <td colspan="10" style="color:black;font-size:11px;font-family: Helvetica, Arial, sans-serif;width: 15%" class="stilot1"><strong>CÓDIGO:</strong> <?php echo $datos_det_orden_paciente[$i]["cod_emp"];?></td>
 
     <td colspan="20" style="color:black;font-family: Helvetica, Arial, sans-serif;width: 25%" class="stilot1"><strong>NOMBRE:</strong> <?php echo $datos_det_orden_paciente[$i]["nombre"];?></td>

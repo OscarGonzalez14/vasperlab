@@ -38,11 +38,17 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
 </style>
 
 <div id="watermark"><img src="images/vasperoficial.jpg" width="710" height="300"/></div>
-<div id="firma">
-  <img src="images/sello_vasper_firma.jpg" height="93" width="180" >
-</div>
-<div id="inscripcion">
-  <img src="images/sello_vasper_ninscrip.jpg" height="120" width="210" >
+
+<div style="margin-top: 0px;">
+  <table class="round_table" width="100%" style="font-size: 14px; margin-top:0px">
+    <tr>
+      <td colspan="40" style="border-left:0px;width: 40%">&nbsp;&nbsp;&nbsp;&nbsp;<b><
+       <span style="margin-left:8px;color:#034f84">Paciente:</span></b><br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucwords(strtolower($paciente));?>
+      </td>
+      <td width="25" style="border-left:1px solid #0275d8;width: 20%;"><span style="margin-left:5px;color:#034f84">Cod. Empleado</span><br> <span style="margin-left:5px;"><?php echo $cod_emp."<span style='color:white'>.</span>";?></span></td>
+      <td width="25" style="border-left:1px solid #0275d8;width: 20%;"><span style="margin-left:5px;color:#034f84">Muestra</span><br> <span style="margin-left:5px;"> <?php echo "Orina";?></span></td> 
+    </tr>
+  </table>
 </div>
 
 <table class="table2" width="100%">
@@ -50,7 +56,7 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
     <tr><td style="text-align: center;width: 100%" colspan="100">
       <span style="color: red;font-size: 15px;text-align: center"><strong>EXAMEN GENERAL DE ORINA</strong></span>
     </td></tr>
-	<?php for($i=0;$i<sizeof($items_orina);$i++){ ?>
+  <?php for($i=0;$i<sizeof($items_orina);$i++){ ?>
   <tr>
     <th class="#table2 stilot1
        border-collapse: collapse" colspan="50" style="background:#034f84;color: white;font-size:13px">EXAMEN FÍSICO-QUÍMICO</th>
@@ -126,3 +132,6 @@ $items_orina = $reporteria->get_items_orina($_GET["id_paciente"],$_GET["numero_o
   </tr>
   <?php } ?>
 </table>
+<br>
+<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/sello_vasper.jpg" height="150" width="320" >

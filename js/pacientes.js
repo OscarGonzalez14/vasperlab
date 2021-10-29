@@ -315,7 +315,7 @@ $(document).on('click', '.agrega_paciente', function(){
       }
     })
 });
-//RELLENAR CAMPOS DE PACIENTE EN NUEVA ORDEN
+
 ////LLENADO DE CAMPOS EN COMPRAS DE PROVEEDOR
 $(document).on('click', '.agregar_oden_paciente', function(){
 
@@ -416,8 +416,7 @@ function eliminar_paciente_o(id_paciente){
 
    }
 
-//////////////////////SEELCT DEPARTAMENTOS DINAMICO
-//VALDAR TIPO DE PAGO
+///////// VALDAR TIPO DE PAGO ////////////
 $(document).ready(function(){
   $("#empresa_paciente").change(function () {         
     $("#empresa_paciente option:selected").each(function () {
